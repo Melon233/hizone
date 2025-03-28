@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: fenta-follow
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

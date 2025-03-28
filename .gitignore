@@ -1,0 +1,10 @@
+.vscode/
+/src/
+/temp/
+target
+*.log
+temp
+logs/
+avatar/
+test/
+**/hizone-login/**/*.yml

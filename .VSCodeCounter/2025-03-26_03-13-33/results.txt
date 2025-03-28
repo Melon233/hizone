@@ -1,0 +1,298 @@
+Date : 2025-03-26 03:13:33
+Directory : d:\AppData\VSCode\Projects\hizone
+Total : 128 files,  2752 codes, 239 comments, 773 blanks, all 3764 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Java       |         99 |      2,116 |        216 |        732 |      3,064 |
+| XML        |         10 |        326 |          9 |         22 |        357 |
+| Markdown   |          1 |        121 |          0 |          1 |        122 |
+| YAML       |          5 |        106 |          8 |          6 |        120 |
+| Properties |         12 |         83 |          6 |         11 |        100 |
+| Batch      |          1 |          0 |          0 |          1 |          1 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                             | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                |        128 |      2,752 |        239 |        773 |      3,764 |
+| . (Files)                                                                                                                        |          2 |        175 |          1 |          2 |        178 |
+| model                                                                                                                            |         32 |        382 |          5 |        216 |        603 |
+| model (Files)                                                                                                                    |          1 |         42 |          0 |          1 |         43 |
+| model\src                                                                                                                        |         31 |        340 |          5 |        215 |        560 |
+| model\src\main                                                                                                                   |         31 |        340 |          5 |        215 |        560 |
+| model\src\main\java                                                                                                              |         31 |        340 |          5 |        215 |        560 |
+| model\src\main\java\com                                                                                                          |         31 |        340 |          5 |        215 |        560 |
+| model\src\main\java\com\example                                                                                                  |         31 |        340 |          5 |        215 |        560 |
+| model\src\main\java\com\example\fenta                                                                                            |         31 |        340 |          5 |        215 |        560 |
+| model\src\main\java\com\example\fenta\dao                                                                                        |          9 |        102 |          0 |         77 |        179 |
+| model\src\main\java\com\example\fenta\dao (Files)                                                                                |          6 |         57 |          0 |         47 |        104 |
+| model\src\main\java\com\example\fenta\dao\user                                                                                   |          3 |         45 |          0 |         30 |         75 |
+| model\src\main\java\com\example\fenta\front                                                                                      |         18 |        135 |          0 |         99 |        234 |
+| model\src\main\java\com\example\fenta\front\follow                                                                               |          3 |         21 |          0 |         15 |         36 |
+| model\src\main\java\com\example\fenta\front\interaction                                                                          |          8 |         62 |          0 |         46 |        108 |
+| model\src\main\java\com\example\fenta\front\login                                                                                |          1 |          7 |          0 |          5 |         12 |
+| model\src\main\java\com\example\fenta\front\post                                                                                 |          3 |         24 |          0 |         18 |         42 |
+| model\src\main\java\com\example\fenta\front\user                                                                                 |          3 |         21 |          0 |         15 |         36 |
+| model\src\main\java\com\example\fenta\inter                                                                                      |          2 |         19 |          0 |         12 |         31 |
+| model\src\main\java\com\example\fenta\utility                                                                                    |          2 |         84 |          5 |         27 |        116 |
+| services                                                                                                                         |         94 |      2,195 |        233 |        555 |      2,983 |
+| services (Files)                                                                                                                 |          1 |        101 |          8 |          1 |        110 |
+| services\hizone-comment                                                                                                          |         11 |        424 |         44 |        102 |        570 |
+| services\hizone-comment (Files)                                                                                                  |          1 |         18 |          0 |          3 |         21 |
+| services\hizone-comment\src                                                                                                      |         10 |        406 |         44 |         99 |        549 |
+| services\hizone-comment\src\main                                                                                                 |         10 |        406 |         44 |         99 |        549 |
+| services\hizone-comment\src\main\java                                                                                            |         10 |        406 |         44 |         99 |        549 |
+| services\hizone-comment\src\main\java\com                                                                                        |         10 |        406 |         44 |         99 |        549 |
+| services\hizone-comment\src\main\java\com\example                                                                                |         10 |        406 |         44 |         99 |        549 |
+| services\hizone-comment\src\main\java\com\example (Files)                                                                        |          1 |          6 |          0 |          1 |          7 |
+| services\hizone-comment\src\main\java\com\example\config                                                                         |          2 |         73 |          4 |         13 |         90 |
+| services\hizone-comment\src\main\java\com\example\controller                                                                     |          1 |         93 |         39 |         15 |        147 |
+| services\hizone-comment\src\main\java\com\example\feign                                                                          |          1 |         10 |          0 |          5 |         15 |
+| services\hizone-comment\src\main\java\com\example\mapper                                                                         |          1 |         29 |          0 |         12 |         41 |
+| services\hizone-comment\src\main\java\com\example\service                                                                        |          4 |        195 |          1 |         53 |        249 |
+| services\hizone-comment\src\main\java\com\example\service (Files)                                                                |          2 |         33 |          0 |         23 |         56 |
+| services\hizone-comment\src\main\java\com\example\service\impl                                                                   |          2 |        162 |          1 |         30 |        193 |
+| services\hizone-follow                                                                                                           |          8 |        186 |         35 |         58 |        279 |
+| services\hizone-follow (Files)                                                                                                   |          1 |         18 |          0 |          3 |         21 |
+| services\hizone-follow\src                                                                                                       |          7 |        168 |         35 |         55 |        258 |
+| services\hizone-follow\src\main                                                                                                  |          7 |        168 |         35 |         55 |        258 |
+| services\hizone-follow\src\main\java                                                                                             |          6 |        160 |         35 |         54 |        249 |
+| services\hizone-follow\src\main\java\com                                                                                         |          6 |        160 |         35 |         54 |        249 |
+| services\hizone-follow\src\main\java\com\example                                                                                 |          6 |        160 |         35 |         54 |        249 |
+| services\hizone-follow\src\main\java\com\example (Files)                                                                         |          1 |          9 |          0 |          3 |         12 |
+| services\hizone-follow\src\main\java\com\example\controller                                                                      |          1 |         72 |         35 |         13 |        120 |
+| services\hizone-follow\src\main\java\com\example\feign                                                                           |          1 |         10 |          0 |          6 |         16 |
+| services\hizone-follow\src\main\java\com\example\mapper                                                                          |          1 |         23 |          0 |         10 |         33 |
+| services\hizone-follow\src\main\java\com\example\service                                                                         |          2 |         46 |          0 |         22 |         68 |
+| services\hizone-follow\src\main\java\com\example\service (Files)                                                                 |          1 |         13 |          0 |          9 |         22 |
+| services\hizone-follow\src\main\java\com\example\service\impl                                                                    |          1 |         33 |          0 |         13 |         46 |
+| services\hizone-follow\src\main\resources                                                                                        |          1 |          8 |          0 |          1 |          9 |
+| services\hizone-interaction                                                                                                      |         27 |        429 |         32 |         95 |        556 |
+| services\hizone-interaction (Files)                                                                                              |          1 |         18 |          0 |          3 |         21 |
+| services\hizone-interaction\src                                                                                                  |         26 |        411 |         32 |         92 |        535 |
+| services\hizone-interaction\src\main                                                                                             |         26 |        411 |         32 |         92 |        535 |
+| services\hizone-interaction\src\main\java                                                                                        |         12 |        285 |         26 |         77 |        388 |
+| services\hizone-interaction\src\main\java\com                                                                                    |         12 |        285 |         26 |         77 |        388 |
+| services\hizone-interaction\src\main\java\com\example                                                                            |         12 |        285 |         26 |         77 |        388 |
+| services\hizone-interaction\src\main\java\com\example (Files)                                                                    |          1 |          9 |          0 |          3 |         12 |
+| services\hizone-interaction\src\main\java\com\example\component                                                                  |          1 |         17 |          0 |          5 |         22 |
+| services\hizone-interaction\src\main\java\com\example\config                                                                     |          3 |         87 |          4 |         17 |        108 |
+| services\hizone-interaction\src\main\java\com\example\controller                                                                 |          1 |         70 |         21 |         12 |        103 |
+| services\hizone-interaction\src\main\java\com\example\feign                                                                      |          1 |         10 |          0 |          6 |         16 |
+| services\hizone-interaction\src\main\java\com\example\mapper                                                                     |          1 |         16 |          0 |          6 |         22 |
+| services\hizone-interaction\src\main\java\com\example\service                                                                    |          4 |         76 |          1 |         28 |        105 |
+| services\hizone-interaction\src\main\java\com\example\service (Files)                                                            |          2 |         16 |          0 |         11 |         27 |
+| services\hizone-interaction\src\main\java\com\example\service\impl                                                               |          2 |         60 |          1 |         17 |         78 |
+| services\hizone-interaction\src\main\resources                                                                                   |         14 |        126 |          6 |         15 |        147 |
+| services\hizone-interaction\src\main\resources (Files)                                                                           |          1 |         43 |          0 |          3 |         46 |
+| services\hizone-interaction\src\main\resources\redis                                                                             |         13 |         83 |          6 |         12 |        101 |
+| services\hizone-interaction\src\main\resources\redis (Files)                                                                     |          1 |          0 |          0 |          1 |          1 |
+| services\hizone-interaction\src\main\resources\redis\7000                                                                        |          2 |         13 |          1 |          1 |         15 |
+| services\hizone-interaction\src\main\resources\redis\7001                                                                        |          2 |         14 |          1 |          2 |         17 |
+| services\hizone-interaction\src\main\resources\redis\7002                                                                        |          2 |         14 |          1 |          2 |         17 |
+| services\hizone-interaction\src\main\resources\redis\7003                                                                        |          2 |         14 |          1 |          2 |         17 |
+| services\hizone-interaction\src\main\resources\redis\7004                                                                        |          2 |         14 |          1 |          2 |         17 |
+| services\hizone-interaction\src\main\resources\redis\7005                                                                        |          2 |         14 |          1 |          2 |         17 |
+| services\hizone-login                                                                                                            |          8 |        186 |         22 |         48 |        256 |
+| services\hizone-login (Files)                                                                                                    |          1 |         23 |          0 |          2 |         25 |
+| services\hizone-login\src                                                                                                        |          7 |        163 |         22 |         46 |        231 |
+| services\hizone-login\src\main                                                                                                   |          7 |        163 |         22 |         46 |        231 |
+| services\hizone-login\src\main\java                                                                                              |          7 |        163 |         22 |         46 |        231 |
+| services\hizone-login\src\main\java\com                                                                                          |          7 |        163 |         22 |         46 |        231 |
+| services\hizone-login\src\main\java\com\example                                                                                  |          7 |        163 |         22 |         46 |        231 |
+| services\hizone-login\src\main\java\com\example (Files)                                                                          |          1 |          9 |          0 |          2 |         11 |
+| services\hizone-login\src\main\java\com\example\component                                                                        |          1 |         39 |          0 |          9 |         48 |
+| services\hizone-login\src\main\java\com\example\config                                                                           |          1 |         17 |          0 |          6 |         23 |
+| services\hizone-login\src\main\java\com\example\controller                                                                       |          1 |         33 |         11 |          8 |         52 |
+| services\hizone-login\src\main\java\com\example\mapper                                                                           |          1 |         12 |          0 |          6 |         18 |
+| services\hizone-login\src\main\java\com\example\service                                                                          |          2 |         53 |         11 |         15 |         79 |
+| services\hizone-login\src\main\java\com\example\service (Files)                                                                  |          1 |          7 |          0 |          5 |         12 |
+| services\hizone-login\src\main\java\com\example\service\impl                                                                     |          1 |         46 |         11 |         10 |         67 |
+| services\hizone-post                                                                                                             |         14 |        327 |         46 |         94 |        467 |
+| services\hizone-post (Files)                                                                                                     |          1 |         18 |          0 |          3 |         21 |
+| services\hizone-post\src                                                                                                         |         13 |        309 |         46 |         91 |        446 |
+| services\hizone-post\src\main                                                                                                    |         13 |        309 |         46 |         91 |        446 |
+| services\hizone-post\src\main\java                                                                                               |         12 |        289 |         46 |         90 |        425 |
+| services\hizone-post\src\main\java\com                                                                                           |         12 |        289 |         46 |         90 |        425 |
+| services\hizone-post\src\main\java\com\example                                                                                   |         12 |        289 |         46 |         90 |        425 |
+| services\hizone-post\src\main\java\com\example (Files)                                                                           |          1 |          9 |          0 |          3 |         12 |
+| services\hizone-post\src\main\java\com\example\component                                                                         |          1 |         17 |          0 |          5 |         22 |
+| services\hizone-post\src\main\java\com\example\config                                                                            |          3 |         61 |          4 |         14 |         79 |
+| services\hizone-post\src\main\java\com\example\controller                                                                        |          1 |         70 |         42 |         14 |        126 |
+| services\hizone-post\src\main\java\com\example\feign                                                                             |          1 |         15 |          0 |          7 |         22 |
+| services\hizone-post\src\main\java\com\example\mapper                                                                            |          1 |         25 |          0 |         11 |         36 |
+| services\hizone-post\src\main\java\com\example\service                                                                           |          4 |         92 |          0 |         36 |        128 |
+| services\hizone-post\src\main\java\com\example\service (Files)                                                                   |          2 |         19 |          0 |         15 |         34 |
+| services\hizone-post\src\main\java\com\example\service\impl                                                                      |          2 |         73 |          0 |         21 |         94 |
+| services\hizone-post\src\main\resources                                                                                          |          1 |         20 |          0 |          1 |         21 |
+| services\hizone-search                                                                                                           |         11 |        198 |          2 |         65 |        265 |
+| services\hizone-search (Files)                                                                                                   |          1 |         17 |          0 |          3 |         20 |
+| services\hizone-search\src                                                                                                       |         10 |        181 |          2 |         62 |        245 |
+| services\hizone-search\src\main                                                                                                  |         10 |        181 |          2 |         62 |        245 |
+| services\hizone-search\src\main\java                                                                                             |          9 |        176 |          0 |         62 |        238 |
+| services\hizone-search\src\main\java\com                                                                                         |          9 |        176 |          0 |         62 |        238 |
+| services\hizone-search\src\main\java\com\example                                                                                 |          9 |        176 |          0 |         62 |        238 |
+| services\hizone-search\src\main\java\com\example (Files)                                                                         |          1 |          9 |          0 |          3 |         12 |
+| services\hizone-search\src\main\java\com\example\config                                                                          |          1 |         18 |          0 |          6 |         24 |
+| services\hizone-search\src\main\java\com\example\controller                                                                      |          1 |         30 |          0 |         10 |         40 |
+| services\hizone-search\src\main\java\com\example\feign                                                                           |          2 |         20 |          0 |         11 |         31 |
+| services\hizone-search\src\main\java\com\example\service                                                                         |          4 |         99 |          0 |         32 |        131 |
+| services\hizone-search\src\main\java\com\example\service (Files)                                                                 |          2 |         16 |          0 |         12 |         28 |
+| services\hizone-search\src\main\java\com\example\service\impl                                                                    |          2 |         83 |          0 |         20 |        103 |
+| services\hizone-search\src\main\resources                                                                                        |          1 |          5 |          2 |          0 |          7 |
+| services\hizone-user                                                                                                             |         14 |        344 |         44 |         92 |        480 |
+| services\hizone-user (Files)                                                                                                     |          1 |         17 |          0 |          2 |         19 |
+| services\hizone-user\src                                                                                                         |         13 |        327 |         44 |         90 |        461 |
+| services\hizone-user\src\main                                                                                                    |         13 |        327 |         44 |         90 |        461 |
+| services\hizone-user\src\main\java                                                                                               |         12 |        297 |         38 |         89 |        424 |
+| services\hizone-user\src\main\java\com                                                                                           |         12 |        297 |         38 |         89 |        424 |
+| services\hizone-user\src\main\java\com\example                                                                                   |         12 |        297 |         38 |         89 |        424 |
+| services\hizone-user\src\main\java\com\example (Files)                                                                           |          1 |          9 |          0 |          3 |         12 |
+| services\hizone-user\src\main\java\com\example\config                                                                            |          4 |         64 |          4 |         18 |         86 |
+| services\hizone-user\src\main\java\com\example\controller                                                                        |          1 |         86 |         34 |         16 |        136 |
+| services\hizone-user\src\main\java\com\example\interceptor                                                                       |          1 |         17 |          0 |          5 |         22 |
+| services\hizone-user\src\main\java\com\example\mapper                                                                            |          1 |         25 |          0 |         11 |         36 |
+| services\hizone-user\src\main\java\com\example\service                                                                           |          4 |         96 |          0 |         36 |        132 |
+| services\hizone-user\src\main\java\com\example\service (Files)                                                                   |          2 |         21 |          0 |         15 |         36 |
+| services\hizone-user\src\main\java\com\example\service\impl                                                                      |          2 |         75 |          0 |         21 |         96 |
+| services\hizone-user\src\main\resources                                                                                          |          1 |         30 |          6 |          1 |         37 |
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                         | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| d:\AppData\VSCode\Projects\hizone\README.md                                                                                      | Markdown   |        121 |          0 |          1 |        122 |
+| d:\AppData\VSCode\Projects\hizone\model\pom.xml                                                                                  | XML        |         42 |          0 |          1 |         43 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\dao\Follow.java                                          | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\dao\Interaction.java                                     | Java       |          9 |          0 |          7 |         16 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\dao\Post.java                                            | Java       |         12 |          0 |         10 |         22 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\dao\PostCollect.java                                     | Java       |          3 |          0 |          3 |          6 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\dao\PostComment.java                                     | Java       |         13 |          0 |         11 |         24 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\dao\PostReplyComment.java                                | Java       |         13 |          0 |         11 |         24 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\dao\user\User.java                                       | Java       |         11 |          0 |          7 |         18 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\dao\user\UserDetail.java                                 | Java       |         14 |          0 |         12 |         26 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\dao\user\UserMetadata.java                               | Java       |         20 |          0 |         11 |         31 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\follow\AddFollow.java                              | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\follow\DeleteFan.java                              | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\follow\DeleteFollow.java                           | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\interaction\CollectPost.java                       | Java       |          7 |          0 |          3 |         10 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\interaction\DeleteComment.java                     | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\interaction\ForwardPost.java                       | Java       |          3 |          0 |          3 |          6 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\interaction\LikeComment.java                       | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\interaction\LikePost.java                          | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\interaction\LikeReply.java                         | Java       |          8 |          0 |          6 |         14 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\interaction\ReplyComment.java                      | Java       |         12 |          0 |         10 |         22 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\interaction\SendComment.java                       | Java       |         11 |          0 |          9 |         20 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\login\Login.java                                   | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\post\DeletePost.java                               | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\post\ModifyPost.java                               | Java       |          9 |          0 |          7 |         16 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\post\UploadPost.java                               | Java       |          8 |          0 |          6 |         14 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\user\Email.java                                    | Java       |          6 |          0 |          4 |         10 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\user\UpdateUserAvatar.java                         | Java       |          8 |          0 |          6 |         14 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\front\user\updateUser.java                               | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\inter\CheckCode.java                                     | Java       |          8 |          0 |          3 |         11 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\inter\UpdateUserMetadata.java                            | Java       |         11 |          0 |          9 |         20 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\utility\RedisUtility.java                                | Java       |         52 |          4 |         13 |         69 |
+| d:\AppData\VSCode\Projects\hizone\model\src\main\java\com\example\fenta\utility\Utility.java                                     | Java       |         32 |          1 |         14 |         47 |
+| d:\AppData\VSCode\Projects\hizone\pom.xml                                                                                        | XML        |         54 |          1 |          1 |         56 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\pom.xml                                                                | XML        |         18 |          0 |          3 |         21 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\CommentApplication.java                      | Java       |          6 |          0 |          1 |          7 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\config\CaffeineConfig.java                   | Java       |         42 |          0 |          8 |         50 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\config\RedisConfig.java                      | Java       |         31 |          4 |          5 |         40 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\controller\CommentController.java            | Java       |         93 |         39 |         15 |        147 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\feign\InteractionFeignClient.java            | Java       |         10 |          0 |          5 |         15 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\mapper\CommentMapper.java                    | Java       |         29 |          0 |         12 |         41 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\service\CacheService.java                    | Java       |         17 |          0 |         13 |         30 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\service\CommentService.java                  | Java       |         16 |          0 |         10 |         26 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\service\impl\CacheServiceImpl.java           | Java       |        121 |          0 |         18 |        139 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-comment\src\main\java\com\example\service\impl\CommentServiceImpl.java         | Java       |         41 |          1 |         12 |         54 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-follow\pom.xml                                                                 | XML        |         18 |          0 |          3 |         21 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-follow\src\main\java\com\example\FollowApplication.java                        | Java       |          9 |          0 |          3 |         12 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-follow\src\main\java\com\example\controller\FollowController.java              | Java       |         72 |         35 |         13 |        120 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-follow\src\main\java\com\example\feign\UserFeignClient.java                    | Java       |         10 |          0 |          6 |         16 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-follow\src\main\java\com\example\mapper\FollowMapper.java                      | Java       |         23 |          0 |         10 |         33 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-follow\src\main\java\com\example\service\FollowService.java                    | Java       |         13 |          0 |          9 |         22 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-follow\src\main\java\com\example\service\impl\FollowServiceImpl.java           | Java       |         33 |          0 |         13 |         46 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-follow\src\main\resources\application.yml                                      | YAML       |          8 |          0 |          1 |          9 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\pom.xml                                                            | XML        |         18 |          0 |          3 |         21 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\InteractionApplication.java              | Java       |          9 |          0 |          3 |         12 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\component\TokenInterceptor.java          | Java       |         17 |          0 |          5 |         22 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\config\CaffeineConfig.java               | Java       |         42 |          0 |          8 |         50 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\config\RedisConfig.java                  | Java       |         31 |          4 |          4 |         39 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\config\WebConfig.java                    | Java       |         14 |          0 |          5 |         19 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\controller\InteractionController.java    | Java       |         70 |         21 |         12 |        103 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\feign\UserFeignClient.java               | Java       |         10 |          0 |          6 |         16 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\mapper\InteractionMapper.java            | Java       |         16 |          0 |          6 |         22 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\service\CacheService.java                | Java       |          5 |          0 |          4 |          9 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\service\InteractionService.java          | Java       |         11 |          0 |          7 |         18 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\service\impl\CacheServiceImpl.java       | Java       |         30 |          0 |          8 |         38 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\java\com\example\service\impl\InteractionServiceImpl.java | Java       |         30 |          1 |          9 |         40 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\application.yml                                 | YAML       |         43 |          0 |          3 |         46 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7000\nodes-7000.conf                      | Properties |          7 |          0 |          1 |          8 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7000\redis.conf                           | Properties |          6 |          1 |          0 |          7 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7001\nodes-7001.conf                      | Properties |          7 |          0 |          1 |          8 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7001\redis.conf                           | Properties |          7 |          1 |          1 |          9 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7002\nodes-7002.conf                      | Properties |          7 |          0 |          1 |          8 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7002\redis.conf                           | Properties |          7 |          1 |          1 |          9 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7003\nodes-7003.conf                      | Properties |          7 |          0 |          1 |          8 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7003\redis.conf                           | Properties |          7 |          1 |          1 |          9 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7004\nodes-7004.conf                      | Properties |          7 |          0 |          1 |          8 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7004\redis.conf                           | Properties |          7 |          1 |          1 |          9 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7005\nodes-7005.conf                      | Properties |          7 |          0 |          1 |          8 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\7005\redis.conf                           | Properties |          7 |          1 |          1 |          9 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-interaction\src\main\resources\redis\start-redis-cluster.bat                   | Batch      |          0 |          0 |          1 |          1 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-login\pom.xml                                                                  | XML        |         23 |          0 |          2 |         25 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-login\src\main\java\com\example\LoginApplication.java                          | Java       |          9 |          0 |          2 |         11 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-login\src\main\java\com\example\component\CheckCodeManager.java                | Java       |         39 |          0 |          9 |         48 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-login\src\main\java\com\example\config\CaffeineConfig.java                     | Java       |         17 |          0 |          6 |         23 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-login\src\main\java\com\example\controller\LoginController.java                | Java       |         33 |         11 |          8 |         52 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-login\src\main\java\com\example\mapper\LoginMapper.java                        | Java       |         12 |          0 |          6 |         18 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-login\src\main\java\com\example\service\LoginService.java                      | Java       |          7 |          0 |          5 |         12 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-login\src\main\java\com\example\service\impl\LoginServiceImpl.java             | Java       |         46 |         11 |         10 |         67 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\pom.xml                                                                   | XML        |         18 |          0 |          3 |         21 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\PostApplication.java                            | Java       |          9 |          0 |          3 |         12 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\component\TokenInterceptor.java                 | Java       |         17 |          0 |          5 |         22 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\config\CaffeineConfig.java                      | Java       |         16 |          0 |          5 |         21 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\config\RedisConfig.java                         | Java       |         31 |          4 |          4 |         39 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\config\WebConfig.java                           | Java       |         14 |          0 |          5 |         19 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\controller\PostController.java                  | Java       |         70 |         42 |         14 |        126 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\feign\UserFeignClient.java                      | Java       |         15 |          0 |          7 |         22 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\mapper\PostMapper.java                          | Java       |         25 |          0 |         11 |         36 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\service\CacheService.java                       | Java       |          6 |          0 |          5 |         11 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\service\PostService.java                        | Java       |         13 |          0 |         10 |         23 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\service\impl\CacheServiceImpl.java              | Java       |         35 |          0 |          9 |         44 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\java\com\example\service\impl\PostServiceImpl.java               | Java       |         38 |          0 |         12 |         50 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-post\src\main\resources\application.yml                                        | YAML       |         20 |          0 |          1 |         21 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\pom.xml                                                                 | XML        |         17 |          0 |          3 |         20 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\java\com\example\SearchApplication.java                        | Java       |          9 |          0 |          3 |         12 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\java\com\example\config\ElasticSearchClientConfig.java         | Java       |         18 |          0 |          6 |         24 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\java\com\example\controller\SearchController.java              | Java       |         30 |          0 |         10 |         40 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\java\com\example\feign\PostFeignClient.java                    | Java       |         10 |          0 |          5 |         15 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\java\com\example\feign\UserFeignClient.java                    | Java       |         10 |          0 |          6 |         16 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\java\com\example\service\PostSearchService.java                | Java       |          8 |          0 |          6 |         14 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\java\com\example\service\UserSearchService.java                | Java       |          8 |          0 |          6 |         14 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\java\com\example\service\impl\PostSearchServiceImpl.java       | Java       |         42 |          0 |         10 |         52 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\java\com\example\service\impl\UserSearchServiceImpl.java       | Java       |         41 |          0 |         10 |         51 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-search\src\main\resources\application.yml                                      | YAML       |          5 |          2 |          0 |          7 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\pom.xml                                                                   | XML        |         17 |          0 |          2 |         19 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\UserApplication.java                            | Java       |          9 |          0 |          3 |         12 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\config\CaffeineConfig.java                      | Java       |         16 |          0 |          6 |         22 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\config\RabbitMQConfig.java                      | Java       |          3 |          0 |          3 |          6 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\config\RedisConfig.java                         | Java       |         31 |          4 |          4 |         39 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\config\WebConfig.java                           | Java       |         14 |          0 |          5 |         19 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\controller\UserController.java                  | Java       |         86 |         34 |         16 |        136 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\interceptor\TokenInterceptor.java               | Java       |         17 |          0 |          5 |         22 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\mapper\UserMapper.java                          | Java       |         25 |          0 |         11 |         36 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\service\CacheService.java                       | Java       |          6 |          0 |          5 |         11 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\service\UserService.java                        | Java       |         15 |          0 |         10 |         25 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\service\impl\CacheServiceImpl.java              | Java       |         35 |          0 |          9 |         44 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\java\com\example\service\impl\UserServiceImpl.java               | Java       |         40 |          0 |         12 |         52 |
+| d:\AppData\VSCode\Projects\hizone\services\hizone-user\src\main\resources\application.yml                                        | YAML       |         30 |          6 |          1 |         37 |
+| d:\AppData\VSCode\Projects\hizone\services\pom.xml                                                                               | XML        |        101 |          8 |          1 |        110 |
+| Total                                                                                                                            |            |      2,752 |        239 |        773 |      3,764 |
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

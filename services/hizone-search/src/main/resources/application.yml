@@ -1,0 +1,7 @@
+spring:
+  elasticsearch:
+    uris: http://localhost:9200
+    # username: elastic
+    # password: your_password
+    connection-timeout: 1s
+    socket-timeout: 5s
