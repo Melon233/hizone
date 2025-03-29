@@ -1,5 +1,11 @@
 package com.example.service.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -40,6 +46,8 @@ public class LoginServiceImpl implements LoginService {
             user.setNickname(login.getEmail());
             user.setEmail(login.getEmail());
             loginMapper.insertUser(user);
+            System.out.println("userId: " + user.getUserId());
+            initUser(user.getUserId());
         }
         return true;
     }
@@ -52,7 +60,7 @@ public class LoginServiceImpl implements LoginService {
     public void sendCheckCode(String email) {
         SimpleMailMessage message = new SimpleMailMessage();
         int checkCode = checkCodeManager.generateAndSaveCheckCode(email);
-        message.setFrom("noreply@hizone.com");
+        message.setFrom("2314795644@qq.com");
         message.setTo(email);
         message.setSubject("Hizone登录验证码");
         message.setText("你的登录验证码为：" + checkCode);
@@ -62,5 +70,17 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public int getUserIdByEmail(String email) {
         return loginMapper.selectUserByEmail(email).getUserId();
+    }
+
+    @Override
+    public void initUser(int userId) {
+        Path defaultAvatar = Paths.get("services/hizone-user/src/main/resources/avatar/default.png");
+        Path userAvatar = Paths.get("services/hizone-user/src/main/resources/avatar/" + userId + ".png");
+        try {
+            Files.copy(defaultAvatar, userAvatar);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        loginMapper.insertNewUserMetadata(userId);
     }
 }

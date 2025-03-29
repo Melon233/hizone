@@ -21,7 +21,7 @@ public class CheckCodeManager {
         CheckCode checkCode=new CheckCode();
         checkCode.setEmail(email);
         checkCode.setCheckCode(code);
-        checkCode.setExpireTime(System.currentTimeMillis() + 1000 * 60 * 2);
+        checkCode.setExpireTime(System.currentTimeMillis() + 1000 * 60 * 10);
         checkCodeCache.put(email, checkCode);
         return code;
     }

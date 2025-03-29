@@ -13,24 +13,26 @@ spring:
     password: 123456
   jackson:
     property-naming-strategy: SNAKE_CASE
-  data:
-    redis:
-      cluster:
-        nodes:
-          - 127.0.0.1:7000
-          - 127.0.0.1:7001
-          - 127.0.0.1:7002
-          - 127.0.0.1:7003
-          - 127.0.0.1:7004
-          - 127.0.0.1:7005
-        max-redirects: 3
-      timeout: 10000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          max-wait: 10000ms
-          min-idle: 0
+  # data:
+  #   redis:
+  #     cluster:
+  #       nodes:
+  #         - 127.0.0.1:7000
+  #         - 127.0.0.1:7001
+  #         - 127.0.0.1:7002
+  #         - 127.0.0.1:7003
+  #         - 127.0.0.1:7004
+  #         - 127.0.0.1:7005
+  #       max-redirects: 3
+  #     timeout: 10000ms
+  #     lettuce:
+  #       pool:
+  #         max-active: 8
+  #         max-idle: 8
+  #         max-wait: 10000ms
+  #         min-idle: 0
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+server:
+  port: 8081

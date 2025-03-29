@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +8,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.feign.InteractionFeignClient;
 import com.example.feign.UserFeignClient;
+import com.example.fenta.dao.interaction.Interaction;
 import com.example.fenta.dao.post.Post;
 import com.example.fenta.front.post.DeletePost;
 import com.example.fenta.front.post.ModifyPost;
 import com.example.fenta.front.post.UploadPost;
+import com.example.fenta.inter.PostId;
 import com.example.fenta.inter.UpdateUserMetadata;
+import com.example.fenta.outer.PostDetail;
 import com.example.service.CacheService;
 import com.example.service.PostService;
 
@@ -32,6 +37,9 @@ class PostController {
 
     @Autowired
     private UserFeignClient userFeignClient;
+
+    @Autowired
+    private InteractionFeignClient interactionFeignClient;
 
     /**
      * 获取单个帖子
@@ -71,8 +79,24 @@ class PostController {
      * @return
      */
     @GetMapping("/getPush")
-    public List<Post> getPush(@RequestParam int userId) {
-        return postService.getPush(userId);
+    public List<PostDetail> getPush() {
+        List<Post> pushList = postService.getPush();
+        List<PostDetail> postDetailList = new ArrayList<>();
+        for (Post post : pushList) {
+            Interaction interaction = interactionFeignClient.getInteraction(post.getPostId());
+            PostDetail postDetail = new PostDetail();
+            postDetail.setPostId(post.getPostId());
+            postDetail.setAuthorId(post.getAuthorId());
+            postDetail.setAuthorName(post.getAuthorName());
+            postDetail.setPostTitle(post.getPostTitle());
+            postDetail.setPostContent(post.getPostContent());
+            postDetail.setLikeCount(interaction.getLikeCount());
+            postDetail.setCollectCount(interaction.getCollectCount());
+            postDetail.setCommentCount(interaction.getCommentCount());
+            postDetail.setPostTime(post.getPostTime());
+            postDetailList.add(postDetail);
+        }
+        return postDetailList;
     }
 
     /**
@@ -89,6 +113,10 @@ class PostController {
         updateUserMetadata.setUserId(uploadPost.getAuthorId());
         updateUserMetadata.setPostCount(1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
+        PostId postId = new PostId();
+        postId.setPostId(uploadPost.getPostId());
+        System.out.println(interactionFeignClient.initInteraction(postId));
+        System.out.println(uploadPost.getPostId());
         return "success";
     }
 

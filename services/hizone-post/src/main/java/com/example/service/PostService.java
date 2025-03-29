@@ -18,5 +18,5 @@ public interface PostService {
 
     List<Post> getPostList(int authorId);
 
-    List<Post> getPush(int authorId);
+    List<Post> getPush();
 }

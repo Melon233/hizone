@@ -1,4 +1,4 @@
-package com.example.fenta.front.user;
+package com.example.fenta.inter;
 
 import lombok.Data;
 

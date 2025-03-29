@@ -43,7 +43,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getPush(int userId) {
+    public List<Post> getPush() {
         return postMapper.selectPush();
     }
 }

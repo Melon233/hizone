@@ -3,15 +3,13 @@ package com.example.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fenta.dao.user.User;
-import com.example.fenta.dao.user.UserDetail;
 import com.example.fenta.dao.user.UserMetadata;
 import com.example.fenta.front.user.UpdateUserAvatar;
 import com.example.fenta.front.user.UpdateUser;
 import com.example.fenta.inter.UpdateUserMetadata;
+import com.example.fenta.outer.UserDetail;
 import com.example.service.CacheService;
 import com.example.service.UserService;
-
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +29,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Slf4j
 @CrossOrigin
 @RestController
 public class UserController {
@@ -70,12 +67,13 @@ public class UserController {
      */
     @GetMapping("/getUserDetail")
     public UserDetail getUserDetail(@RequestParam("user_id") int userId) {
+        System.out.println(userId);
         return userService.getUserDetail(userId);
     }
 
     @GetMapping("/getUserAvatar")
     public ResponseEntity<Resource> getUserAvatar(@RequestParam("user_id") int userId) throws IOException {
-        File imageFile = new File("services/fenta-user/src/main/resources/avatar/" + userId + ".jpg");
+        File imageFile = new File("services/hizone-user/src/main/resources/avatar/" + userId + ".png");
         if (!imageFile.exists()) {
             return ResponseEntity.notFound().build(); // 如果文件不存在，返回 404
         }
@@ -127,6 +125,7 @@ public class UserController {
      */
     @PostMapping("/updateUserMetadata")
     public String updateUserMetadata(@RequestBody UpdateUserMetadata updateUserMetadata) {
+        System.out.println("updateUserMetadata" + updateUserMetadata.getUserId() + " " + updateUserMetadata.getPostCount());
         UserMetadata userMetadata = userService.getUserMetadata(updateUserMetadata.getUserId());
         userMetadata.merge(updateUserMetadata);
         userService.updateUserMetadata(updateUserMetadata);

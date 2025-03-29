@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fenta.front.login.Login;
-import com.example.fenta.front.user.Email;
+import com.example.fenta.inter.Email;
 import com.example.fenta.utility.Utility;
 import com.example.service.LoginService;
 
@@ -29,7 +29,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestBody Login login) {
         if (!loginService.validateLogin(login)) {
-            return null;
+            return "error";
         }
         return Utility.generateToken(loginService.getUserIdByEmail(login.getEmail()));
     }

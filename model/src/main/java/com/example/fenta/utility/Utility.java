@@ -27,7 +27,8 @@ public class Utility {
     }
 
     public static boolean validateEmail(String email) {
-        String regex = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        System.out.println("email: " + email);
         if (email.matches(regex)) {
             return true;
         } else {
@@ -39,8 +40,4 @@ public class Utility {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateNickname'");
     }
-
-
-
-
 }

@@ -10,7 +10,7 @@ import com.example.fenta.inter.UpdateUserMetadata;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
-@FeignClient(value = "hizone-user")
+@FeignClient(name="hizone-user", url = "http://localhost:8081")
 public interface UserFeignClient {
 
     @GetMapping("/getUser")

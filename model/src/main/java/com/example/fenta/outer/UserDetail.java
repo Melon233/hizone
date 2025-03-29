@@ -1,4 +1,4 @@
-package com.example.fenta.dao.user;
+package com.example.fenta.outer;
 
 import lombok.Data;
 

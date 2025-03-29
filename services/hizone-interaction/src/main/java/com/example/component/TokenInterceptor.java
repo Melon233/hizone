@@ -13,10 +13,10 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String cookie = request.getHeader("Cookie");
-        if (!Utility.validateToken(cookie)) {
-            return false;
-        }
+        // String cookie = request.getHeader("Cookie");
+        // if (!Utility.validateToken(cookie)) {
+        // return false;
+        // }
         return true;
     }
 }
