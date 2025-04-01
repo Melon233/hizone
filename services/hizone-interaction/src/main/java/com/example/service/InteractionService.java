@@ -1,14 +1,13 @@
 package com.example.service;
 
+import java.util.List;
+
 import com.example.hizone.dao.interaction.Interaction;
 import com.example.hizone.front.interaction.CollectPost;
 import com.example.hizone.front.interaction.ForwardPost;
 import com.example.hizone.front.interaction.LikePost;
 import com.example.hizone.inter.UserInteraction;
 import com.example.hizone.inter.UserPost;
-import com.example.hizone.outer.InteractionDetail;
-
-import co.elastic.clients.elasticsearch.security.User;
 
 public interface InteractionService {
 
@@ -23,4 +22,8 @@ public interface InteractionService {
     void initInteraction(int postId);
 
     UserInteraction getUserInteraction(UserPost userPost);
+
+    List<LikePost> getLikePostList(int postId);
+
+    List<CollectPost> getCollectPostList(int postId);
 }

@@ -17,12 +17,14 @@ import com.example.hizone.front.post.ModifyPost;
 import com.example.hizone.front.post.UploadPost;
 import com.example.hizone.inter.PostId;
 import com.example.hizone.inter.UpdateUserMetadata;
+import com.example.hizone.outer.InteractionDetail;
 import com.example.hizone.outer.PostDetail;
 import com.example.service.CacheService;
 import com.example.service.PostService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin
@@ -79,21 +81,24 @@ class PostController {
      * @return
      */
     @GetMapping("/getPush")
-    public List<PostDetail> getPush() {
+    public List<PostDetail> getPush(@RequestHeader("Token") String token) {
         List<Post> pushList = postService.getPush();
         List<PostDetail> postDetailList = new ArrayList<>();
         for (Post post : pushList) {
-            Interaction interaction = interactionFeignClient.getInteraction(post.getPostId());
+            InteractionDetail interactionDetail = interactionFeignClient.getInteractionDetail(token, post.getPostId());
             PostDetail postDetail = new PostDetail();
+            System.out.println(interactionDetail);
             postDetail.setPostId(post.getPostId());
             postDetail.setAuthorId(post.getAuthorId());
             postDetail.setAuthorName(post.getAuthorName());
             postDetail.setPostTitle(post.getPostTitle());
             postDetail.setPostContent(post.getPostContent());
-            postDetail.setLikeCount(interaction.getLikeCount());
-            postDetail.setCollectCount(interaction.getCollectCount());
-            postDetail.setCommentCount(interaction.getCommentCount());
+            postDetail.setLikeCount(interactionDetail.getLikeCount());
+            postDetail.setCollectCount(interactionDetail.getCollectCount());
+            postDetail.setCommentCount(interactionDetail.getCommentCount());
             postDetail.setPostTime(post.getPostTime());
+            postDetail.setLiked(interactionDetail.isLiked());
+            postDetail.setCollected(interactionDetail.isCollected());
             postDetailList.add(postDetail);
         }
         return postDetailList;

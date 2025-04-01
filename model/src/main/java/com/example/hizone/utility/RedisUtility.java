@@ -10,6 +10,8 @@ import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 
 import com.example.hizone.dao.comment.PostComment;
 import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.front.interaction.CollectPost;
+import com.example.hizone.front.interaction.LikePost;
 
 public class RedisUtility {
 
@@ -92,5 +94,15 @@ public class RedisUtility {
             tupleSet.add(tuple);
         }
         return tupleSet;
+    }
+
+    public static Set<TypedTuple<Object>> convertLikePostListToTypedTupleListByScore(List<LikePost> likePostList) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'convertLikePostListToTypedTupleListByScore'");
+    }
+
+    public static Set<TypedTuple<Object>> convertCollectPostListToTypedTupleListByScore(List<CollectPost> collectPostList) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'convertCollectPostListToTypedTupleListByScore'");
     }
 }

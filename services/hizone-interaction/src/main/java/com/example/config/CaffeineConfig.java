@@ -1,13 +1,14 @@
 package com.example.config;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.hizone.dao.comment.PostComment;
-import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.front.interaction.CollectPost;
+import com.example.hizone.front.interaction.LikePost;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
@@ -26,7 +27,7 @@ public class CaffeineConfig {
     }
 
     @Bean
-    Cache<String, List<PostComment>> caffeineCacheCommentList() {
+    Cache<String, Set<LikePost>> caffeineCacheLikePostList() {
         return Caffeine.newBuilder()
                 .maximumSize(1000)
                 .expireAfterWrite(10, TimeUnit.MINUTES)
@@ -37,7 +38,7 @@ public class CaffeineConfig {
     }
 
     @Bean
-    Cache<String, List<PostReply>> caffeineCacheReplyCommentList() {
+    Cache<String, Set<CollectPost>> caffeineCacheCollectPostList() {
         return Caffeine.newBuilder()
                 .maximumSize(1000)
                 .expireAfterWrite(10, TimeUnit.MINUTES)

@@ -1,8 +1,11 @@
 package com.example.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.hizone.dao.interaction.Interaction;
 import com.example.hizone.dao.interaction.PostCollect;
@@ -31,4 +34,13 @@ public interface InteractionMapper {
 
     @Select("SELECT * FROM post_collect WHERE post_id = #{postId} AND sender_id = #{userId}")
     PostCollect selectPostCollect(UserPost userPost);
+
+    @Select("SELECT * FROM post_like WHERE post_id = #{postId}")
+    List<LikePost> selectPostLikeList(int postId);
+
+    @Select("SELECT * FROM post_collect WHERE post_id = #{postId}")
+    List<CollectPost> selectPostCollectList(int postId);
+
+    @Update("UPDATE post_interaction SET like_count = like_count + #{increment} WHERE post_id = #{postId}")
+    void updateInteractionLikeCount(int postId, int increment);
 }

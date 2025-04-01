@@ -1,5 +1,7 @@
 package com.example.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class InteractionServiceImpl implements InteractionService {
     @Override
     public void addLikePost(LikePost postLike) {
         interactionMapper.insertPostLike(postLike);
+        interactionMapper.updateInteractionLikeCount(postLike.getPostId(), 1);
     }
 
     @Override
@@ -47,6 +50,7 @@ public class InteractionServiceImpl implements InteractionService {
     @Override
     public UserInteraction getUserInteraction(UserPost userPost) {
         UserInteraction userInteraction = new UserInteraction();
+        System.out.println("getUserInteraction" + userPost);
         if (interactionMapper.selectPostLike(userPost) != null) {
             userInteraction.setLiked(true);
         } else {
@@ -58,5 +62,15 @@ public class InteractionServiceImpl implements InteractionService {
             userInteraction.setCollected(false);
         }
         return userInteraction;
+    }
+
+    @Override
+    public List<LikePost> getLikePostList(int postId) {
+        return interactionMapper.selectPostLikeList(postId);
+    }
+
+    @Override
+    public List<CollectPost> getCollectPostList(int postId) {
+        return interactionMapper.selectPostCollectList(postId);
     }
 }
