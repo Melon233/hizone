@@ -9,9 +9,9 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.fenta.dao.post.Post;
-import com.example.fenta.front.post.ModifyPost;
-import com.example.fenta.front.post.UploadPost;
+import com.example.hizone.dao.post.Post;
+import com.example.hizone.front.post.ModifyPost;
+import com.example.hizone.front.post.UploadPost;
 
 @Mapper
 public interface PostMapper {
@@ -25,7 +25,7 @@ public interface PostMapper {
     @Select("select * from post order by post_time desc limit 50")
     List<Post> selectPush();
 
-    @Options(useGeneratedKeys=true, keyProperty="postId")
+    @Options(useGeneratedKeys = true, keyProperty = "postId")
     @Insert("insert into post(author_id, post_title, post_content) values(#{authorId} , #{postTitle}, #{postContent})")
     void insertPost(UploadPost uploadPost);
 

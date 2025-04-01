@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.feign.InteractionFeignClient;
 import com.example.feign.UserFeignClient;
-import com.example.fenta.dao.interaction.Interaction;
-import com.example.fenta.dao.post.Post;
-import com.example.fenta.front.post.DeletePost;
-import com.example.fenta.front.post.ModifyPost;
-import com.example.fenta.front.post.UploadPost;
-import com.example.fenta.inter.PostId;
-import com.example.fenta.inter.UpdateUserMetadata;
-import com.example.fenta.outer.PostDetail;
+import com.example.hizone.dao.interaction.Interaction;
+import com.example.hizone.dao.post.Post;
+import com.example.hizone.front.post.DeletePost;
+import com.example.hizone.front.post.ModifyPost;
+import com.example.hizone.front.post.UploadPost;
+import com.example.hizone.inter.PostId;
+import com.example.hizone.inter.UpdateUserMetadata;
+import com.example.hizone.outer.PostDetail;
 import com.example.service.CacheService;
 import com.example.service.PostService;
 

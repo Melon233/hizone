@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.feign.PostFeignClient;
-import com.example.fenta.dao.post.Post;
+import com.example.hizone.dao.post.Post;
 import com.example.service.PostSearchService;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;

@@ -3,11 +3,11 @@ package com.example.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.feign.UserFeignClient;
-import com.example.fenta.dao.follow.Follow;
-import com.example.fenta.front.follow.AddFollow;
-import com.example.fenta.front.follow.DeleteFan;
-import com.example.fenta.front.follow.DeleteFollow;
-import com.example.fenta.inter.UpdateUserMetadata;
+import com.example.hizone.dao.follow.Follow;
+import com.example.hizone.front.follow.AddFollow;
+import com.example.hizone.front.follow.DeleteFan;
+import com.example.hizone.front.follow.DeleteFollow;
+import com.example.hizone.inter.UpdateUserMetadata;
 import com.example.service.FollowService;
 
 import java.util.List;
@@ -62,11 +62,11 @@ public class FollowController {
     public String addFollow(@RequestBody AddFollow addFollow) {
         followService.addFollow(addFollow);
         UpdateUserMetadata updateUserMetadata;
-        updateUserMetadata= new UpdateUserMetadata();
+        updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(addFollow.getFollowerId());
         updateUserMetadata.setFollowCount(1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
-        updateUserMetadata= new UpdateUserMetadata();
+        updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(addFollow.getFollowedId());
         updateUserMetadata.setFanCount(1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
@@ -84,11 +84,11 @@ public class FollowController {
     public String deleteFan(@RequestBody DeleteFan deleteFan) {
         followService.deleteFan(deleteFan);
         UpdateUserMetadata updateUserMetadata;
-        updateUserMetadata= new UpdateUserMetadata();
+        updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFan.getFollowerId());
         updateUserMetadata.setFollowCount(-1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
-        updateUserMetadata= new UpdateUserMetadata();
+        updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFan.getFollowedId());
         updateUserMetadata.setFanCount(-1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
@@ -106,11 +106,11 @@ public class FollowController {
     public String updateFollow(@RequestBody DeleteFollow deleteFollow) {
         followService.deleteFollow(deleteFollow);
         UpdateUserMetadata updateUserMetadata;
-        updateUserMetadata= new UpdateUserMetadata();
+        updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFollow.getFollowerId());
         updateUserMetadata.setFollowCount(-1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
-        updateUserMetadata= new UpdateUserMetadata();
+        updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFollow.getFollowedId());
         updateUserMetadata.setFanCount(-1);
         userFeignClient.updateUserMetadata(updateUserMetadata);

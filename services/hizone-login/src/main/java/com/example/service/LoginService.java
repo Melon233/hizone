@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.fenta.front.login.Login;
+import com.example.hizone.front.login.Login;
 
 public interface LoginService {
 

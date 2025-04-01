@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fenta.dao.post.Post;
-import com.example.fenta.dao.user.User;
+import com.example.hizone.dao.post.Post;
+import com.example.hizone.dao.user.User;
 import com.example.service.PostSearchService;
 import com.example.service.UserSearchService;
 
@@ -28,12 +28,12 @@ public class SearchController {
     private PostSearchService postSearchService;
 
     @GetMapping("/searchUser")
-    public List<User> searchUser(@RequestParam String keyword)throws IOException {
+    public List<User> searchUser(@RequestParam String keyword) throws IOException {
         return userSearchService.searchUser(keyword);
     }
 
     @PostMapping("/searchPost")
-    public List<Post> searchPost(@RequestBody String keyword)throws IOException {
+    public List<Post> searchPost(@RequestBody String keyword) throws IOException {
         return postSearchService.searchPost(keyword);
     }
 }

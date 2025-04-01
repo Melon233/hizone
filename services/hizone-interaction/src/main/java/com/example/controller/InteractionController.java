@@ -3,16 +3,16 @@ package com.example.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.feign.UserFeignClient;
-import com.example.fenta.dao.interaction.Interaction;
-import com.example.fenta.front.interaction.CollectPost;
-import com.example.fenta.front.interaction.ForwardPost;
-import com.example.fenta.front.interaction.LikePost;
-import com.example.fenta.inter.PostId;
-import com.example.fenta.inter.UpdateCommentCount;
-import com.example.fenta.inter.UserInteraction;
-import com.example.fenta.inter.UserPost;
-import com.example.fenta.outer.InteractionDetail;
-import com.example.fenta.utility.Utility;
+import com.example.hizone.dao.interaction.Interaction;
+import com.example.hizone.front.interaction.CollectPost;
+import com.example.hizone.front.interaction.ForwardPost;
+import com.example.hizone.front.interaction.LikePost;
+import com.example.hizone.inter.PostId;
+import com.example.hizone.inter.UpdateCommentCount;
+import com.example.hizone.inter.UserInteraction;
+import com.example.hizone.inter.UserPost;
+import com.example.hizone.outer.InteractionDetail;
+import com.example.hizone.utility.Utility;
 import com.example.service.CacheService;
 import com.example.service.InteractionService;
 

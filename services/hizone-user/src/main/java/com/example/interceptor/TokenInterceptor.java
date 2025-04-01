@@ -3,7 +3,7 @@ package com.example.interceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.example.fenta.utility.Utility;
+import com.example.hizone.utility.Utility;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +15,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // String cookie = request.getHeader("Cookie");
         // if (!Utility.validateToken(cookie)) {
-        //     return false;
+        // return false;
         // }
         return true;
     }

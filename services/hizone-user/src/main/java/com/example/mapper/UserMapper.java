@@ -6,11 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.fenta.dao.user.User;
-import com.example.fenta.dao.user.UserMetadata;
-import com.example.fenta.front.user.UpdateUser;
-import com.example.fenta.inter.UpdateUserMetadata;
-import com.example.fenta.outer.UserDetail;
+import com.example.hizone.dao.user.User;
+import com.example.hizone.dao.user.UserMetadata;
+import com.example.hizone.front.user.UpdateUser;
+import com.example.hizone.inter.UpdateUserMetadata;
+import com.example.hizone.outer.UserDetail;
 
 @Mapper
 public interface UserMapper {

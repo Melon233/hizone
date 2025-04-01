@@ -4,12 +4,12 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.example.fenta.dao.interaction.Interaction;
-import com.example.fenta.dao.interaction.PostCollect;
-import com.example.fenta.dao.interaction.PostLike;
-import com.example.fenta.front.interaction.CollectPost;
-import com.example.fenta.front.interaction.LikePost;
-import com.example.fenta.inter.UserPost;
+import com.example.hizone.dao.interaction.Interaction;
+import com.example.hizone.dao.interaction.PostCollect;
+import com.example.hizone.dao.interaction.PostLike;
+import com.example.hizone.front.interaction.CollectPost;
+import com.example.hizone.front.interaction.LikePost;
+import com.example.hizone.inter.UserPost;
 
 @Mapper
 public interface InteractionMapper {

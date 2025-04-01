@@ -5,10 +5,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
-import com.example.fenta.dao.user.User;
+import com.example.hizone.dao.user.User;
 
 @Mapper
 public interface LoginMapper {
+
     @Options(useGeneratedKeys = true, keyProperty = "userId")
     @Insert("INSERT INTO user (nickname, email) VALUES (#{nickname}, #{email})")
     void insertUser(User user);

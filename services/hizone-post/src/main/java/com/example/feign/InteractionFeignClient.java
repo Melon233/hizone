@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.fenta.dao.interaction.Interaction;
-import com.example.fenta.inter.PostId;
+import com.example.hizone.dao.interaction.Interaction;
+import com.example.hizone.inter.PostId;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 

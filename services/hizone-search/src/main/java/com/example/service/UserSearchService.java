@@ -3,7 +3,7 @@ package com.example.service;
 import java.io.IOException;
 import java.util.List;
 
-import com.example.fenta.dao.user.User;
+import com.example.hizone.dao.user.User;
 
 public interface UserSearchService {
 

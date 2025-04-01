@@ -3,7 +3,7 @@ package com.example.component;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.example.fenta.utility.Utility;
+import com.example.hizone.utility.Utility;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

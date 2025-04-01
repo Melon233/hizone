@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.fenta.dao.comment.PostComment;
-import com.example.fenta.dao.comment.PostReply;
+import com.example.hizone.dao.comment.PostComment;
+import com.example.hizone.dao.comment.PostReply;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 

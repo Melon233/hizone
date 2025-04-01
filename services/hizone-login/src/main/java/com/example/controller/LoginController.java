@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fenta.front.login.Login;
-import com.example.fenta.inter.Email;
-import com.example.fenta.utility.Utility;
+import com.example.hizone.front.login.Login;
+import com.example.hizone.inter.Email;
+import com.example.hizone.utility.Utility;
 import com.example.service.LoginService;
 
 import lombok.extern.slf4j.Slf4j;

@@ -2,11 +2,11 @@ package com.example.service;
 
 import java.util.List;
 
-import com.example.fenta.dao.comment.PostComment;
-import com.example.fenta.dao.comment.PostReply;
-import com.example.fenta.front.comment.LikeComment;
-import com.example.fenta.front.comment.LikeReply;
-import com.example.fenta.inter.UpdateReplyCount;
+import com.example.hizone.dao.comment.PostComment;
+import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.front.comment.LikeComment;
+import com.example.hizone.front.comment.LikeReply;
+import com.example.hizone.inter.UpdateReplyCount;
 
 public interface CacheService {
 

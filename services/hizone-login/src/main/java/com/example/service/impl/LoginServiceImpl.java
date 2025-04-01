@@ -12,8 +12,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.component.CheckCodeManager;
-import com.example.fenta.dao.user.User;
-import com.example.fenta.front.login.Login;
+import com.example.hizone.dao.user.User;
+import com.example.hizone.front.login.Login;
 import com.example.mapper.LoginMapper;
 import com.example.service.LoginService;
 

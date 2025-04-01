@@ -5,8 +5,8 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.fenta.front.login.Login;
-import com.example.fenta.inter.CheckCode;
+import com.example.hizone.front.login.Login;
+import com.example.hizone.inter.CheckCode;
 import com.github.benmanes.caffeine.cache.Cache;
 
 @Component
@@ -16,9 +16,9 @@ public class CheckCodeManager {
     private Cache<String, CheckCode> checkCodeCache;
 
     public int generateAndSaveCheckCode(String email) {
-        Random random=new Random();
-        int code=random.nextInt(900000)+100000;
-        CheckCode checkCode=new CheckCode();
+        Random random = new Random();
+        int code = random.nextInt(900000) + 100000;
+        CheckCode checkCode = new CheckCode();
         checkCode.setEmail(email);
         checkCode.setCheckCode(code);
         checkCode.setExpireTime(System.currentTimeMillis() + 1000 * 60 * 10);

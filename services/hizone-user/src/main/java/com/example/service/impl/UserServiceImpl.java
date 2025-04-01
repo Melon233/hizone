@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.fenta.dao.user.User;
-import com.example.fenta.dao.user.UserMetadata;
-import com.example.fenta.front.user.UpdateUser;
-import com.example.fenta.inter.UpdateUserMetadata;
-import com.example.fenta.outer.UserDetail;
+import com.example.hizone.dao.user.User;
+import com.example.hizone.dao.user.UserMetadata;
+import com.example.hizone.front.user.UpdateUser;
+import com.example.hizone.inter.UpdateUserMetadata;
+import com.example.hizone.outer.UserDetail;
 import com.example.mapper.UserMapper;
 import com.example.service.UserService;
 

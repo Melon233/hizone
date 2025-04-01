@@ -3,7 +3,7 @@ package com.example.service;
 import java.io.IOException;
 import java.util.List;
 
-import com.example.fenta.dao.post.Post;
+import com.example.hizone.dao.post.Post;
 
 public interface PostSearchService {
 

@@ -2,10 +2,10 @@ package com.example.service;
 
 import java.util.List;
 
-import com.example.fenta.dao.follow.Follow;
-import com.example.fenta.front.follow.AddFollow;
-import com.example.fenta.front.follow.DeleteFan;
-import com.example.fenta.front.follow.DeleteFollow;
+import com.example.hizone.dao.follow.Follow;
+import com.example.hizone.front.follow.AddFollow;
+import com.example.hizone.front.follow.DeleteFan;
+import com.example.hizone.front.follow.DeleteFollow;
 
 public interface FollowService {
 

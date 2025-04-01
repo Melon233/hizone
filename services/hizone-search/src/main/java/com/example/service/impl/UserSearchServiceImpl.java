@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.feign.UserFeignClient;
-import com.example.fenta.dao.post.Post;
-import com.example.fenta.dao.user.User;
+import com.example.hizone.dao.post.Post;
+import com.example.hizone.dao.user.User;
 import com.example.service.UserSearchService;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;

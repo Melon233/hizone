@@ -1,12 +1,12 @@
 package com.example.service;
 
-import com.example.fenta.dao.interaction.Interaction;
-import com.example.fenta.front.interaction.CollectPost;
-import com.example.fenta.front.interaction.ForwardPost;
-import com.example.fenta.front.interaction.LikePost;
-import com.example.fenta.inter.UserInteraction;
-import com.example.fenta.inter.UserPost;
-import com.example.fenta.outer.InteractionDetail;
+import com.example.hizone.dao.interaction.Interaction;
+import com.example.hizone.front.interaction.CollectPost;
+import com.example.hizone.front.interaction.ForwardPost;
+import com.example.hizone.front.interaction.LikePost;
+import com.example.hizone.inter.UserInteraction;
+import com.example.hizone.inter.UserPost;
+import com.example.hizone.outer.InteractionDetail;
 
 import co.elastic.clients.elasticsearch.security.User;
 

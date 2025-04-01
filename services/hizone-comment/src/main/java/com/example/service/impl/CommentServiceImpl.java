@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.fenta.dao.comment.PostComment;
-import com.example.fenta.dao.comment.PostReply;
-import com.example.fenta.front.comment.CancelLikeComment;
-import com.example.fenta.front.comment.CancelLikeReply;
-import com.example.fenta.front.comment.DeleteComment;
-import com.example.fenta.front.comment.DeleteReply;
-import com.example.fenta.front.comment.LikeComment;
-import com.example.fenta.front.comment.LikeReply;
-import com.example.fenta.front.comment.ReplyComment;
-import com.example.fenta.front.comment.SendComment;
+import com.example.hizone.dao.comment.PostComment;
+import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.front.comment.CancelLikeComment;
+import com.example.hizone.front.comment.CancelLikeReply;
+import com.example.hizone.front.comment.DeleteComment;
+import com.example.hizone.front.comment.DeleteReply;
+import com.example.hizone.front.comment.LikeComment;
+import com.example.hizone.front.comment.LikeReply;
+import com.example.hizone.front.comment.ReplyComment;
+import com.example.hizone.front.comment.SendComment;
 import com.example.mapper.CommentMapper;
 import com.example.service.CommentService;
 

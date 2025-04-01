@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.fenta.dao.post.Post;
-import com.example.fenta.front.post.ModifyPost;
-import com.example.fenta.front.post.UploadPost;
+import com.example.hizone.dao.post.Post;
+import com.example.hizone.front.post.ModifyPost;
+import com.example.hizone.front.post.UploadPost;
 import com.example.mapper.PostMapper;
 import com.example.service.PostService;
 

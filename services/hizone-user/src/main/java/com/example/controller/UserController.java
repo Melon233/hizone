@@ -2,12 +2,12 @@ package com.example.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fenta.dao.user.User;
-import com.example.fenta.dao.user.UserMetadata;
-import com.example.fenta.front.user.UpdateUserAvatar;
-import com.example.fenta.front.user.UpdateUser;
-import com.example.fenta.inter.UpdateUserMetadata;
-import com.example.fenta.outer.UserDetail;
+import com.example.hizone.dao.user.User;
+import com.example.hizone.dao.user.UserMetadata;
+import com.example.hizone.front.user.UpdateUser;
+import com.example.hizone.front.user.UpdateUserAvatar;
+import com.example.hizone.inter.UpdateUserMetadata;
+import com.example.hizone.outer.UserDetail;
 import com.example.service.CacheService;
 import com.example.service.UserService;
 

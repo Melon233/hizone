@@ -8,12 +8,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import com.example.fenta.dao.comment.PostComment;
-import com.example.fenta.dao.comment.PostReply;
-import com.example.fenta.front.comment.LikeComment;
-import com.example.fenta.front.comment.LikeReply;
-import com.example.fenta.inter.UpdateReplyCount;
-import com.example.fenta.utility.RedisUtility;
+import com.example.hizone.dao.comment.PostComment;
+import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.front.comment.LikeComment;
+import com.example.hizone.front.comment.LikeReply;
+import com.example.hizone.inter.UpdateReplyCount;
+import com.example.hizone.utility.RedisUtility;
 import com.example.service.CacheService;
 import com.example.service.CommentService;
 import com.github.benmanes.caffeine.cache.Cache;

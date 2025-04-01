@@ -3,16 +3,14 @@ package com.example.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.fenta.dao.interaction.Interaction;
-import com.example.fenta.front.interaction.CollectPost;
-import com.example.fenta.front.interaction.ForwardPost;
-import com.example.fenta.front.interaction.LikePost;
-import com.example.fenta.inter.UserInteraction;
-import com.example.fenta.inter.UserPost;
+import com.example.hizone.dao.interaction.Interaction;
+import com.example.hizone.front.interaction.CollectPost;
+import com.example.hizone.front.interaction.ForwardPost;
+import com.example.hizone.front.interaction.LikePost;
+import com.example.hizone.inter.UserInteraction;
+import com.example.hizone.inter.UserPost;
 import com.example.mapper.InteractionMapper;
 import com.example.service.InteractionService;
-
-import co.elastic.clients.elasticsearch.security.User;
 
 @Service
 public class InteractionServiceImpl implements InteractionService {
