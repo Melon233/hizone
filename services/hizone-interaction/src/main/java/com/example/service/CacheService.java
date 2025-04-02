@@ -14,4 +14,10 @@ public interface CacheService {
     void loadPostUserInteraction(int postId);
 
     void addLikePost(UserPost userPost);
+
+    void addCollectPost(UserPost userPost);
+
+    void cancelLikePost(UserPost userPost);
+
+    void cancelCollectPost(UserPost userPost);
 }

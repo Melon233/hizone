@@ -4,10 +4,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hizone.dao.user.User;
 import com.example.hizone.dao.user.UserMetadata;
-import com.example.hizone.front.user.UpdateUser;
+import com.example.hizone.front.user.UpdateUserInfo;
 import com.example.hizone.front.user.UpdateUserAvatar;
 import com.example.hizone.inter.UpdateUserMetadata;
 import com.example.hizone.outer.UserDetail;
+import com.example.hizone.outer.UserInfo;
 import com.example.service.CacheService;
 import com.example.service.UserService;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,15 +49,31 @@ public class UserController {
      * @param userId
      * @return
      */
-    @GetMapping("/getUser")
-    public User getUser(@RequestParam("user_id") int userId) {
-        User user = (User) cacheService.getCache("user" + userId);
-        if (user != null) {
-            return user;
+    // @GetMapping("/getUser")
+    // public User getUser(@RequestParam("user_id") int userId) {
+    // User user = (User) cacheService.getCache("user" + userId);
+    // if (user != null) {
+    // return user;
+    // }
+    // user = userService.getUser(userId);
+    // cacheService.setCache("user" + userId, user);
+    // return user;
+    // }
+    @GetMapping("/getUserInfoList")
+    public List<UserInfo> getUserInfoList(@RequestParam("user_id_list") int[] userIdList) {
+        List<UserInfo> userInfoList = new ArrayList<>();
+        for (int userId : userIdList) {
+            UserDetail userDetail = (UserDetail) cacheService.getCache("user" + userId);
+            if (userDetail == null) {
+                userDetail = userService.getUserDetail(userId);
+                cacheService.setCache("user" + userId, userDetail);
+            }
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUserId(userId);
+            userInfo.setNickname(userDetail.getNickname());
+            userInfoList.add(userInfo);
         }
-        user = userService.getUser(userId);
-        cacheService.setCache("user" + userId, user);
-        return user;
+        return userInfoList;
     }
 
     /**
@@ -67,8 +85,12 @@ public class UserController {
      */
     @GetMapping("/getUserDetail")
     public UserDetail getUserDetail(@RequestParam("user_id") int userId) {
-        System.out.println(userId);
-        return userService.getUserDetail(userId);
+        UserDetail userDetail = (UserDetail) cacheService.getCache("user" + userId);
+        if (userDetail == null) {
+            userDetail = userService.getUserDetail(userId);
+            cacheService.setCache("user" + userId, userDetail);
+        }
+        return userDetail;
     }
 
     @GetMapping("/getUserAvatar")
@@ -95,13 +117,13 @@ public class UserController {
     /**
      * 高频高精数据-缓存并总是更新缓存
      * 
-     * @param updateUser
+     * @param updateUserInfo
      * @return
      */
-    @PostMapping("/updateUser")
-    public String updateUser(@RequestBody UpdateUser updateUser) {
-        userService.updateUser(updateUser);
-        cacheService.deleteCache("user" + updateUser.getUserId());
+    @PostMapping("/updateUserInfo")
+    public String updateUserInfo(@RequestBody UpdateUserInfo updateUserInfo) {
+        userService.updateUserInfo(updateUserInfo);
+        cacheService.deleteCache("user" + updateUserInfo.getUserId());
         return "success";
     }
 

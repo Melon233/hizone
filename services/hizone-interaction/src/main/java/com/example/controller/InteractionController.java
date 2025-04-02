@@ -2,8 +2,9 @@ package com.example.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.feign.UserFeignClient;
 import com.example.hizone.dao.interaction.Interaction;
+import com.example.hizone.front.interaction.CancelCollectPost;
+import com.example.hizone.front.interaction.CancelLikePost;
 import com.example.hizone.front.interaction.CollectPost;
 import com.example.hizone.front.interaction.ForwardPost;
 import com.example.hizone.front.interaction.LikePost;
@@ -16,7 +17,8 @@ import com.example.hizone.utility.Utility;
 import com.example.service.CacheService;
 import com.example.service.InteractionService;
 
-import co.elastic.clients.elasticsearch.security.User;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -31,9 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin
 @RestController
 public class InteractionController {
-
-    @Autowired
-    private UserFeignClient userFeignClient;
 
     @Autowired
     private InteractionService interactionService;
@@ -51,19 +50,25 @@ public class InteractionController {
      * @return
      */
     @GetMapping("/getInteractionDetail")
-    public InteractionDetail getInteractionDetail(@RequestHeader(value = "Cookie") String token, @RequestParam("post_id") int postId) {
+    public InteractionDetail getInteractionDetail(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") int postId) {
         // System.out.println("getInteraction" + postId);
-        int userId = Utility.extractUserId(token);
-        // 抓取单个用户帖子交互缓存
-        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(postId, userId));
-        // System.out.println(userInteraction);
-        // 未命中
-        if (userInteraction == null) {
-            // 从数据库抓取
-            userInteraction = interactionService.getUserInteraction(new UserPost(postId, userId));
-            System.out.println(userInteraction);
-            // 缓存帖子所有交互
-            cacheService.loadPostUserInteraction(postId);
+        UserInteraction userInteraction = new UserInteraction();
+        if (token != null) {
+            int userId = Utility.extractUserId(token);
+            // 抓取单个用户帖子交互缓存
+            userInteraction = cacheService.getUserInteraction(new UserPost(postId, userId));
+            // System.out.println(userInteraction);
+            // 未命中
+            if (userInteraction == null) {
+                // 从数据库抓取
+                userInteraction = interactionService.getUserInteraction(new UserPost(postId, userId));
+                System.out.println(userInteraction);
+                // 缓存帖子所有交互
+                cacheService.loadPostUserInteraction(postId);
+            }
+        } else {
+            userInteraction.setLiked(false);
+            userInteraction.setCollected(false);
         }
         // 抓取单个帖子交互元数据缓存
         Interaction interaction = (Interaction) cacheService.getCache("interaction" + postId);
@@ -83,6 +88,49 @@ public class InteractionController {
         interactionDetail.setLiked(userInteraction.isLiked());
         interactionDetail.setCollected(userInteraction.isCollected());
         return interactionDetail;
+    }
+
+    @GetMapping("/getInteractionDetailList")
+    public List<InteractionDetail> getInteractionDetailList(@RequestHeader("Token") String token, @RequestParam("post_id_list") int[] postIdList) {
+        List<InteractionDetail> interactionDetailList = new ArrayList<>();
+        int userId = Utility.extractUserId(token);
+        for (int postId : postIdList) {
+            // 抓取单个帖子交互元数据缓存
+            Interaction interaction = (Interaction) cacheService.getCache("interaction" + postId);
+            // 未命中
+            if (interaction == null) {
+                // 从数据库抓取
+                interaction = interactionService.getInteraction(postId);
+                // System.out.println("getInteraction by db" + interaction);
+                // 加入缓存
+                cacheService.setCache("interaction" + postId, interaction);
+            }
+            UserInteraction userInteraction = new UserInteraction();
+            if (token != null) {
+                // 抓取单个用户帖子交互缓存
+                userInteraction = cacheService.getUserInteraction(new UserPost(postId, userId));
+                // System.out.println(userInteraction);
+                // 未命中
+                if (userInteraction == null) {
+                    // 从数据库抓取
+                    userInteraction = interactionService.getUserInteraction(new UserPost(postId, userId));
+                    // 缓存帖子所有交互
+                    cacheService.loadPostUserInteraction(postId);
+                }
+            } else {
+                userInteraction.setLiked(false);
+                userInteraction.setCollected(false);
+            }
+            InteractionDetail interactionDetail = new InteractionDetail();
+            interactionDetail.setPostId(interaction.getPostId());
+            interactionDetail.setLikeCount(interaction.getLikeCount());
+            interactionDetail.setCollectCount(interaction.getCollectCount());
+            interactionDetail.setCommentCount(interaction.getCommentCount());
+            interactionDetail.setLiked(userInteraction.isLiked());
+            interactionDetail.setCollected(userInteraction.isCollected());
+            interactionDetailList.add(interactionDetail);
+        }
+        return interactionDetailList;
     }
 
     /**
@@ -122,17 +170,65 @@ public class InteractionController {
      */
     @PostMapping("/collectPost")
     public String collectPost(@RequestBody CollectPost collectPost) {
+        // 抓取用户单个帖子收藏记录缓存
+        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(collectPost.getPostId(), collectPost.getSenderId()));
+        System.out.println(userInteraction);
+        // if (userInteraction == null) {
         interactionService.addCollectPost(collectPost);
+        cacheService.addCollectPost(new UserPost(collectPost.getPostId(), collectPost.getSenderId()));
+        // 抓取单个帖子交互元数据缓存
         Interaction interaction = (Interaction) cacheService.getCache("interaction" + collectPost.getPostId());
+        // 若非空
         if (interaction != null) {
-            interaction.setCollectCount(interaction.getCollectCount() + 1);
+            // 更新缓存
+            interaction.setCollectCount((interaction.getCollectCount() + 1));
             cacheService.setCache("interaction" + collectPost.getPostId(), interaction);
-            return "success";
         }
-        interaction = interactionService.getInteraction(collectPost.getPostId());
-        interaction.setCollectCount(interaction.getCollectCount() + 1);
-        cacheService.setCache("interaction" + collectPost.getPostId(), interaction);
         return "success";
+        // }
+        // return "error";
+    }
+
+    @PostMapping("/cancelLikePost")
+    public String cancelLikePost(@RequestBody CancelLikePost cancelLikePost) {
+        // 抓取用户单个帖子点赞记录缓存
+        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(cancelLikePost.getPostId(), cancelLikePost.getSenderId()));
+        System.out.println(userInteraction);
+        // if (userInteraction == null) {
+        interactionService.cancelLikePost(cancelLikePost);
+        cacheService.cancelLikePost(new UserPost(cancelLikePost.getPostId(), cancelLikePost.getSenderId()));
+        // 抓取单个帖子交互元数据缓存
+        Interaction interaction = (Interaction) cacheService.getCache("interaction" + cancelLikePost.getPostId());
+        // 若非空
+        if (interaction != null) {
+            // 更新缓存
+            interaction.setLikeCount(interaction.getLikeCount() - 1);
+            cacheService.setCache("interaction" + cancelLikePost.getPostId(), interaction);
+        }
+        return "success";
+        // }
+        // return "error";
+    }
+
+    @PostMapping("/cancelCollectPost")
+    public String cancelCollectPost(@RequestBody CancelCollectPost cancelCollectPost) {
+        // 抓取用户单个帖子点赞记录缓存
+        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(cancelCollectPost.getPostId(), cancelCollectPost.getSenderId()));
+        System.out.println(userInteraction);
+        // if (userInteraction == null) {
+        interactionService.cancelCollectPost(cancelCollectPost);
+        cacheService.cancelCollectPost(new UserPost(cancelCollectPost.getPostId(), cancelCollectPost.getSenderId()));
+        // 抓取单个帖子交互元数据缓存
+        Interaction interaction = (Interaction) cacheService.getCache("interaction" + cancelCollectPost.getPostId());
+        // 若非空
+        if (interaction != null) {
+            // 更新缓存
+            interaction.setCollectCount(interaction.getCollectCount() - 1);
+            cacheService.setCache("interaction" + cancelCollectPost.getPostId(), interaction);
+        }
+        return "success";
+        // }
+        // return "error";
     }
 
     @PostMapping("/updateCommentCount")

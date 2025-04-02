@@ -3,6 +3,8 @@ package com.example.service;
 import java.util.List;
 
 import com.example.hizone.dao.interaction.Interaction;
+import com.example.hizone.front.interaction.CancelCollectPost;
+import com.example.hizone.front.interaction.CancelLikePost;
 import com.example.hizone.front.interaction.CollectPost;
 import com.example.hizone.front.interaction.ForwardPost;
 import com.example.hizone.front.interaction.LikePost;
@@ -26,4 +28,8 @@ public interface InteractionService {
     List<LikePost> getLikePostList(int postId);
 
     List<CollectPost> getCollectPostList(int postId);
+
+    void cancelLikePost(CancelLikePost cancelLikePost);
+
+    void cancelCollectPost(CancelCollectPost cancelCollectPost);
 }

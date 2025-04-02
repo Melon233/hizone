@@ -3,7 +3,7 @@ package com.example.hizone.front.user;
 import lombok.Data;
 
 @Data
-public class UpdateUser {
+public class UpdateUserInfo {
 
     private int userId;
 

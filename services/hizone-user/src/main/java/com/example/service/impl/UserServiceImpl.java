@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.hizone.dao.user.User;
 import com.example.hizone.dao.user.UserMetadata;
-import com.example.hizone.front.user.UpdateUser;
+import com.example.hizone.front.user.UpdateUserInfo;
 import com.example.hizone.inter.UpdateUserMetadata;
 import com.example.hizone.outer.UserDetail;
 import com.example.mapper.UserMapper;
@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public void updateUser(UpdateUser updateUser) {
-        userMapper.updateUser(updateUser);
+    public void updateUserInfo(UpdateUserInfo updateUserInfo) {
+        userMapper.updateUserInfo(updateUserInfo);
     }
 
     @Override

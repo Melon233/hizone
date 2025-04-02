@@ -50,8 +50,8 @@ mybatis:
 server:
   port: 8083
 
-logging:
-  level:
-    root: INFO
-  file:
-    name: services\fenta-interaction\src\main\resources\logs\application.log
+# logging:
+#   level:
+#     root: INFO
+#   file:
+#     name: services\fenta-interaction\src\main\resources\logs\application.log

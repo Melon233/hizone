@@ -1,26 +1,18 @@
 package com.example.service.impl;
 
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.example.hizone.dao.comment.PostComment;
 import com.example.hizone.front.interaction.CollectPost;
 import com.example.hizone.front.interaction.LikePost;
 import com.example.hizone.inter.UserInteraction;
 import com.example.hizone.inter.UserPost;
-import com.example.hizone.utility.RedisUtility;
 import com.example.service.CacheService;
 import com.example.service.InteractionService;
 import com.github.benmanes.caffeine.cache.Cache;
-
-import co.elastic.clients.elasticsearch._types.query_dsl.Like;
-import co.elastic.clients.elasticsearch.security.User;
 
 @Service
 public class CacheServiceImpl implements CacheService {
@@ -30,12 +22,10 @@ public class CacheServiceImpl implements CacheService {
 
     @Autowired
     private Cache<String, Object> caffeineCache;
-
-    @Autowired
-    private Cache<String, Set<LikePost>> caffeineCacheLikePostSet;
-
-    @Autowired
-    private Cache<String, Set<CollectPost>> caffeineCacheCollectPostSet;
+    // @Autowired
+    // private Cache<String, Set<LikePost>> caffeineCacheLikePostSet;
+    // @Autowired
+    // private Cache<String, Set<CollectPost>> caffeineCacheCollectPostSet;
 
     @Autowired
     private InteractionService interactionService;
@@ -73,6 +63,7 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public UserInteraction getUserInteraction(UserPost userPost) {
+        // 用户交互数据不做caffeine缓存，直接从redis中获取
         UserInteraction userInteraction = new UserInteraction();
         // Set<LikePost> likePostSet = caffeineCacheLikePostSet.getIfPresent("post_like");
         // Set<CollectPost> collectPostSet = caffeineCacheCollectPostSet.getIfPresent("post_collect");
@@ -111,5 +102,20 @@ public class CacheServiceImpl implements CacheService {
     @Override
     public void addLikePost(UserPost userPost) {
         redisTemplate.opsForSet().add("post_like" + userPost.getPostId(), new LikePost(userPost.getPostId(), userPost.getUserId()));
+    }
+
+    @Override
+    public void addCollectPost(UserPost userPost) {
+        redisTemplate.opsForSet().add("post_collect" + userPost.getPostId(), new CollectPost(userPost.getPostId(), userPost.getUserId()));
+    }
+
+    @Override
+    public void cancelLikePost(UserPost userPost) {
+        redisTemplate.opsForSet().remove("post_like" + userPost.getPostId(), new LikePost(userPost.getPostId(), userPost.getUserId()));
+    }
+
+    @Override
+    public void cancelCollectPost(UserPost userPost) {
+        redisTemplate.opsForSet().add("post_collect" + userPost.getPostId(), new CollectPost(userPost.getPostId(), userPost.getUserId()));
     }
 }

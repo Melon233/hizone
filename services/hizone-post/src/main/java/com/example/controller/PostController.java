@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.feign.InteractionFeignClient;
 import com.example.feign.UserFeignClient;
-import com.example.hizone.dao.interaction.Interaction;
 import com.example.hizone.dao.post.Post;
 import com.example.hizone.front.post.DeletePost;
 import com.example.hizone.front.post.ModifyPost;
@@ -19,6 +20,7 @@ import com.example.hizone.inter.PostId;
 import com.example.hizone.inter.UpdateUserMetadata;
 import com.example.hizone.outer.InteractionDetail;
 import com.example.hizone.outer.PostDetail;
+import com.example.hizone.outer.UserInfo;
 import com.example.service.CacheService;
 import com.example.service.PostService;
 
@@ -51,14 +53,23 @@ class PostController {
      * @return
      */
     @GetMapping("/getPost")
-    public Post getPost(@RequestParam("post_id") int postId) {
-        Post post = (Post) cacheService.getCache("post" + postId);
-        if (post != null) {
-            return post;
-        }
-        post = postService.getPost(postId);
-        cacheService.setCache("post" + postId, post);
-        return post;
+    public PostDetail getPost(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") int postId) {
+        Post post = postService.getPost(postId);
+        UserInfo userInfo = userFeignClient.getUserInfoList(new int[] { post.getAuthorId() }).get(0);
+        InteractionDetail interactionDetail = interactionFeignClient.getInteractionDetailList(token, new int[] { postId }).get(0);
+        PostDetail postDetail = new PostDetail();
+        postDetail.setPostId(post.getPostId());
+        postDetail.setAuthorId(post.getAuthorId());
+        postDetail.setAuthorName(userInfo.getNickname());
+        postDetail.setPostTitle(post.getPostTitle());
+        postDetail.setPostContent(post.getPostContent());
+        postDetail.setLikeCount(interactionDetail.getLikeCount());
+        postDetail.setCollectCount(interactionDetail.getCollectCount());
+        postDetail.setCommentCount(interactionDetail.getCommentCount());
+        postDetail.setPostTime(post.getPostTime());
+        postDetail.setLiked(interactionDetail.isLiked());
+        postDetail.setCollected(interactionDetail.isCollected());
+        return postDetail;
     }
 
     /**
@@ -81,24 +92,24 @@ class PostController {
      * @return
      */
     @GetMapping("/getPush")
-    public List<PostDetail> getPush(@RequestHeader("Token") String token) {
+    public List<PostDetail> getPush(@RequestHeader(value = "Token", required = false) String token) {
         List<Post> pushList = postService.getPush();
+        List<UserInfo> userInfoList = userFeignClient.getUserInfoList(pushList.stream().mapToInt(Post::getAuthorId).toArray());
+        List<InteractionDetail> interactionDetailList = interactionFeignClient.getInteractionDetailList(token, pushList.stream().mapToInt(Post::getPostId).toArray());
         List<PostDetail> postDetailList = new ArrayList<>();
-        for (Post post : pushList) {
-            InteractionDetail interactionDetail = interactionFeignClient.getInteractionDetail(token, post.getPostId());
+        for (int i = 0; i < pushList.size(); i++) {
             PostDetail postDetail = new PostDetail();
-            System.out.println(interactionDetail);
-            postDetail.setPostId(post.getPostId());
-            postDetail.setAuthorId(post.getAuthorId());
-            postDetail.setAuthorName(post.getAuthorName());
-            postDetail.setPostTitle(post.getPostTitle());
-            postDetail.setPostContent(post.getPostContent());
-            postDetail.setLikeCount(interactionDetail.getLikeCount());
-            postDetail.setCollectCount(interactionDetail.getCollectCount());
-            postDetail.setCommentCount(interactionDetail.getCommentCount());
-            postDetail.setPostTime(post.getPostTime());
-            postDetail.setLiked(interactionDetail.isLiked());
-            postDetail.setCollected(interactionDetail.isCollected());
+            postDetail.setPostId(pushList.get(i).getPostId());
+            postDetail.setAuthorId(pushList.get(i).getAuthorId());
+            postDetail.setAuthorName(userInfoList.get(i).getNickname());
+            postDetail.setPostTitle(pushList.get(i).getPostTitle());
+            postDetail.setPostContent(pushList.get(i).getPostContent());
+            postDetail.setLikeCount(interactionDetailList.get(i).getLikeCount());
+            postDetail.setCollectCount(interactionDetailList.get(i).getCollectCount());
+            postDetail.setCommentCount(interactionDetailList.get(i).getCommentCount());
+            postDetail.setPostTime(pushList.get(i).getPostTime());
+            postDetail.setLiked(interactionDetailList.get(i).isLiked());
+            postDetail.setCollected(interactionDetailList.get(i).isCollected());
             postDetailList.add(postDetail);
         }
         return postDetailList;

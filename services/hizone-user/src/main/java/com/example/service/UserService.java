@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.hizone.dao.user.User;
 import com.example.hizone.dao.user.UserMetadata;
-import com.example.hizone.front.user.UpdateUser;
+import com.example.hizone.front.user.UpdateUserInfo;
 import com.example.hizone.inter.UpdateUserMetadata;
 import com.example.hizone.outer.UserDetail;
 
@@ -18,7 +18,7 @@ public interface UserService {
 
     List<User> getAllUser();
 
-    void updateUser(UpdateUser updateUser);
+    void updateUserInfo(UpdateUserInfo updateUser);
 
     void updateUserMetadata(UpdateUserMetadata updateUserMetadata);
 }

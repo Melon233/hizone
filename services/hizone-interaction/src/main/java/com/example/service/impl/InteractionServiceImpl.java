@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hizone.dao.interaction.Interaction;
+import com.example.hizone.front.interaction.CancelCollectPost;
+import com.example.hizone.front.interaction.CancelLikePost;
 import com.example.hizone.front.interaction.CollectPost;
 import com.example.hizone.front.interaction.ForwardPost;
 import com.example.hizone.front.interaction.LikePost;
@@ -23,7 +25,7 @@ public class InteractionServiceImpl implements InteractionService {
     @Override
     public void addLikePost(LikePost postLike) {
         interactionMapper.insertPostLike(postLike);
-        interactionMapper.updateInteractionLikeCount(postLike.getPostId(), 1);
+        // interactionMapper.updateInteractionLikeCount(postLike.getPostId(), 1);
     }
 
     @Override
@@ -72,5 +74,15 @@ public class InteractionServiceImpl implements InteractionService {
     @Override
     public List<CollectPost> getCollectPostList(int postId) {
         return interactionMapper.selectPostCollectList(postId);
+    }
+
+    @Override
+    public void cancelLikePost(CancelLikePost cancelLikePost) {
+        interactionMapper.deletePostLike(cancelLikePost);
+    }
+
+    @Override
+    public void cancelCollectPost(CancelCollectPost cancelCollectPost) {
+        interactionMapper.deletePostCollect(cancelCollectPost);
     }
 }

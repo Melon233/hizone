@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.example.hizone.dao.user.User;
 import com.example.hizone.dao.user.UserMetadata;
-import com.example.hizone.front.user.UpdateUser;
+import com.example.hizone.front.user.UpdateUserInfo;
 import com.example.hizone.inter.UpdateUserMetadata;
 import com.example.hizone.outer.UserDetail;
 
@@ -28,7 +28,7 @@ public interface UserMapper {
     List<User> getAllUserList();
 
     @Update("UPDATE user SET nickname = #{nickname} WHERE user_id = #{userId}")
-    void updateUser(UpdateUser updateUser);
+    void updateUserInfo(UpdateUserInfo updateUserInfo);
 
     @Update("UPDATE user_metadata SET fan_count = fan_count + #{fanCount}, follow_count = follow_count + #{followCount}, collect_count = collect_count + #{collectCount}, post_count = post_count + #{postCount}, liked_count = liked_count + #{likedCount} WHERE user_id = #{userId}")
     void updateUserMetadata(UpdateUserMetadata updateUserMetadata);

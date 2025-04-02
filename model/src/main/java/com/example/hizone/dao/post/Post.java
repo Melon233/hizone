@@ -11,8 +11,6 @@ public class Post {
 
     private int authorId;
 
-    private String authorName;
-
     private String postTitle;
 
     private String postContent;

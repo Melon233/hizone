@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -10,6 +11,8 @@ import org.apache.ibatis.annotations.Update;
 import com.example.hizone.dao.interaction.Interaction;
 import com.example.hizone.dao.interaction.PostCollect;
 import com.example.hizone.dao.interaction.PostLike;
+import com.example.hizone.front.interaction.CancelCollectPost;
+import com.example.hizone.front.interaction.CancelLikePost;
 import com.example.hizone.front.interaction.CollectPost;
 import com.example.hizone.front.interaction.LikePost;
 import com.example.hizone.inter.UserPost;
@@ -43,4 +46,10 @@ public interface InteractionMapper {
 
     @Update("UPDATE post_interaction SET like_count = like_count + #{increment} WHERE post_id = #{postId}")
     void updateInteractionLikeCount(int postId, int increment);
+
+    @Delete("DELETE FROM post_like WHERE post_id = #{postId} AND sender_id = #{senderId}")
+    void deletePostLike(CancelLikePost cancelLikePost);
+
+    @Delete("DELETE FROM post_collect WHERE post_id = #{postId} AND sender_id = #{senderId}")
+    void deletePostCollect(CancelCollectPost cancelCollectPost);
 }
