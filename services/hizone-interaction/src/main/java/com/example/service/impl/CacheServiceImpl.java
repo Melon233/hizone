@@ -93,8 +93,12 @@ public class CacheServiceImpl implements CacheService {
         List<CollectPost> collectPostList = interactionService.getCollectPostList(postId);
         // Set<LikePost> likePostSet = new HashSet<>(likePostList);
         // Set<CollectPost> collectPostSet = new HashSet<>(collectPostList);
-        redisTemplate.opsForSet().add("post_like" + postId, likePostList);
-        redisTemplate.opsForSet().add("post_collect" + postId, collectPostList);
+        if (likePostList.size() > 0) {
+            redisTemplate.opsForSet().add("post_like" + postId, likePostList.toArray());
+        }
+        if (collectPostList.size() > 0) {
+            redisTemplate.opsForSet().add("post_collect" + postId, collectPostList.toArray());
+        }
         // caffeineCacheLikePostSet.put("post_like", likePostSet);
         // caffeineCacheCollectPostSet.put("post_collect", collectPostSet);
     }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 import com.example.hizone.dao.comment.PostComment;
 import com.example.hizone.dao.comment.PostReply;
@@ -18,6 +19,7 @@ import com.example.service.CacheService;
 import com.example.service.CommentService;
 import com.github.benmanes.caffeine.cache.Cache;
 
+@Service
 public class CacheServiceImpl implements CacheService {
 
     @Autowired

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import com.example.hizone.inter.UpdateCommentCount;
 import com.example.service.CacheService;
 import com.example.service.CommentService;
 
+@CrossOrigin
 @RestController
 public class CommentController {
 
@@ -78,8 +80,9 @@ public class CommentController {
      */
     @PostMapping("/sendComment")
     public String sendComment(@RequestBody SendComment sendComment) {
+        System.out.println("sendComment" + sendComment.toString());
         // 设置时间
-        sendComment.setCommentTime(LocalDateTime.now());
+        sendComment.setCommentTime(LocalDateTime.now().toString());
         // 添加评论到数据库
         commentService.addComment(sendComment);
         // 更新交互元数据缓存
@@ -91,7 +94,7 @@ public class CommentController {
         PostComment comment = new PostComment();
         comment.setCommentContent(sendComment.getCommentContent());
         comment.setCommentId(sendComment.getCommentId());
-        comment.setCommentTime(sendComment.getCommentTime());
+        comment.setCommentTime(sendComment.getCommentTime().toString());
         comment.setPostId(sendComment.getPostId());
         comment.setSenderId(sendComment.getSenderId());
         cacheService.addComment("comment" + sendComment.getPostId(), comment);

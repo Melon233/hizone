@@ -3,6 +3,7 @@ package com.example.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.hizone.dao.comment.PostComment;
 import com.example.hizone.dao.comment.PostReply;
@@ -17,6 +18,7 @@ import com.example.hizone.front.comment.SendComment;
 import com.example.mapper.CommentMapper;
 import com.example.service.CommentService;
 
+@Service
 public class CommentServiceImpl implements CommentService {
 
     @Autowired

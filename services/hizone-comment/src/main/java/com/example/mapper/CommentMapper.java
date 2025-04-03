@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -19,9 +20,10 @@ import com.example.hizone.front.comment.LikeReply;
 import com.example.hizone.front.comment.ReplyComment;
 import com.example.hizone.front.comment.SendComment;
 
+@Mapper
 public interface CommentMapper {
 
-    @Insert("INSERT INTO post_comment (post_id, sender_id, comment_content, parent_comment_id, comment_time) VALUES (#{postId}, #{senderId}, #{commentContent}, #{parentCommentId}, #{commentTime})")
+    @Insert("INSERT INTO post_comment (post_id, sender_id, comment_content, comment_time) VALUES (#{postId}, #{senderId}, #{commentContent}, #{commentTime})")
     @Options(useGeneratedKeys = true, keyProperty = "commentId", keyColumn = "comment_id")
     void insertComment(SendComment sendComment);
 

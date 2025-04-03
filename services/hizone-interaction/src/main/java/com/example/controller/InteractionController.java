@@ -91,9 +91,14 @@ public class InteractionController {
     }
 
     @GetMapping("/getInteractionDetailList")
-    public List<InteractionDetail> getInteractionDetailList(@RequestHeader("Token") String token, @RequestParam("post_id_list") int[] postIdList) {
+    public List<InteractionDetail> getInteractionDetailList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id_list") int[] postIdList) {
         List<InteractionDetail> interactionDetailList = new ArrayList<>();
-        int userId = Utility.extractUserId(token);
+        int userId;
+        if (token != null) {
+            userId = Utility.extractUserId(token);
+        } else {
+            userId = -1;
+        }
         for (int postId : postIdList) {
             // 抓取单个帖子交互元数据缓存
             Interaction interaction = (Interaction) cacheService.getCache("interaction" + postId);
@@ -232,7 +237,8 @@ public class InteractionController {
     }
 
     @PostMapping("/updateCommentCount")
-    public String updateCommentCount(UpdateCommentCount updateCommentCount) {
+    public String updateCommentCount(@RequestBody UpdateCommentCount updateCommentCount) {
+        System.out.println(updateCommentCount.toString());
         Interaction interaction = (Interaction) cacheService.getCache("interaction" + updateCommentCount.getPostId());
         interaction.setCommentCount(interaction.getCommentCount() + updateCommentCount.getCommentCount());
         cacheService.setCache("interaction" + updateCommentCount.getPostId(), interaction);

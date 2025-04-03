@@ -19,5 +19,5 @@ public class PostComment {
 
     private int commentReplyCount;
 
-    private LocalDateTime commentTime;
+    private String commentTime;
 }
