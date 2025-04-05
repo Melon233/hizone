@@ -6,16 +6,14 @@ import com.example.hizone.dao.interaction.Interaction;
 import com.example.hizone.front.interaction.CancelCollectPost;
 import com.example.hizone.front.interaction.CancelLikePost;
 import com.example.hizone.front.interaction.CollectPost;
-import com.example.hizone.front.interaction.ForwardPost;
 import com.example.hizone.front.interaction.LikePost;
+import com.example.hizone.inter.UpdateCommentCount;
 import com.example.hizone.inter.UserInteraction;
 import com.example.hizone.inter.UserPost;
 
 public interface InteractionService {
 
     void addLikePost(LikePost postLike);
-
-    void forwardPost(ForwardPost forwardPost);
 
     void addCollectPost(CollectPost collectPost);
 
@@ -32,4 +30,10 @@ public interface InteractionService {
     void cancelLikePost(CancelLikePost cancelLikePost);
 
     void cancelCollectPost(CancelCollectPost cancelCollectPost);
+
+    void updatePostLikeCount(int postId, int increment);
+
+    void updatePostCollectCount(int postId, int increment);
+
+    void updateCommentCount(UpdateCommentCount updateCommentCount);
 }

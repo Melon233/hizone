@@ -6,7 +6,6 @@ import com.example.hizone.dao.interaction.Interaction;
 import com.example.hizone.front.interaction.CancelCollectPost;
 import com.example.hizone.front.interaction.CancelLikePost;
 import com.example.hizone.front.interaction.CollectPost;
-import com.example.hizone.front.interaction.ForwardPost;
 import com.example.hizone.front.interaction.LikePost;
 import com.example.hizone.inter.PostId;
 import com.example.hizone.inter.UpdateCommentCount;
@@ -161,6 +160,8 @@ public class InteractionController {
             interaction.setLikeCount(interaction.getLikeCount() + 1);
             cacheService.setCache("interaction" + likePost.getPostId(), interaction);
         }
+        // 异步更新数据库
+        interactionService.updatePostLikeCount(likePost.getPostId(), 1);
         return "success";
         // }
         // return "error";
@@ -189,6 +190,8 @@ public class InteractionController {
             interaction.setCollectCount((interaction.getCollectCount() + 1));
             cacheService.setCache("interaction" + collectPost.getPostId(), interaction);
         }
+        // 异步更新数据库
+        interactionService.updatePostCollectCount(collectPost.getPostId(), 1);
         return "success";
         // }
         // return "error";
@@ -210,6 +213,8 @@ public class InteractionController {
             interaction.setLikeCount(interaction.getLikeCount() - 1);
             cacheService.setCache("interaction" + cancelLikePost.getPostId(), interaction);
         }
+        // 异步更新数据库
+        interactionService.updatePostLikeCount(cancelLikePost.getPostId(), 1);
         return "success";
         // }
         // return "error";
@@ -231,6 +236,8 @@ public class InteractionController {
             interaction.setCollectCount(interaction.getCollectCount() - 1);
             cacheService.setCache("interaction" + cancelCollectPost.getPostId(), interaction);
         }
+        // 异步更新数据库
+        interactionService.updatePostCollectCount(cancelCollectPost.getPostId(), -1);
         return "success";
         // }
         // return "error";
@@ -238,10 +245,10 @@ public class InteractionController {
 
     @PostMapping("/updateCommentCount")
     public String updateCommentCount(@RequestBody UpdateCommentCount updateCommentCount) {
-        System.out.println(updateCommentCount.toString());
         Interaction interaction = (Interaction) cacheService.getCache("interaction" + updateCommentCount.getPostId());
-        interaction.setCommentCount(interaction.getCommentCount() + updateCommentCount.getCommentCount());
+        interaction.setCommentCount(interaction.getCommentCount() + updateCommentCount.getIncrement());
         cacheService.setCache("interaction" + updateCommentCount.getPostId(), interaction);
+        interactionService.updateCommentCount(updateCommentCount);
         return "success";
     }
 
@@ -249,12 +256,6 @@ public class InteractionController {
     public String initInteraction(@RequestBody PostId postId) {
         System.out.println("initInteraction" + postId.getPostId());
         interactionService.initInteraction(postId.getPostId());
-        return "success";
-    }
-
-    @PostMapping("/forwardPost")
-    public String forwardPost(@RequestBody ForwardPost forwardPost) {
-        interactionService.forwardPost(forwardPost);
         return "success";
     }
 }

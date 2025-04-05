@@ -2,9 +2,6 @@ package com.example.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -93,6 +90,7 @@ class PostController {
      */
     @GetMapping("/getPush")
     public List<PostDetail> getPush(@RequestHeader(value = "Token", required = false) String token) {
+        System.out.println("getPush");
         List<Post> pushList = postService.getPush();
         List<UserInfo> userInfoList = userFeignClient.getUserInfoList(pushList.stream().mapToInt(Post::getAuthorId).toArray());
         List<InteractionDetail> interactionDetailList = interactionFeignClient.getInteractionDetailList(token, pushList.stream().mapToInt(Post::getPostId).toArray());

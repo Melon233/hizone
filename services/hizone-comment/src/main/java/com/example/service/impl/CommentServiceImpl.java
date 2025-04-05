@@ -48,6 +48,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void addLikeComment(LikeComment likeComment) {
+        System.out.println(likeComment.toString());
         commentMapper.insertCommentLike(likeComment);
     }
 

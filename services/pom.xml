@@ -16,6 +16,7 @@
         <module>hizone-login</module>
         <module>hizone-search</module>
         <module>hizone-comment</module>
+        <module>hizone-mq</module>
     </modules>
     <groupId>com.example</groupId>
     <artifactId>services</artifactId>

@@ -120,6 +120,6 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public void cancelCollectPost(UserPost userPost) {
-        redisTemplate.opsForSet().add("post_collect" + userPost.getPostId(), new CollectPost(userPost.getPostId(), userPost.getUserId()));
+        redisTemplate.opsForSet().remove("post_collect" + userPost.getPostId(), new CollectPost(userPost.getPostId(), userPost.getUserId()));
     }
 }

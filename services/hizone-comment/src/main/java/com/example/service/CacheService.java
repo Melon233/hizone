@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.example.hizone.dao.comment.PostComment;
 import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.front.comment.CancelLikeComment;
+import com.example.hizone.front.comment.CancelLikeReply;
 import com.example.hizone.front.comment.LikeComment;
 import com.example.hizone.front.comment.LikeReply;
 import com.example.hizone.inter.UpdateReplyCount;
@@ -14,31 +16,31 @@ public interface CacheService {
 
     Object getCache(String key);
 
-    List<PostComment> getCommentShardByScore(String key, int start, int end);
+    List<PostComment> getCommentShardByScore(int postId, int start, int end);
 
     List<PostComment> getCommentShardByTime(String key, int start, int end);
 
-    List<PostReply> getReplyShardByScore(String key, int start, int end);
+    List<PostReply> getReplyShardByScore(int parentCommentId, int start, int end);
 
-    void addComment(String key, PostComment comment);
+    void addComment(PostComment postComment);
 
-    void addReply(String key, PostReply comment);
+    void addReply(PostReply postReply);
 
     void updateReplyCount(String key, UpdateReplyCount updateReplyCount);
 
-    void likeComment(String key, LikeComment likeComment);
+    void likeComment(LikeComment likeComment);
 
-    void likeReply(String key, LikeReply likeReply);
+    void likeReply(LikeReply likeReply);
 
-    void appendCommentShard(String key, List<PostComment> commentList);
+    void appendCommentShard(int postId, List<PostComment> commentList);
 
-    void appendReplyShard(String string, List<PostReply> postReplyList);
+    void appendReplyShard(int postId, List<PostReply> postReplyList);
 
     void deleteComment(String key);
 
     void deleteReply(String key);
 
-    void cancelLikeComment(String key, int id);
+    void cancelLikeComment(CancelLikeComment cancelLikeComment);
 
-    void cancelLikeReply(String key, int id);
+    void cancelLikeReply(CancelLikeReply cancelLikeReply);
 }

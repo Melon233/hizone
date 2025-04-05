@@ -15,6 +15,7 @@ import com.example.hizone.front.interaction.CancelCollectPost;
 import com.example.hizone.front.interaction.CancelLikePost;
 import com.example.hizone.front.interaction.CollectPost;
 import com.example.hizone.front.interaction.LikePost;
+import com.example.hizone.inter.UpdateCommentCount;
 import com.example.hizone.inter.UserPost;
 
 @Mapper
@@ -46,6 +47,12 @@ public interface InteractionMapper {
 
     @Update("UPDATE post_interaction SET like_count = like_count + #{increment} WHERE post_id = #{postId}")
     void updateInteractionLikeCount(int postId, int increment);
+
+    @Update("UPDATE post_interaction SET collect_count = collect_count + #{increment} WHERE post_id = #{postId}")
+    void updateInteractionCollectCount(int postId, int increment);
+
+    @Update("UPDATE post_interaction SET comment_count = comment_count + #{increment} WHERE post_id = #{postId}")
+    void updateCommentCount(UpdateCommentCount updateCommentCount);
 
     @Delete("DELETE FROM post_like WHERE post_id = #{postId} AND sender_id = #{senderId}")
     void deletePostLike(CancelLikePost cancelLikePost);

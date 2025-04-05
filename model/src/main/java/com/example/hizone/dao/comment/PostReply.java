@@ -1,7 +1,5 @@
 package com.example.hizone.dao.comment;
 
-import java.time.LocalDateTime;
-
 import lombok.Data;
 
 @Data
@@ -19,5 +17,5 @@ public class PostReply {
 
     private int replyLikeCount;
 
-    private LocalDateTime replyTime;
+    private String replyTime;
 }

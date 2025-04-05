@@ -7,5 +7,5 @@ public class UpdateCommentCount {
 
     private int postId;
 
-    private int commentCount;
+    private int increment;
 }

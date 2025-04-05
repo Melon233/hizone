@@ -24,7 +24,7 @@ import com.example.hizone.front.comment.SendComment;
 public interface CommentMapper {
 
     @Insert("INSERT INTO post_comment (post_id, sender_id, comment_content, comment_time) VALUES (#{postId}, #{senderId}, #{commentContent}, #{commentTime})")
-    @Options(useGeneratedKeys = true, keyProperty = "commentId", keyColumn = "comment_id")
+    @Options(useGeneratedKeys = true, keyProperty = "commentId", keyColumn = "post_comment_id")
     void insertComment(SendComment sendComment);
 
     @Insert("INSERT INTO comment_reply (post_id, sender_id, reply_content, parent_comment_id, reply_time) VALUES (#{postId}, #{senderId}, #{replyContent}, #{parentCommentId},#{replyTime})")
@@ -34,7 +34,7 @@ public interface CommentMapper {
     @Select("SELECT * FROM post_comment WHERE post_id = #{postId}")
     List<PostComment> selectCommentList(int postId);
 
-    @Update("SELECT * FROM comment_reply WHERE parent_comment_id = #{commentId}")
+    @Select("SELECT * FROM comment_reply WHERE parent_comment_id = #{commentId}")
     List<PostReply> selectReplyList(int commentId);
 
     @Insert("INSERT INTO comment_like (sender_id, comment_id) VALUES (#{senderId}, #{commentId})")

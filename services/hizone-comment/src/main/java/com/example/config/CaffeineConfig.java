@@ -1,6 +1,6 @@
 package com.example.config;
 
-import java.util.List;
+import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Bean;
@@ -26,7 +26,7 @@ public class CaffeineConfig {
     }
 
     @Bean
-    Cache<String, List<PostComment>> caffeineCacheCommentList() {
+    Cache<Integer, TreeSet<PostComment>> caffeineCommentSet() {
         return Caffeine.newBuilder()
                 .maximumSize(1000)
                 .expireAfterWrite(10, TimeUnit.MINUTES)
@@ -37,7 +37,7 @@ public class CaffeineConfig {
     }
 
     @Bean
-    Cache<String, List<PostReply>> caffeineCacheReplyCommentList() {
+    Cache<Integer, TreeSet<PostReply>> caffeineReplySet() {
         return Caffeine.newBuilder()
                 .maximumSize(1000)
                 .expireAfterWrite(10, TimeUnit.MINUTES)

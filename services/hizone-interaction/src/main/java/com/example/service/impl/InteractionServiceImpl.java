@@ -9,8 +9,8 @@ import com.example.hizone.dao.interaction.Interaction;
 import com.example.hizone.front.interaction.CancelCollectPost;
 import com.example.hizone.front.interaction.CancelLikePost;
 import com.example.hizone.front.interaction.CollectPost;
-import com.example.hizone.front.interaction.ForwardPost;
 import com.example.hizone.front.interaction.LikePost;
+import com.example.hizone.inter.UpdateCommentCount;
 import com.example.hizone.inter.UserInteraction;
 import com.example.hizone.inter.UserPost;
 import com.example.mapper.InteractionMapper;
@@ -26,12 +26,6 @@ public class InteractionServiceImpl implements InteractionService {
     public void addLikePost(LikePost postLike) {
         interactionMapper.insertPostLike(postLike);
         // interactionMapper.updateInteractionLikeCount(postLike.getPostId(), 1);
-    }
-
-    @Override
-    public void forwardPost(ForwardPost forwardPost) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'forwardPost'");
     }
 
     @Override
@@ -84,5 +78,20 @@ public class InteractionServiceImpl implements InteractionService {
     @Override
     public void cancelCollectPost(CancelCollectPost cancelCollectPost) {
         interactionMapper.deletePostCollect(cancelCollectPost);
+    }
+
+    @Override
+    public void updatePostLikeCount(int postId, int increment) {
+        interactionMapper.updateInteractionLikeCount(postId, increment);
+    }
+
+    @Override
+    public void updatePostCollectCount(int postId, int increment) {
+        interactionMapper.updateInteractionCollectCount(postId, increment);
+    }
+
+    @Override
+    public void updateCommentCount(UpdateCommentCount updateCommentCount) {
+        interactionMapper.updateCommentCount(updateCommentCount);
     }
 }

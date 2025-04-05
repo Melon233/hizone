@@ -1,7 +1,5 @@
 package com.example.hizone.front.comment;
 
-import java.time.LocalDateTime;
-
 import lombok.Data;
 
 @Data
@@ -17,5 +15,5 @@ public class ReplyComment {
 
     private int parentCommentId;
 
-    private LocalDateTime replyTime;
+    private String replyTime;
 }
