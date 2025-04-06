@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.hizone.dao.comment.PostComment;
-import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.dao.comment.Comment;
+import com.example.hizone.dao.comment.Reply;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
@@ -26,7 +26,7 @@ public class CaffeineConfig {
     }
 
     @Bean
-    Cache<Integer, TreeSet<PostComment>> caffeineCommentSet() {
+    Cache<Integer, TreeSet<Comment>> caffeineCommentSet() {
         return Caffeine.newBuilder()
                 .maximumSize(1000)
                 .expireAfterWrite(10, TimeUnit.MINUTES)
@@ -37,7 +37,7 @@ public class CaffeineConfig {
     }
 
     @Bean
-    Cache<Integer, TreeSet<PostReply>> caffeineReplySet() {
+    Cache<Integer, TreeSet<Reply>> caffeineReplySet() {
         return Caffeine.newBuilder()
                 .maximumSize(1000)
                 .expireAfterWrite(10, TimeUnit.MINUTES)

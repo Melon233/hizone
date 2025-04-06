@@ -1,9 +1,9 @@
-package com.example.hizone.front.comment;
+package com.example.hizone.dao.comment;
 
 import lombok.Data;
 
 @Data
-public class ReplyComment {
+public class Reply {
 
     private int postId;
 
@@ -14,6 +14,8 @@ public class ReplyComment {
     private String replyContent;
 
     private int parentCommentId;
+
+    private int replyLikeCount;
 
     private String replyTime;
 }

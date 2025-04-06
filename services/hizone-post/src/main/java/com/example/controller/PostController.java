@@ -50,10 +50,12 @@ class PostController {
      * @return
      */
     @GetMapping("/getPost")
-    public PostDetail getPost(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") int postId) {
+    public PostDetail getPost(@RequestHeader(value = "Token", required = false) String token,
+            @RequestParam("post_id") int postId) {
         Post post = postService.getPost(postId);
         UserInfo userInfo = userFeignClient.getUserInfoList(new int[] { post.getAuthorId() }).get(0);
-        InteractionDetail interactionDetail = interactionFeignClient.getInteractionDetailList(token, new int[] { postId }).get(0);
+        InteractionDetail interactionDetail = interactionFeignClient
+                .getInteractionDetailList(token, new int[] { postId }).get(0);
         PostDetail postDetail = new PostDetail();
         postDetail.setPostId(post.getPostId());
         postDetail.setAuthorId(post.getAuthorId());
@@ -92,8 +94,10 @@ class PostController {
     public List<PostDetail> getPush(@RequestHeader(value = "Token", required = false) String token) {
         System.out.println("getPush");
         List<Post> pushList = postService.getPush();
-        List<UserInfo> userInfoList = userFeignClient.getUserInfoList(pushList.stream().mapToInt(Post::getAuthorId).toArray());
-        List<InteractionDetail> interactionDetailList = interactionFeignClient.getInteractionDetailList(token, pushList.stream().mapToInt(Post::getPostId).toArray());
+        List<UserInfo> userInfoList = userFeignClient
+                .getUserInfoList(pushList.stream().mapToInt(Post::getAuthorId).toArray());
+        List<InteractionDetail> interactionDetailList = interactionFeignClient.getInteractionDetailList(token,
+                pushList.stream().mapToInt(Post::getPostId).toArray());
         List<PostDetail> postDetailList = new ArrayList<>();
         for (int i = 0; i < pushList.size(); i++) {
             PostDetail postDetail = new PostDetail();

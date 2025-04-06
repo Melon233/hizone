@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.feign.InteractionFeignClient;
-import com.example.hizone.dao.comment.PostComment;
-import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.dao.comment.CommentLike;
+import com.example.hizone.dao.comment.Comment;
+import com.example.hizone.dao.comment.Reply;
+import com.example.hizone.dao.comment.ReplyLike;
 import com.example.hizone.front.comment.CancelLikeComment;
 import com.example.hizone.front.comment.CancelLikeReply;
 import com.example.hizone.front.comment.DeleteComment;
@@ -24,6 +28,9 @@ import com.example.hizone.front.comment.LikeReply;
 import com.example.hizone.front.comment.ReplyComment;
 import com.example.hizone.front.comment.SendComment;
 import com.example.hizone.inter.UpdateCommentCount;
+import com.example.hizone.outer.CommentDetail;
+import com.example.hizone.outer.ReplyDetail;
+import com.example.hizone.utility.Utility;
 import com.example.service.CacheService;
 import com.example.service.CommentService;
 
@@ -47,27 +54,37 @@ public class CommentController {
      * @return
      */
     @GetMapping("/getCommentList")
-    public List<PostComment> getCommentList(@RequestParam("post_id") int postId) {
-        List<PostComment> commentList = cacheService.getCommentShardByScore(postId, 0, 10);
-        if (commentList != null) {
-            return commentList;
+    public List<CommentDetail> getCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") int postId) {
+        int userId = Utility.extractUserId(token);
+        List<CommentDetail> commentDetailList = cacheService.getCommentShardByScore(postId, userId, 0, 10);
+        if (!commentDetailList.isEmpty()) {
+            return commentDetailList;
         }
-        commentList = commentService.getCommentList(postId);
-        if (commentList != null) {
-            cacheService.appendCommentShard(postId, commentList);
+        List<Comment> commentList = commentService.getCommentList(postId);
+        List<CommentLike> commentLikeList = commentService.getCommentLikeList(postId);
+        if (!commentList.isEmpty()) {
+            cacheService.appendCommentShard(postId, commentList, commentLikeList);
+            return cacheService.getCommentShardByScore(postId, userId, 0, 10);
+        } else {
+            return new ArrayList<>();
         }
-        return commentList;
     }
 
     @GetMapping("/getReplyList")
-    public List<PostReply> getReplyCommentList(@RequestParam("parent_comment_id") int parentCommentId) {
-        List<PostReply> replyList = cacheService.getReplyShardByScore(parentCommentId, 0, 10);
-        if (replyList != null) {
-            return replyList;
+    public List<ReplyDetail> getReplyCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("parent_comment_id") int parentCommentId) {
+        int userId = Utility.extractUserId(token);
+        List<ReplyDetail> replyDetailList = cacheService.getReplyShardByScore(parentCommentId, userId, 0, 10);
+        if (!replyDetailList.isEmpty()) {
+            return replyDetailList;
         }
-        replyList = commentService.getReplyList(parentCommentId);
-        cacheService.appendReplyShard(parentCommentId, replyList);
-        return replyList;
+        List<Reply> replyList = commentService.getReplyList(parentCommentId);
+        List<ReplyLike> replyLikeList = commentService.getReplyLikeList(parentCommentId);
+        if (!replyList.isEmpty()) {
+            cacheService.appendReplyShard(parentCommentId, replyList, replyLikeList);
+            return cacheService.getReplyShardByScore(parentCommentId, userId, 0, 10);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -82,7 +99,7 @@ public class CommentController {
      * @return
      */
     @PostMapping("/sendComment")
-    public PostComment sendComment(@RequestBody SendComment sendComment) {
+    public Comment sendComment(@RequestBody SendComment sendComment) {
         System.out.println("sendComment" + sendComment.toString());
         // 设置时间
         sendComment.setCommentTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).toString());
@@ -95,14 +112,44 @@ public class CommentController {
         updateCommentCount.setIncrement(1);
         interactionFeignClient.updateCommentCount(updateCommentCount);
         // 添加评论到缓存
-        PostComment comment = new PostComment();
+        Comment comment = new Comment();
         comment.setCommentContent(sendComment.getCommentContent());
-        comment.setPostCommentId(sendComment.getCommentId());
+        comment.setCommentId(sendComment.getCommentId());
         comment.setCommentTime(sendComment.getCommentTime());
         comment.setPostId(sendComment.getPostId());
         comment.setSenderId(sendComment.getSenderId());
         cacheService.addComment(comment);
         return comment;
+    }
+
+    /**
+     * 回复评论
+     * 高频高精数据-使用缓存并且数据更新时总是更新缓存
+     * 
+     * @param replyComment
+     * @return
+     */
+    @PostMapping("/sendReply")
+    public Reply sendReply(@RequestBody ReplyComment sendReply) {
+        // 设置时间
+        sendReply.setReplyTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).toString());
+        // 添加评论到数据库
+        commentService.addReply(sendReply);
+        // 更新交互元数据缓存
+        UpdateCommentCount updateCommentCount = new UpdateCommentCount();
+        updateCommentCount.setPostId(sendReply.getPostId());
+        updateCommentCount.setIncrement(1);
+        interactionFeignClient.updateCommentCount(updateCommentCount);
+        // 添加评论到缓存
+        Reply reply = new Reply();
+        reply.setReplyContent(sendReply.getReplyContent());
+        reply.setReplyId(sendReply.getReplyId());
+        reply.setReplyTime(sendReply.getReplyTime());
+        reply.setPostId(sendReply.getPostId());
+        reply.setSenderId(sendReply.getSenderId());
+        reply.setParentCommentId(sendReply.getParentCommentId());
+        cacheService.addReply(reply);
+        return reply;
     }
 
     /**
@@ -148,38 +195,6 @@ public class CommentController {
     }
 
     /**
-     * 回复评论
-     * 高频高精数据-使用缓存并且数据更新时总是更新缓存
-     * 
-     * @param replyComment
-     * @return
-     */
-    @PostMapping("/sendReply")
-    public PostReply sendReply(@RequestBody ReplyComment sendReply) {
-        // 设置时间
-        sendReply.setReplyTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).toString());
-        // 添加评论到数据库
-        commentService.addReply(sendReply);
-        // 更新交互元数据缓存
-        UpdateCommentCount updateCommentCount = new UpdateCommentCount();
-        updateCommentCount.setPostId(sendReply.getPostId());
-        updateCommentCount.setIncrement(1);
-        interactionFeignClient.updateCommentCount(updateCommentCount);
-        // 添加评论到缓存
-        PostReply comment = new PostReply();
-        comment.setReplyContent(sendReply.getReplyContent());
-        comment.setCommentReplyId(sendReply.getCommentReplyId());
-        comment.setReplyTime(sendReply.getReplyTime());
-        comment.setPostId(sendReply.getPostId());
-        comment.setSenderId(sendReply.getSenderId());
-        comment.setParentCommentId(sendReply.getParentCommentId());
-        cacheService.addReply(comment);
-        // 更新评论回复数缓存
-        cacheService.updateReplyCount("", null);
-        return comment;
-    }
-
-    /**
      * 删除评论
      * 高频低精数据-记录异步到数据库修改缓存记录
      * 
@@ -196,7 +211,7 @@ public class CommentController {
     @PostMapping("/deleteReply")
     public String deleteReply(@RequestBody DeleteReply deleteReply) {
         commentService.deleteReply(deleteReply);
-        cacheService.deleteReply("reply" + deleteReply.getCommentReplyId());
+        cacheService.deleteReply("reply" + deleteReply.getReplyId());
         return "success";
     }
 }

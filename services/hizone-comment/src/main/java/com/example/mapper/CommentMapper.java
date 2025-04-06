@@ -9,8 +9,10 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.hizone.dao.comment.PostComment;
-import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.dao.comment.CommentLike;
+import com.example.hizone.dao.comment.Comment;
+import com.example.hizone.dao.comment.Reply;
+import com.example.hizone.dao.comment.ReplyLike;
 import com.example.hizone.front.comment.CancelLikeComment;
 import com.example.hizone.front.comment.CancelLikeReply;
 import com.example.hizone.front.comment.DeleteComment;
@@ -23,41 +25,59 @@ import com.example.hizone.front.comment.SendComment;
 @Mapper
 public interface CommentMapper {
 
-    @Insert("INSERT INTO post_comment (post_id, sender_id, comment_content, comment_time) VALUES (#{postId}, #{senderId}, #{commentContent}, #{commentTime})")
-    @Options(useGeneratedKeys = true, keyProperty = "commentId", keyColumn = "post_comment_id")
+    @Insert("INSERT INTO comment (post_id, sender_id, comment_content, comment_time) VALUES (#{postId}, #{senderId}, #{commentContent}, #{commentTime})")
+    @Options(useGeneratedKeys = true, keyProperty = "commentId", keyColumn = "comment_id")
     void insertComment(SendComment sendComment);
 
-    @Insert("INSERT INTO comment_reply (post_id, sender_id, reply_content, parent_comment_id, reply_time) VALUES (#{postId}, #{senderId}, #{replyContent}, #{parentCommentId},#{replyTime})")
-    @Options(useGeneratedKeys = true, keyProperty = "commentReplyId", keyColumn = "comment_reply_id")
+    @Insert("INSERT INTO reply (post_id, sender_id, reply_content, parent_comment_id, reply_time) VALUES (#{postId}, #{senderId}, #{replyContent}, #{parentCommentId},#{replyTime})")
+    @Options(useGeneratedKeys = true, keyProperty = "replyId", keyColumn = "reply_id")
     void insertReplyComment(ReplyComment replyComment);
 
-    @Select("SELECT * FROM post_comment WHERE post_id = #{postId}")
-    List<PostComment> selectCommentList(int postId);
+    @Select("SELECT * FROM comment WHERE post_id = #{postId}")
+    List<Comment> selectCommentList(int postId);
 
-    @Select("SELECT * FROM comment_reply WHERE parent_comment_id = #{commentId}")
-    List<PostReply> selectReplyList(int commentId);
+    @Select("SELECT * FROM reply WHERE parent_comment_id = #{commentId}")
+    List<Reply> selectReplyList(int commentId);
 
-    @Insert("INSERT INTO comment_like (sender_id, comment_id) VALUES (#{senderId}, #{commentId})")
+    @Insert("INSERT INTO comment_like (post_id,sender_id, comment_id) VALUES (#{postId}, #{senderId}, #{commentId})")
     void insertCommentLike(LikeComment likeComment);
 
-    @Insert("INSERT INTO comment_reply_like (sender_id, comment_reply_id) VALUES (#{senderId}, #{commentReplyId})")
+    @Insert("INSERT INTO reply_like (parent_comment_id, sender_id, reply_id) VALUES (#{parentCommentId}, #{senderId}, #{replyId})")
     void insertCommentReplyLike(LikeReply likeReply);
 
-    @Update("UPDATE post_comment SET comment_like_count = comment_like_count + 1 WHERE comment_id = #{commentId}")
-    void updateCommentLikeCount(LikeComment likeComment);
+    @Update("UPDATE comment SET comment_like_count = comment_like_count + 1 WHERE comment_id = #{commentId}")
+    void updateCommentLikeCountIncrement(LikeComment likeComment);
 
-    @Update("UPDATE post_comment SET comment_reply_count = comment_reply_count + 1 WHERE comment_id = #{parentCommentId}")
-    void updateCommentReplyCount(SendComment sendComment);
+    @Update("UPDATE comment SET comment_like_count = comment_like_count - 1 WHERE comment_id = #{commentId}")
+    void updateCommentLikeCountDecrement(CancelLikeComment cancelLikeComment);
 
-    @Delete("DELETE FROM post_comment WHERE comment_id = #{commentId} AND sender_id = #{senderId}")
+    @Update("UPDATE reply SET reply_like_count = reply_like_count + 1 WHERE reply_id = #{replyId}")
+    void updateReplyLikeCountIncrement(LikeReply likeReply);
+
+    @Update("UPDATE reply SET reply_like_count = reply_like_count - 1 WHERE reply_id = #{replyId}")
+    void updateReplyLikeCountDecrement(CancelLikeReply cancelLikeReply);
+
+    @Update("UPDATE comment SET reply_count = reply_count + 1 WHERE comment_id = #{parentCommentId}")
+    void updateReplyCountIncrement(ReplyComment replyComment);
+
+    @Update("UPDATE comment SET reply_count = reply_count - 1 WHERE comment_id = #{parentCommentId}")
+    void updateReplyCountDecrement(DeleteReply deleteReply);
+
+    @Delete("DELETE FROM comment WHERE comment_id = #{commentId}")
     void deleteComment(DeleteComment deleteComment);
 
-    @Delete("DELETE FROM comment_reply WHERE comment_reply_id = #{commentReplyId} AND sender_id = #{senderId}")
+    @Delete("DELETE FROM reply WHERE reply_id = #{replyId}")
     void deleteReply(DeleteReply deleteReply);
 
     @Delete("DELETE FROM comment_like WHERE comment_id = #{commentId} AND sender_id = #{senderId}")
     void cancelLikeComment(CancelLikeComment cancelLikeComment);
 
-    @Delete("DELETE FROM comment_reply_like WHERE comment_reply_id = #{commentReplyId} AND sender_id = #{senderId}")
+    @Delete("DELETE FROM reply_like WHERE reply_id = #{replyId} AND sender_id = #{senderId}")
     void cancelLikeReply(CancelLikeReply cancelLikeReply);
+
+    @Select("SELECT * FROM comment_like WHERE post_id = #{postId}")
+    List<CommentLike> selectCommentLikeList(int postId);
+
+    @Select("SELECT * FROM reply_like WHERE parent_comment_id = #{parentCommentId}")
+    List<ReplyLike> selectReplyLikeList(int parentCommentId);
 }

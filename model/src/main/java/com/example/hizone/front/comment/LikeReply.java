@@ -11,5 +11,5 @@ public class LikeReply {
 
     private int parentCommentId;
 
-    private int commentReplyId;
+    private int replyId;
 }

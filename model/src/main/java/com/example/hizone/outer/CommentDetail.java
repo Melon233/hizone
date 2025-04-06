@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CommentDetail {
 
-    private int postCommentId;
+    private int commentId;
 
     private int postId;
 
@@ -15,7 +15,7 @@ public class CommentDetail {
 
     private int commentLikeCount;
 
-    private int commentReplyCount;
+    private int replyCount;
 
     private String commentTime;
 

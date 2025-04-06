@@ -2,8 +2,10 @@ package com.example.service;
 
 import java.util.List;
 
-import com.example.hizone.dao.comment.PostComment;
-import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.dao.comment.CommentLike;
+import com.example.hizone.dao.comment.Comment;
+import com.example.hizone.dao.comment.Reply;
+import com.example.hizone.dao.comment.ReplyLike;
 import com.example.hizone.front.comment.CancelLikeComment;
 import com.example.hizone.front.comment.CancelLikeReply;
 import com.example.hizone.front.comment.DeleteComment;
@@ -15,13 +17,13 @@ import com.example.hizone.front.comment.SendComment;
 
 public interface CommentService {
 
-    int addComment(SendComment sendComment);
+    void addComment(SendComment sendComment);
 
-    int addReply(ReplyComment replyComment);
+    void addReply(ReplyComment replyComment);
 
-    List<PostComment> getCommentList(int postId);
+    List<Comment> getCommentList(int postId);
 
-    List<PostReply> getReplyList(int commentId);
+    List<Reply> getReplyList(int commentId);
 
     void addLikeComment(LikeComment likeComment);
 
@@ -34,4 +36,8 @@ public interface CommentService {
     void cancelLikeComment(CancelLikeComment cancelLikeComment);
 
     void cancelLikeReply(CancelLikeReply cancelLikeReply);
+
+    List<CommentLike> getCommentLikeList(int postId);
+
+    List<ReplyLike> getReplyLikeList(int parentCommentId);
 }

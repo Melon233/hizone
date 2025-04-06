@@ -7,5 +7,7 @@ public class DeleteReply {
 
     private int senderId;
 
-    private int commentReplyId;
+    private int parentCommentId;
+
+    private int replyId;
 }

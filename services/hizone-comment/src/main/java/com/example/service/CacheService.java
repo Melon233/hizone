@@ -2,13 +2,17 @@ package com.example.service;
 
 import java.util.List;
 
-import com.example.hizone.dao.comment.PostComment;
-import com.example.hizone.dao.comment.PostReply;
+import com.example.hizone.dao.comment.CommentLike;
+import com.example.hizone.dao.comment.Comment;
+import com.example.hizone.dao.comment.Reply;
+import com.example.hizone.dao.comment.ReplyLike;
 import com.example.hizone.front.comment.CancelLikeComment;
 import com.example.hizone.front.comment.CancelLikeReply;
 import com.example.hizone.front.comment.LikeComment;
 import com.example.hizone.front.comment.LikeReply;
 import com.example.hizone.inter.UpdateReplyCount;
+import com.example.hizone.outer.CommentDetail;
+import com.example.hizone.outer.ReplyDetail;
 
 public interface CacheService {
 
@@ -16,15 +20,15 @@ public interface CacheService {
 
     Object getCache(String key);
 
-    List<PostComment> getCommentShardByScore(int postId, int start, int end);
+    List<CommentDetail> getCommentShardByScore(int postId, int userId, int start, int end);
 
-    List<PostComment> getCommentShardByTime(String key, int start, int end);
+    List<Comment> getCommentShardByTime(String key, int start, int end);
 
-    List<PostReply> getReplyShardByScore(int parentCommentId, int start, int end);
+    List<ReplyDetail> getReplyShardByScore(int parentCommentId, int userId, int start, int end);
 
-    void addComment(PostComment postComment);
+    void addComment(Comment comment);
 
-    void addReply(PostReply postReply);
+    void addReply(Reply reply);
 
     void updateReplyCount(String key, UpdateReplyCount updateReplyCount);
 
@@ -32,9 +36,9 @@ public interface CacheService {
 
     void likeReply(LikeReply likeReply);
 
-    void appendCommentShard(int postId, List<PostComment> commentList);
+    void appendCommentShard(int postId, List<Comment> commentList, List<CommentLike> commentLikeList);
 
-    void appendReplyShard(int postId, List<PostReply> postReplyList);
+    void appendReplyShard(int postId, List<Reply> replyList, List<ReplyLike> replyLikeList);
 
     void deleteComment(String key);
 

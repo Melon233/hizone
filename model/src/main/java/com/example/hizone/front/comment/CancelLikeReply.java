@@ -9,7 +9,7 @@ public class CancelLikeReply {
 
     private int senderId;
 
-    private int commentReplyId;
+    private int replyId;
 
     private int parentCommentId;
 }

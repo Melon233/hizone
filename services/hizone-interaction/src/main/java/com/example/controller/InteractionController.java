@@ -90,7 +90,9 @@ public class InteractionController {
     }
 
     @GetMapping("/getInteractionDetailList")
-    public List<InteractionDetail> getInteractionDetailList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id_list") int[] postIdList) {
+    public List<InteractionDetail> getInteractionDetailList(
+        @RequestHeader(value = "Token", required = false) String token,
+        @RequestParam("post_id_list") int[] postIdList) {
         List<InteractionDetail> interactionDetailList = new ArrayList<>();
         int userId;
         if (token != null) {
@@ -147,7 +149,8 @@ public class InteractionController {
     @PostMapping("/likePost")
     public String likePost(@RequestBody LikePost likePost) {
         // 抓取用户单个帖子点赞记录缓存
-        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(likePost.getPostId(), likePost.getSenderId()));
+        UserInteraction userInteraction = cacheService
+            .getUserInteraction(new UserPost(likePost.getPostId(), likePost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.addLikePost(likePost);
@@ -177,7 +180,8 @@ public class InteractionController {
     @PostMapping("/collectPost")
     public String collectPost(@RequestBody CollectPost collectPost) {
         // 抓取用户单个帖子收藏记录缓存
-        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(collectPost.getPostId(), collectPost.getSenderId()));
+        UserInteraction userInteraction = cacheService
+            .getUserInteraction(new UserPost(collectPost.getPostId(), collectPost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.addCollectPost(collectPost);
@@ -200,7 +204,8 @@ public class InteractionController {
     @PostMapping("/cancelLikePost")
     public String cancelLikePost(@RequestBody CancelLikePost cancelLikePost) {
         // 抓取用户单个帖子点赞记录缓存
-        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(cancelLikePost.getPostId(), cancelLikePost.getSenderId()));
+        UserInteraction userInteraction = cacheService
+            .getUserInteraction(new UserPost(cancelLikePost.getPostId(), cancelLikePost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.cancelLikePost(cancelLikePost);
@@ -214,7 +219,7 @@ public class InteractionController {
             cacheService.setCache("interaction" + cancelLikePost.getPostId(), interaction);
         }
         // 异步更新数据库
-        interactionService.updatePostLikeCount(cancelLikePost.getPostId(), 1);
+        interactionService.updatePostLikeCount(cancelLikePost.getPostId(), -1);
         return "success";
         // }
         // return "error";
@@ -223,7 +228,8 @@ public class InteractionController {
     @PostMapping("/cancelCollectPost")
     public String cancelCollectPost(@RequestBody CancelCollectPost cancelCollectPost) {
         // 抓取用户单个帖子点赞记录缓存
-        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(cancelCollectPost.getPostId(), cancelCollectPost.getSenderId()));
+        UserInteraction userInteraction = cacheService
+            .getUserInteraction(new UserPost(cancelCollectPost.getPostId(), cancelCollectPost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.cancelCollectPost(cancelCollectPost);
