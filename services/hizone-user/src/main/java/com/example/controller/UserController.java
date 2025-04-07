@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -30,8 +31,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @CrossOrigin
+@RequestMapping("/user")
+@GlobalTransactional
 @RestController
 public class UserController {
 
@@ -49,16 +53,6 @@ public class UserController {
      * @param userId
      * @return
      */
-    // @GetMapping("/getUser")
-    // public User getUser(@RequestParam("user_id") int userId) {
-    // User user = (User) cacheService.getCache("user" + userId);
-    // if (user != null) {
-    // return user;
-    // }
-    // user = userService.getUser(userId);
-    // cacheService.setCache("user" + userId, user);
-    // return user;
-    // }
     @GetMapping("/getUserInfoList")
     public List<UserInfo> getUserInfoList(@RequestParam("user_id_list") int[] userIdList) {
         List<UserInfo> userInfoList = new ArrayList<>();
@@ -96,7 +90,9 @@ public class UserController {
     @GetMapping("/getUserAvatar")
     public ResponseEntity<Resource> getUserAvatar(@RequestParam("user_id") int userId) throws IOException {
         File imageFile = new File("services/hizone-user/src/main/resources/avatar/" + userId + ".png");
+        System.out.println(imageFile.getAbsolutePath());
         if (!imageFile.exists()) {
+            System.out.println("Image file not found: " + imageFile.getAbsolutePath());
             return ResponseEntity.notFound().build(); // 如果文件不存在，返回 404
         }
         Resource imageResource = new FileSystemResource(imageFile);

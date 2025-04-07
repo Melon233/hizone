@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: hizone-gateway
+  profiles:
+    include: route
+server:
+  port: 90

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.example.hizone.dao.user.User;
 import com.example.hizone.dao.user.UserMetadata;
 import com.example.hizone.front.user.UpdateUserInfo;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @SentinelResource(value = "updateUserInfo")
     @Override
     public void updateUserInfo(UpdateUserInfo updateUserInfo) {
         userMapper.updateUserInfo(updateUserInfo);

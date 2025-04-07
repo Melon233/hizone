@@ -5,12 +5,14 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,6 +36,8 @@ import com.example.hizone.utility.Utility;
 import com.example.service.CacheService;
 import com.example.service.CommentService;
 
+@RequestMapping("/comment")
+@GlobalTransactional
 @CrossOrigin
 @RestController
 public class CommentController {
@@ -55,7 +59,7 @@ public class CommentController {
      */
     @GetMapping("/getCommentList")
     public List<CommentDetail> getCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") int postId) {
-        int userId = Utility.extractUserId(token);
+        int userId = token == null ? -1 : Utility.extractUserId(token);
         List<CommentDetail> commentDetailList = cacheService.getCommentShardByScore(postId, userId, 0, 10);
         if (!commentDetailList.isEmpty()) {
             return commentDetailList;
@@ -72,7 +76,7 @@ public class CommentController {
 
     @GetMapping("/getReplyList")
     public List<ReplyDetail> getReplyCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("parent_comment_id") int parentCommentId) {
-        int userId = Utility.extractUserId(token);
+        int userId = token == null ? -1 : Utility.extractUserId(token);
         List<ReplyDetail> replyDetailList = cacheService.getReplyShardByScore(parentCommentId, userId, 0, 10);
         if (!replyDetailList.isEmpty()) {
             return replyDetailList;

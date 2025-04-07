@@ -1,9 +1,11 @@
 package com.example.controller;
 
+import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hizone.front.login.Login;
@@ -11,9 +13,8 @@ import com.example.hizone.inter.Email;
 import com.example.hizone.utility.Utility;
 import com.example.service.LoginService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
+@RequestMapping("/login")
+@GlobalTransactional
 @RestController
 @CrossOrigin
 public class LoginController {

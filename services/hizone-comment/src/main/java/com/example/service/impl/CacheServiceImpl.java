@@ -178,7 +178,7 @@ public class CacheServiceImpl implements CacheService {
             commentDetail.setCommentLikeCount(comment.getCommentLikeCount());
             commentDetail.setReplyCount(comment.getReplyCount());
             commentDetail.setCommentTime(comment.getCommentTime());
-            commentDetail.setLiked(commentLikeSet.contains(new CommentLike(postId, userId, comment.getCommentId())));
+            commentDetail.setLiked(userId == -1 ? false : commentLikeSet.contains(new CommentLike(postId, userId, comment.getCommentId())));
             commentDetailList.add(commentDetail);
         }
         return commentDetailList;
@@ -211,7 +211,7 @@ public class CacheServiceImpl implements CacheService {
             replyDetail.setReplyContent(reply.getReplyContent());
             replyDetail.setReplyLikeCount(reply.getReplyLikeCount());
             replyDetail.setReplyTime(reply.getReplyTime());
-            replyDetail.setLiked(replyLikeSet.contains(new ReplyLike(userId, parentCommentId, reply.getReplyId())));
+            replyDetail.setLiked(userId == -1 ? false : replyLikeSet.contains(new ReplyLike(userId, parentCommentId, reply.getReplyId())));
             replyDetailList.add(replyDetail);
         }
         return replyDetailList;

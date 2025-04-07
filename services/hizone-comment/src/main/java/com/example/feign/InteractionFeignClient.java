@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.hizone.inter.UpdateCommentCount;
 
-@FeignClient(name = "hizone-interaction", url = "http://localhost:8083/")
+@FeignClient(value = "hizone-interaction")
 public interface InteractionFeignClient {
 
     @GetMapping("/updateCommentCount")

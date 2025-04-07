@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.feign.UserFeignClient;
 import com.example.hizone.dao.post.Post;
@@ -14,6 +15,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 
+@Service
 public class UserSearchServiceImpl implements UserSearchService {
 
     @Autowired
@@ -35,6 +37,7 @@ public class UserSearchServiceImpl implements UserSearchService {
 
     @Override
     public List<User> searchUser(String keyword) throws IOException {
+        syncUser();
         SearchResponse<User> search = elasticsearchClient.search(s -> s
                 .index("user")
                 .query(q -> q

@@ -19,17 +19,19 @@ import com.example.service.InteractionService;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@EnableFeignClients
 @CrossOrigin
+@RequestMapping("/interaction")
+@GlobalTransactional
 @RestController
 public class InteractionController {
 
@@ -45,8 +47,6 @@ public class InteractionController {
      * 从token解析uid，从缓存获取元数据，若缓存中无元数据，则从数据库获取元数据并缓存
      * 然后通过用户服务
      * 
-     * @param postLike
-     * @return
      */
     @GetMapping("/getInteractionDetail")
     public InteractionDetail getInteractionDetail(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") int postId) {
@@ -91,8 +91,8 @@ public class InteractionController {
 
     @GetMapping("/getInteractionDetailList")
     public List<InteractionDetail> getInteractionDetailList(
-        @RequestHeader(value = "Token", required = false) String token,
-        @RequestParam("post_id_list") int[] postIdList) {
+            @RequestHeader(value = "Token", required = false) String token,
+            @RequestParam("post_id_list") int[] postIdList) {
         List<InteractionDetail> interactionDetailList = new ArrayList<>();
         int userId;
         if (token != null) {
@@ -150,7 +150,7 @@ public class InteractionController {
     public String likePost(@RequestBody LikePost likePost) {
         // 抓取用户单个帖子点赞记录缓存
         UserInteraction userInteraction = cacheService
-            .getUserInteraction(new UserPost(likePost.getPostId(), likePost.getSenderId()));
+                .getUserInteraction(new UserPost(likePost.getPostId(), likePost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.addLikePost(likePost);
@@ -181,7 +181,7 @@ public class InteractionController {
     public String collectPost(@RequestBody CollectPost collectPost) {
         // 抓取用户单个帖子收藏记录缓存
         UserInteraction userInteraction = cacheService
-            .getUserInteraction(new UserPost(collectPost.getPostId(), collectPost.getSenderId()));
+                .getUserInteraction(new UserPost(collectPost.getPostId(), collectPost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.addCollectPost(collectPost);
@@ -205,7 +205,7 @@ public class InteractionController {
     public String cancelLikePost(@RequestBody CancelLikePost cancelLikePost) {
         // 抓取用户单个帖子点赞记录缓存
         UserInteraction userInteraction = cacheService
-            .getUserInteraction(new UserPost(cancelLikePost.getPostId(), cancelLikePost.getSenderId()));
+                .getUserInteraction(new UserPost(cancelLikePost.getPostId(), cancelLikePost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.cancelLikePost(cancelLikePost);
@@ -229,7 +229,7 @@ public class InteractionController {
     public String cancelCollectPost(@RequestBody CancelCollectPost cancelCollectPost) {
         // 抓取用户单个帖子点赞记录缓存
         UserInteraction userInteraction = cacheService
-            .getUserInteraction(new UserPost(cancelCollectPost.getPostId(), cancelCollectPost.getSenderId()));
+                .getUserInteraction(new UserPost(cancelCollectPost.getPostId(), cancelCollectPost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.cancelCollectPost(cancelCollectPost);

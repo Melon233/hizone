@@ -13,6 +13,7 @@
 	<modules>
 		<module>services</module>
 		<module>model</module>
+		<module>hizone-gateway</module>
 	</modules>
 	<groupId>com.example</groupId>
 	<artifactId>hizone</artifactId>

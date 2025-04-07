@@ -1,8 +1,22 @@
 spring:
   application:
-    name: fenta-follow
+    name: hizone-follow
+  datasource:
+    url: jdbc:mysql://localhost:3306/habitat
+    username: root
+    password: 123456
   jackson:
     property-naming-strategy: SNAKE_CASE
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      config:
+        import-check:
+          enabled: false
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      eager: true
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

@@ -1,0 +1,36 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: hizone-post
+          uri: lb://hizone-post
+          predicates:
+            - Path=/post/**
+        - id: hizone-mq
+          uri: lb://hizone-mq
+          predicates:
+            - Path=/mq/**
+        - id: hizone-follow
+          uri: lb://hizone-follow
+          predicates:
+            - Path=/follow/**
+        - id: hizone-user
+          uri: lb://hizone-user
+          predicates:
+            - Path=/user/**
+        - id: hizone-interaction
+          uri: lb://hizone-interaction
+          predicates:
+            - Path=/interaction/**
+        - id: hizone-comment
+          uri: lb://hizone-comment
+          predicates:
+            - Path=/comment/**
+        - id: hizone-search
+          uri: lb://hizone-search
+          predicates:
+            - Path=/search/**
+        - id: hizone-login
+          uri: lb://hizone-login
+          predicates:
+            - Path=/login/**

@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +26,11 @@ import com.example.service.PostService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@RequestMapping("/post")
+@GlobalTransactional
 @CrossOrigin
 @RestController
 class PostController {
@@ -94,10 +99,8 @@ class PostController {
     public List<PostDetail> getPush(@RequestHeader(value = "Token", required = false) String token) {
         System.out.println("getPush");
         List<Post> pushList = postService.getPush();
-        List<UserInfo> userInfoList = userFeignClient
-                .getUserInfoList(pushList.stream().mapToInt(Post::getAuthorId).toArray());
-        List<InteractionDetail> interactionDetailList = interactionFeignClient.getInteractionDetailList(token,
-                pushList.stream().mapToInt(Post::getPostId).toArray());
+        List<UserInfo> userInfoList = userFeignClient.getUserInfoList(pushList.stream().mapToInt(Post::getAuthorId).toArray());
+        List<InteractionDetail> interactionDetailList = interactionFeignClient.getInteractionDetailList(token, pushList.stream().mapToInt(Post::getPostId).toArray());
         List<PostDetail> postDetailList = new ArrayList<>();
         for (int i = 0; i < pushList.size(); i++) {
             PostDetail postDetail = new PostDetail();

@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.hizone.inter.UpdateUserMetadata;
 import com.example.hizone.outer.UserInfo;
 
-@FeignClient(name = "hizone-user", url = "http://localhost:8081")
+@FeignClient(value = "hizone-user")
 public interface UserFeignClient {
 
-    @GetMapping("/getUserInfoList")
+    @GetMapping("/user/getUserInfoList")
     public List<UserInfo> getUserInfoList(@RequestParam("user_id_list") int[] userIdList);
 
-    @PostMapping("/updateUserMetadata")
+    @PostMapping("/user/updateUserMetadata")
     public String updateUserMetadata(@RequestBody UpdateUserMetadata updateUserMetadata);
 }
