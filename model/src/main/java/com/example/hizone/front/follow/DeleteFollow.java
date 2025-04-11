@@ -7,5 +7,5 @@ public class DeleteFollow {
 
     private int followerId;
 
-    private int followedId;
+    private int followeeId;
 }

@@ -11,6 +11,8 @@ public class Comment {
 
     private int senderId;
 
+    private String senderName;
+
     private String commentContent;
 
     private int commentLikeCount;

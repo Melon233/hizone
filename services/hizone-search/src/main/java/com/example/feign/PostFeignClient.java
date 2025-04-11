@@ -11,6 +11,6 @@ import com.example.hizone.outer.PostDetail;
 @FeignClient(value = "hizone-post")
 public interface PostFeignClient {
 
-    @GetMapping("/getPush")
+    @GetMapping("/post/getPush")
     List<PostDetail> getPush(@RequestHeader(value = "Token", required = false) String token);
 }

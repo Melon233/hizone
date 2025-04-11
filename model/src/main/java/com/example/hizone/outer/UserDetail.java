@@ -13,6 +13,8 @@ public class UserDetail {
 
     private String registerTime;
 
+    private boolean followed;
+
     private int fanCount;
 
     private int followCount;

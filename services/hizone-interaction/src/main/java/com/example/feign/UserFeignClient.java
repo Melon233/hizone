@@ -9,6 +9,6 @@ import com.example.hizone.inter.UpdateUserMetadata;
 @FeignClient(value = "hizone-user")
 public interface UserFeignClient {
 
-    @PostMapping("/updateUserMetadata")
+    @PostMapping("/user/updateUserMetadata")
     public String updateUserMetadata(@RequestBody UpdateUserMetadata updateUserMetadata);
 }

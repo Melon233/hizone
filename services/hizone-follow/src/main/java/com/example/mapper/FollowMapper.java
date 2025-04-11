@@ -15,18 +15,21 @@ import com.example.hizone.front.follow.DeleteFollow;
 @Mapper
 public interface FollowMapper {
 
-    @Select("SELECT * FROM follow WHERE followed_id = #{userId}")
+    @Select("SELECT * FROM follow WHERE followee_id = #{userId}")
     List<Follow> selectFanList(int userId);
 
     @Select("SELECT * FROM follow WHERE follower_id = #{userId}")
     List<Follow> selectFollowList(int userId);
 
-    @Delete("DELETE FROM follow WHERE follower_id = #{followerId} AND followed_id = #{followedId}")
+    @Delete("DELETE FROM follow WHERE follower_id = #{followerId} AND followee_id = #{followeeId}")
     void deleteFollow(DeleteFollow deleteFollow);
 
-    @Insert("INSERT INTO follow(follower_id, followed_id) VALUES(#{followerId}, #{followedId})")
+    @Insert("INSERT INTO follow(follower_id, followee_id) VALUES(#{followerId}, #{followeeId})")
     void insertFollow(AddFollow addFollow);
 
-    @Delete("DELETE FROM follow WHERE follower_id = #{followerId} AND followed_id = #{followedId}")
+    @Delete("DELETE FROM follow WHERE follower_id = #{followerId} AND followee_id = #{followeeId}")
     void deleteFan(DeleteFan deleteFan);
+
+    @Select("SELECT * FROM follow WHERE follower_id = #{followerId} AND followee_id = #{followeeId}")
+    Follow selectFollow(Follow follow);
 }

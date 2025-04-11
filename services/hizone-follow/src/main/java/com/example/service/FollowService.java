@@ -18,4 +18,6 @@ public interface FollowService {
     void deleteFan(DeleteFan deleteFan);
 
     void deleteFollow(DeleteFollow deleteFollow);
+
+    boolean hasFollow(Follow follow);
 }

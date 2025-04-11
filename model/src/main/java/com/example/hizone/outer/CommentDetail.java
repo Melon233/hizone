@@ -11,6 +11,8 @@ public class CommentDetail {
 
     private int senderId;
 
+    private String senderName;
+
     private String commentContent;
 
     private int commentLikeCount;
@@ -19,5 +21,5 @@ public class CommentDetail {
 
     private String commentTime;
 
-    private boolean isLiked;
+    private boolean liked;
 }

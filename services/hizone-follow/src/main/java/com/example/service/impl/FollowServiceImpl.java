@@ -3,6 +3,7 @@ package com.example.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.hizone.dao.follow.Follow;
 import com.example.hizone.front.follow.AddFollow;
@@ -11,6 +12,7 @@ import com.example.hizone.front.follow.DeleteFollow;
 import com.example.mapper.FollowMapper;
 import com.example.service.FollowService;
 
+@Service
 public class FollowServiceImpl implements FollowService {
 
     @Autowired
@@ -39,5 +41,10 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public void addFollow(AddFollow addFollow) {
         followMapper.insertFollow(addFollow);
+    }
+
+    @Override
+    public boolean hasFollow(Follow follow) {
+        return followMapper.selectFollow(follow) != null;
     }
 }

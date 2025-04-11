@@ -7,5 +7,5 @@ public class DeleteFan {
 
     private int followerId;
 
-    private int followedId;
+    private int followeeId;
 }

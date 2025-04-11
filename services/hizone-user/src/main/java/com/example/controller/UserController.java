@@ -2,6 +2,8 @@ package com.example.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.feign.FollowFeignClient;
+import com.example.hizone.dao.follow.Follow;
 import com.example.hizone.dao.user.User;
 import com.example.hizone.dao.user.UserMetadata;
 import com.example.hizone.front.user.UpdateUserInfo;
@@ -9,6 +11,7 @@ import com.example.hizone.front.user.UpdateUserAvatar;
 import com.example.hizone.inter.UpdateUserMetadata;
 import com.example.hizone.outer.UserDetail;
 import com.example.hizone.outer.UserInfo;
+import com.example.hizone.utility.Utility;
 import com.example.service.CacheService;
 import com.example.service.UserService;
 
@@ -31,6 +34,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @CrossOrigin
@@ -41,6 +45,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FollowFeignClient followFeignClient;
 
     @Autowired
     private CacheService cacheService;
@@ -78,12 +85,14 @@ public class UserController {
      * @return
      */
     @GetMapping("/getUserDetail")
-    public UserDetail getUserDetail(@RequestParam("user_id") int userId) {
+    public UserDetail getUserDetail(@RequestHeader(value = "Token", required = false) String token, @RequestParam("user_id") int userId) {
+        int selfId = token == null ? -1 : Utility.extractUserId(token);
         UserDetail userDetail = (UserDetail) cacheService.getCache("user" + userId);
         if (userDetail == null) {
             userDetail = userService.getUserDetail(userId);
             cacheService.setCache("user" + userId, userDetail);
         }
+        userDetail.setFollowed(followFeignClient.hasFollow(new Follow(selfId, userId)));
         return userDetail;
     }
 
@@ -147,6 +156,7 @@ public class UserController {
         UserMetadata userMetadata = userService.getUserMetadata(updateUserMetadata.getUserId());
         userMetadata.merge(updateUserMetadata);
         userService.updateUserMetadata(updateUserMetadata);
+        cacheService.deleteCache("user" + updateUserMetadata.getUserId());
         return "success";
     }
 }

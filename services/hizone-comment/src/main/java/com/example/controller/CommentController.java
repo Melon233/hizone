@@ -104,10 +104,8 @@ public class CommentController {
      */
     @PostMapping("/sendComment")
     public Comment sendComment(@RequestBody SendComment sendComment) {
-        System.out.println("sendComment" + sendComment.toString());
         // 设置时间
         sendComment.setCommentTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).toString());
-        System.out.println(sendComment.getCommentTime());
         // 添加评论到数据库
         commentService.addComment(sendComment);
         // 更新交互元数据缓存
@@ -208,14 +206,24 @@ public class CommentController {
     @PostMapping("/deleteComment")
     public String deleteComment(@RequestBody DeleteComment deleteComment) {
         commentService.deleteComment(deleteComment);
-        cacheService.deleteComment("comment" + deleteComment.getCommentId());
+        // 更新交互元数据缓存
+        UpdateCommentCount updateCommentCount = new UpdateCommentCount();
+        updateCommentCount.setPostId(deleteComment.getPostId());
+        updateCommentCount.setIncrement(-1);
+        interactionFeignClient.updateCommentCount(updateCommentCount);
+        cacheService.deleteComment(deleteComment);
         return "success";
     }
 
     @PostMapping("/deleteReply")
     public String deleteReply(@RequestBody DeleteReply deleteReply) {
         commentService.deleteReply(deleteReply);
-        cacheService.deleteReply("reply" + deleteReply.getReplyId());
+        // 更新交互元数据缓存
+        UpdateCommentCount updateCommentCount = new UpdateCommentCount();
+        updateCommentCount.setPostId(deleteReply.getPostId());
+        updateCommentCount.setIncrement(-1);
+        interactionFeignClient.updateCommentCount(updateCommentCount);
+        cacheService.deleteReply(deleteReply);
         return "success";
     }
 }

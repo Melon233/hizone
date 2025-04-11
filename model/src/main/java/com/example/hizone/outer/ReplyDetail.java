@@ -9,6 +9,8 @@ public class ReplyDetail {
 
     private int senderId;
 
+    private String senderName;
+
     private int replyId;
 
     private String replyContent;

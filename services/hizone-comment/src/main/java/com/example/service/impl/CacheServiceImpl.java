@@ -7,22 +7,27 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.ReactiveStreamCommands.DeleteCommand;
 import org.springframework.data.redis.core.DefaultTypedTuple;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import com.example.hizone.dao.comment.CommentLike;
+import com.example.feign.UserFeignClient;
 import com.example.hizone.dao.comment.Comment;
 import com.example.hizone.dao.comment.Reply;
 import com.example.hizone.dao.comment.ReplyLike;
 import com.example.hizone.front.comment.CancelLikeComment;
 import com.example.hizone.front.comment.CancelLikeReply;
+import com.example.hizone.front.comment.DeleteComment;
+import com.example.hizone.front.comment.DeleteReply;
 import com.example.hizone.front.comment.LikeComment;
 import com.example.hizone.front.comment.LikeReply;
 import com.example.hizone.inter.UpdateReplyCount;
 import com.example.hizone.outer.CommentDetail;
 import com.example.hizone.outer.ReplyDetail;
+import com.example.hizone.outer.UserInfo;
 import com.example.service.CacheService;
 import com.github.benmanes.caffeine.cache.Cache;
 
@@ -34,6 +39,9 @@ public class CacheServiceImpl implements CacheService {
 
     @Autowired
     private Cache<String, Object> caffeineCache;
+
+    @Autowired
+    private UserFeignClient userFeignClient;
     // @Autowired
     // private Cache<Integer, TreeSet<comment>> caffeineCommentSet;
     // @Autowired
@@ -159,7 +167,6 @@ public class CacheServiceImpl implements CacheService {
                 .stream()
                 .map(item -> (Object) item.toString())
                 .collect(Collectors.toList());
-        System.out.println(commentRankSet);
         Set<CommentLike> commentLikeSet = redisTemplate.opsForSet().members("comment-like" + postId).stream()
                 .map(item -> (CommentLike) item)
                 .collect(Collectors.toSet());
@@ -168,12 +175,14 @@ public class CacheServiceImpl implements CacheService {
                 .stream()
                 .map(item -> (Comment) item)
                 .collect(Collectors.toList());
+        List<UserInfo> userInfoList = userFeignClient.getUserInfoList(commentList.stream().mapToInt(Comment::getSenderId).toArray());
         List<CommentDetail> commentDetailList = new ArrayList<>();
         for (Comment comment : commentList) {
             CommentDetail commentDetail = new CommentDetail();
             commentDetail.setCommentId(comment.getCommentId());
             commentDetail.setPostId(comment.getPostId());
             commentDetail.setSenderId(comment.getSenderId());
+            commentDetail.setSenderName(userInfoList.get(commentList.indexOf(comment)).getNickname());
             commentDetail.setCommentContent(comment.getCommentContent());
             commentDetail.setCommentLikeCount(comment.getCommentLikeCount());
             commentDetail.setReplyCount(comment.getReplyCount());
@@ -202,12 +211,14 @@ public class CacheServiceImpl implements CacheService {
                 .map(item -> (Reply) item)
                 .collect(Collectors.toList());
         List<ReplyDetail> replyDetailList = new ArrayList<>();
+        List<UserInfo> userInfoList = userFeignClient.getUserInfoList(replyList.stream().mapToInt(Reply::getSenderId).toArray());
         for (Reply reply : replyList) {
             ReplyDetail replyDetail = new ReplyDetail();
             replyDetail.setReplyId(reply.getReplyId());
             replyDetail.setParentCommentId(reply.getParentCommentId());
             replyDetail.setPostId(reply.getPostId());
             replyDetail.setSenderId(reply.getSenderId());
+            replyDetail.setSenderName(userInfoList.get(replyList.indexOf(reply)).getNickname());
             replyDetail.setReplyContent(reply.getReplyContent());
             replyDetail.setReplyLikeCount(reply.getReplyLikeCount());
             replyDetail.setReplyTime(reply.getReplyTime());
@@ -252,15 +263,18 @@ public class CacheServiceImpl implements CacheService {
     }
 
     @Override
-    public void deleteComment(String key) {
-        redisTemplate.delete(key);
-        // caffeineCommentSet.invalidate(key);
+    public void deleteComment(DeleteComment deleteComment) {
+        redisTemplate.opsForHash().delete("comment" + deleteComment.getPostId(), Integer.toString(deleteComment.getCommentId()));
+        redisTemplate.opsForZSet().remove("comment-score" + deleteComment.getPostId(), deleteComment.getCommentId());
     }
 
     @Override
-    public void deleteReply(String key) {
-        redisTemplate.delete(key);
-        // caffeineReplySet.invalidate(key);
+    public void deleteReply(DeleteReply deleteReply) {
+        redisTemplate.opsForHash().delete("reply" + deleteReply.getParentCommentId(), Integer.toString(deleteReply.getReplyId()));
+        redisTemplate.opsForZSet().remove("reply-score" + deleteReply.getParentCommentId(), deleteReply.getReplyId());
+        Comment comment = (Comment) redisTemplate.opsForHash().get("comment" + deleteReply.getPostId(), Integer.toString(deleteReply.getParentCommentId()));
+        comment.setReplyCount(comment.getReplyCount() - 1);
+        redisTemplate.opsForHash().put("comment" + deleteReply.getPostId(), Integer.toString(deleteReply.getParentCommentId()), comment);
     }
 
     @Override

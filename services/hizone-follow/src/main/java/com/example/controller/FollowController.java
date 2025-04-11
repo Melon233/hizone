@@ -11,6 +11,7 @@ import com.example.hizone.inter.UpdateUserMetadata;
 import com.example.service.FollowService;
 
 import java.util.List;
+import java.util.concurrent.Flow;
 
 import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class FollowController {
 
     @Autowired
     private UserFeignClient userFeignClient;
+
+    @PostMapping("/hasFollow")
+    public boolean hasFollow(@RequestBody Follow follow) {
+        return followService.hasFollow(follow);
+    }
 
     /**
      * 获取粉丝列表
@@ -73,7 +79,7 @@ public class FollowController {
         updateUserMetadata.setFollowCount(1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         updateUserMetadata = new UpdateUserMetadata();
-        updateUserMetadata.setUserId(addFollow.getFollowedId());
+        updateUserMetadata.setUserId(addFollow.getFolloweeId());
         updateUserMetadata.setFanCount(1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";
@@ -95,7 +101,7 @@ public class FollowController {
         updateUserMetadata.setFollowCount(-1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         updateUserMetadata = new UpdateUserMetadata();
-        updateUserMetadata.setUserId(deleteFan.getFollowedId());
+        updateUserMetadata.setUserId(deleteFan.getFolloweeId());
         updateUserMetadata.setFanCount(-1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";
@@ -117,7 +123,7 @@ public class FollowController {
         updateUserMetadata.setFollowCount(-1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         updateUserMetadata = new UpdateUserMetadata();
-        updateUserMetadata.setUserId(deleteFollow.getFollowedId());
+        updateUserMetadata.setUserId(deleteFollow.getFolloweeId());
         updateUserMetadata.setFanCount(-1);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";

@@ -9,6 +9,6 @@ import com.example.hizone.inter.UpdateCommentCount;
 @FeignClient(value = "hizone-interaction")
 public interface InteractionFeignClient {
 
-    @GetMapping("/updateCommentCount")
+    @GetMapping("/interaction/updateCommentCount")
     public String updateCommentCount(@RequestBody UpdateCommentCount updateCommentCount);
 }

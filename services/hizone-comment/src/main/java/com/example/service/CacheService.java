@@ -8,6 +8,8 @@ import com.example.hizone.dao.comment.Reply;
 import com.example.hizone.dao.comment.ReplyLike;
 import com.example.hizone.front.comment.CancelLikeComment;
 import com.example.hizone.front.comment.CancelLikeReply;
+import com.example.hizone.front.comment.DeleteComment;
+import com.example.hizone.front.comment.DeleteReply;
 import com.example.hizone.front.comment.LikeComment;
 import com.example.hizone.front.comment.LikeReply;
 import com.example.hizone.inter.UpdateReplyCount;
@@ -40,9 +42,9 @@ public interface CacheService {
 
     void appendReplyShard(int postId, List<Reply> replyList, List<ReplyLike> replyLikeList);
 
-    void deleteComment(String key);
+    void deleteComment(DeleteComment deleteComment);
 
-    void deleteReply(String key);
+    void deleteReply(DeleteReply deleteReply);
 
     void cancelLikeComment(CancelLikeComment cancelLikeComment);
 

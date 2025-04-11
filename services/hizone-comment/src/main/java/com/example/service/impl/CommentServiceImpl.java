@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.hizone.dao.comment.CommentLike;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.example.feign.UserFeignClient;
 import com.example.hizone.dao.comment.Comment;
 import com.example.hizone.dao.comment.Reply;
 import com.example.hizone.dao.comment.ReplyLike;
@@ -28,6 +29,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private UserFeignClient userFeignClient;
 
     @SentinelResource(value = "getCommentList")
     @Override
@@ -78,6 +82,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteReply(DeleteReply deleteReply) {
         commentMapper.deleteReply(deleteReply);
+        commentMapper.updateReplyCountDecrement(deleteReply);
     }
 
     @SentinelResource(value = "cancelLikeComment")

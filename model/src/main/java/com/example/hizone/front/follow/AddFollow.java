@@ -7,5 +7,5 @@ public class AddFollow {
 
     private int followerId;
 
-    private int followedId;
+    private int followeeId;
 }

@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class DeleteReply {
 
+    private int postId;
+
     private int senderId;
 
     private int parentCommentId;
