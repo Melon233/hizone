@@ -34,10 +34,10 @@ public interface CommentMapper {
     void insertReplyComment(SendReply replyComment);
 
     @Select("SELECT * FROM comment WHERE post_id = #{postId}")
-    List<Comment> selectCommentList(int postId);
+    List<Comment> selectCommentList(Long postId);
 
     @Select("SELECT * FROM reply WHERE parent_comment_id = #{commentId}")
-    List<Reply> selectReplyList(int commentId);
+    List<Reply> selectReplyList(Long commentId);
 
     @Insert("INSERT INTO comment_like (post_id,sender_id, comment_id) VALUES (#{postId}, #{senderId}, #{commentId})")
     void insertCommentLike(LikeComment likeComment);
@@ -76,8 +76,8 @@ public interface CommentMapper {
     void cancelLikeReply(CancelLikeReply cancelLikeReply);
 
     @Select("SELECT * FROM comment_like WHERE post_id = #{postId}")
-    List<CommentLike> selectCommentLikeList(int postId);
+    List<CommentLike> selectCommentLikeList(Long postId);
 
     @Select("SELECT * FROM reply_like WHERE parent_comment_id = #{parentCommentId}")
-    List<ReplyLike> selectReplyLikeList(int parentCommentId);
+    List<ReplyLike> selectReplyLikeList(Long parentCommentId);
 }

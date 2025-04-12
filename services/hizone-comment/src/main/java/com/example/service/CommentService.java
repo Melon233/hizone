@@ -21,9 +21,9 @@ public interface CommentService {
 
     void addReply(SendReply replyComment);
 
-    List<Comment> getCommentList(int postId);
+    List<Comment> getCommentList(Long postId);
 
-    List<Reply> getReplyList(int commentId);
+    List<Reply> getReplyList(Long commentId);
 
     void addLikeComment(LikeComment likeComment);
 
@@ -37,7 +37,7 @@ public interface CommentService {
 
     void cancelLikeReply(CancelLikeReply cancelLikeReply);
 
-    List<CommentLike> getCommentLikeList(int postId);
+    List<CommentLike> getCommentLikeList(Long postId);
 
-    List<ReplyLike> getReplyLikeList(int parentCommentId);
+    List<ReplyLike> getReplyLikeList(Long parentCommentId);
 }

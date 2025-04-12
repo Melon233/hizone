@@ -62,7 +62,7 @@ public class UserController {
      * use cache and always update cache when data is updated
      */
     @GetMapping("/getUserInfoList")
-    public List<UserInfo> getUserInfoList(@RequestParam("user_id_list") List<Integer> userIdList) {
+    public List<UserInfo> getUserInfoList(@RequestParam("user_id_list") List<Long> userIdList) {
         if (userIdList == null || userIdList.isEmpty()) {
             return new ArrayList<>();
         }

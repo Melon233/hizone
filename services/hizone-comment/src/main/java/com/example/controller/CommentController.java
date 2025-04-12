@@ -58,9 +58,9 @@ public class CommentController {
      * @return
      */
     @GetMapping("/getCommentList")
-    public List<CommentDetail> getCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") int postId) {
-        int userId = token == null ? -1 : TokenUtility.extractUserId(token);
-        List<CommentDetail> commentDetailList = cacheService.getCommentShardByScore(postId, userId, 0, 10);
+    public List<CommentDetail> getCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") Long postId) {
+        Long userId = token == null ? -1 : TokenUtility.extractUserId(token);
+        List<CommentDetail> commentDetailList = cacheService.getCommentShardByScore(postId, userId, 0L, 10L);
         if (!commentDetailList.isEmpty()) {
             return commentDetailList;
         }
@@ -68,16 +68,16 @@ public class CommentController {
         List<CommentLike> commentLikeList = commentService.getCommentLikeList(postId);
         if (!commentList.isEmpty()) {
             cacheService.appendCommentShard(postId, commentList, commentLikeList);
-            return cacheService.getCommentShardByScore(postId, userId, 0, 10);
+            return cacheService.getCommentShardByScore(postId, userId, 0L, 10L);
         } else {
             return new ArrayList<>();
         }
     }
 
     @GetMapping("/getReplyList")
-    public List<ReplyDetail> getReplyCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("parent_comment_id") int parentCommentId) {
-        int userId = token == null ? -1 : TokenUtility.extractUserId(token);
-        List<ReplyDetail> replyDetailList = cacheService.getReplyShardByScore(parentCommentId, userId, 0, 10);
+    public List<ReplyDetail> getReplyCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("parent_comment_id") Long parentCommentId) {
+        Long userId = token == null ? -1 : TokenUtility.extractUserId(token);
+        List<ReplyDetail> replyDetailList = cacheService.getReplyShardByScore(parentCommentId, userId, 0L, 10L);
         if (!replyDetailList.isEmpty()) {
             return replyDetailList;
         }
@@ -85,7 +85,7 @@ public class CommentController {
         List<ReplyLike> replyLikeList = commentService.getReplyLikeList(parentCommentId);
         if (!replyList.isEmpty()) {
             cacheService.appendReplyShard(parentCommentId, replyList, replyLikeList);
-            return cacheService.getReplyShardByScore(parentCommentId, userId, 0, 10);
+            return cacheService.getReplyShardByScore(parentCommentId, userId, 0L, 10L);
         } else {
             return new ArrayList<>();
         }

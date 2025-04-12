@@ -9,7 +9,7 @@ public class TokenUtility {
 
     private static String secret = "secret";
 
-    public static String generateToken(int userId) {
+    public static String generateToken(Long userId) {
         return JWT.create().withClaim("user_id", userId).withIssuedAt(new Date()).sign(Algorithm.HMAC256(secret));
     }
 
@@ -34,10 +34,5 @@ public class TokenUtility {
         } else {
             return false;
         }
-    }
-
-    public static boolean validateNickname(String nickname) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateNickname'");
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.example.feign.UserFeignClient;
 import com.example.hizone.request.comment.CancelLikeComment;
 import com.example.hizone.request.comment.CancelLikeReply;
 import com.example.hizone.request.comment.DeleteComment;
@@ -30,18 +29,15 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
-    @Autowired
-    private UserFeignClient userFeignClient;
-
     @SentinelResource(value = "getCommentList")
     @Override
-    public List<Comment> getCommentList(int postId) {
+    public List<Comment> getCommentList(Long postId) {
         return commentMapper.selectCommentList(postId);
     }
 
     @SentinelResource(value = "getReplyList")
     @Override
-    public List<Reply> getReplyList(int commentId) {
+    public List<Reply> getReplyList(Long commentId) {
         return commentMapper.selectReplyList(commentId);
     }
 
@@ -101,12 +97,12 @@ public class CommentServiceImpl implements CommentService {
 
     @SentinelResource(value = "getCommentLikeList")
     @Override
-    public List<CommentLike> getCommentLikeList(int postId) {
+    public List<CommentLike> getCommentLikeList(Long postId) {
         return commentMapper.selectCommentLikeList(postId);
     }
 
     @Override
-    public List<ReplyLike> getReplyLikeList(int parentCommentId) {
+    public List<ReplyLike> getReplyLikeList(Long parentCommentId) {
         return commentMapper.selectReplyLikeList(parentCommentId);
     }
 }
