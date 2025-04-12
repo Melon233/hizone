@@ -2,17 +2,17 @@ package com.example.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hizone.dao.interaction.Interaction;
-import com.example.hizone.front.interaction.CancelCollectPost;
-import com.example.hizone.front.interaction.CancelLikePost;
-import com.example.hizone.front.interaction.CollectPost;
-import com.example.hizone.front.interaction.LikePost;
-import com.example.hizone.inter.PostId;
-import com.example.hizone.inter.UpdateCommentCount;
-import com.example.hizone.inter.UserInteraction;
-import com.example.hizone.inter.UserPost;
-import com.example.hizone.outer.InteractionDetail;
-import com.example.hizone.utility.Utility;
+import com.example.hizone.dto.PostId;
+import com.example.hizone.dto.UpdateCommentCount;
+import com.example.hizone.dto.UserInteraction;
+import com.example.hizone.dto.UserPost;
+import com.example.hizone.request.interaction.CancelCollectPost;
+import com.example.hizone.request.interaction.CancelLikePost;
+import com.example.hizone.request.interaction.CollectPost;
+import com.example.hizone.request.interaction.LikePost;
+import com.example.hizone.response.InteractionDetail;
+import com.example.hizone.table.interaction.Interaction;
+import com.example.hizone.utility.TokenUtility;
 import com.example.service.CacheService;
 import com.example.service.InteractionService;
 
@@ -49,11 +49,11 @@ public class InteractionController {
      * 
      */
     @GetMapping("/getInteractionDetail")
-    public InteractionDetail getInteractionDetail(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") int postId) {
+    public InteractionDetail getInteractionDetail(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") Long postId) {
         // System.out.println("getInteraction" + postId);
         UserInteraction userInteraction = new UserInteraction();
         if (token != null) {
-            int userId = Utility.extractUserId(token);
+            Long userId = TokenUtility.extractUserId(token);
             // 抓取单个用户帖子交互缓存
             userInteraction = cacheService.getUserInteraction(new UserPost(postId, userId));
             // System.out.println(userInteraction);
@@ -84,23 +84,23 @@ public class InteractionController {
         interactionDetail.setLikeCount(interaction.getLikeCount());
         interactionDetail.setCollectCount(interaction.getCollectCount());
         interactionDetail.setCommentCount(interaction.getCommentCount());
-        interactionDetail.setLiked(userInteraction.isLiked());
-        interactionDetail.setCollected(userInteraction.isCollected());
+        interactionDetail.setLiked(userInteraction.getLiked());
+        interactionDetail.setCollected(userInteraction.getCollected());
         return interactionDetail;
     }
 
     @GetMapping("/getInteractionDetailList")
     public List<InteractionDetail> getInteractionDetailList(
             @RequestHeader(value = "Token", required = false) String token,
-            @RequestParam("post_id_list") int[] postIdList) {
+            @RequestParam("post_id_list") Long[] postIdList) {
         List<InteractionDetail> interactionDetailList = new ArrayList<>();
-        int userId;
+        Long userId;
         if (token != null) {
-            userId = Utility.extractUserId(token);
+            userId = TokenUtility.extractUserId(token);
         } else {
-            userId = -1;
+            userId = -1L;
         }
-        for (int postId : postIdList) {
+        for (Long postId : postIdList) {
             // 抓取单个帖子交互元数据缓存
             Interaction interaction = (Interaction) cacheService.getCache("interaction" + postId);
             // 未命中
@@ -132,8 +132,8 @@ public class InteractionController {
             interactionDetail.setLikeCount(interaction.getLikeCount());
             interactionDetail.setCollectCount(interaction.getCollectCount());
             interactionDetail.setCommentCount(interaction.getCommentCount());
-            interactionDetail.setLiked(userInteraction.isLiked());
-            interactionDetail.setCollected(userInteraction.isCollected());
+            interactionDetail.setLiked(userInteraction.getLiked());
+            interactionDetail.setCollected(userInteraction.getCollected());
             interactionDetailList.add(interactionDetail);
         }
         return interactionDetailList;
@@ -164,7 +164,7 @@ public class InteractionController {
             cacheService.setCache("interaction" + likePost.getPostId(), interaction);
         }
         // 异步更新数据库
-        interactionService.updatePostLikeCount(likePost.getPostId(), 1);
+        interactionService.updatePostLikeCount(likePost.getPostId(), 1L);
         return "success";
         // }
         // return "error";
@@ -195,7 +195,7 @@ public class InteractionController {
             cacheService.setCache("interaction" + collectPost.getPostId(), interaction);
         }
         // 异步更新数据库
-        interactionService.updatePostCollectCount(collectPost.getPostId(), 1);
+        interactionService.updatePostCollectCount(collectPost.getPostId(), 1L);
         return "success";
         // }
         // return "error";
@@ -219,7 +219,7 @@ public class InteractionController {
             cacheService.setCache("interaction" + cancelLikePost.getPostId(), interaction);
         }
         // 异步更新数据库
-        interactionService.updatePostLikeCount(cancelLikePost.getPostId(), -1);
+        interactionService.updatePostLikeCount(cancelLikePost.getPostId(), -1L);
         return "success";
         // }
         // return "error";
@@ -243,7 +243,7 @@ public class InteractionController {
             cacheService.setCache("interaction" + cancelCollectPost.getPostId(), interaction);
         }
         // 异步更新数据库
-        interactionService.updatePostCollectCount(cancelCollectPost.getPostId(), -1);
+        interactionService.updatePostCollectCount(cancelCollectPost.getPostId(), -1L);
         return "success";
         // }
         // return "error";

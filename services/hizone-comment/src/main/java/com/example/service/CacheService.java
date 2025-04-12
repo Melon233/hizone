@@ -2,19 +2,19 @@ package com.example.service;
 
 import java.util.List;
 
-import com.example.hizone.dao.comment.CommentLike;
-import com.example.hizone.dao.comment.Comment;
-import com.example.hizone.dao.comment.Reply;
-import com.example.hizone.dao.comment.ReplyLike;
-import com.example.hizone.front.comment.CancelLikeComment;
-import com.example.hizone.front.comment.CancelLikeReply;
-import com.example.hizone.front.comment.DeleteComment;
-import com.example.hizone.front.comment.DeleteReply;
-import com.example.hizone.front.comment.LikeComment;
-import com.example.hizone.front.comment.LikeReply;
-import com.example.hizone.inter.UpdateReplyCount;
-import com.example.hizone.outer.CommentDetail;
-import com.example.hizone.outer.ReplyDetail;
+import com.example.hizone.dto.UpdateReplyCount;
+import com.example.hizone.request.comment.CancelLikeComment;
+import com.example.hizone.request.comment.CancelLikeReply;
+import com.example.hizone.request.comment.DeleteComment;
+import com.example.hizone.request.comment.DeleteReply;
+import com.example.hizone.request.comment.LikeComment;
+import com.example.hizone.request.comment.LikeReply;
+import com.example.hizone.response.CommentDetail;
+import com.example.hizone.response.ReplyDetail;
+import com.example.hizone.table.comment.Comment;
+import com.example.hizone.table.comment.CommentLike;
+import com.example.hizone.table.comment.Reply;
+import com.example.hizone.table.comment.ReplyLike;
 
 public interface CacheService {
 
@@ -22,11 +22,11 @@ public interface CacheService {
 
     Object getCache(String key);
 
-    List<CommentDetail> getCommentShardByScore(int postId, int userId, int start, int end);
+    List<CommentDetail> getCommentShardByScore(Long postId, Long userId, Long start, Long end);
 
-    List<Comment> getCommentShardByTime(String key, int start, int end);
+    List<Comment> getCommentShardByTime(String key, Long start, Long end);
 
-    List<ReplyDetail> getReplyShardByScore(int parentCommentId, int userId, int start, int end);
+    List<ReplyDetail> getReplyShardByScore(Long parentCommentId, Long userId, Long start, Long end);
 
     void addComment(Comment comment);
 
@@ -38,9 +38,9 @@ public interface CacheService {
 
     void likeReply(LikeReply likeReply);
 
-    void appendCommentShard(int postId, List<Comment> commentList, List<CommentLike> commentLikeList);
+    void appendCommentShard(Long postId, List<Comment> commentList, List<CommentLike> commentLikeList);
 
-    void appendReplyShard(int postId, List<Reply> replyList, List<ReplyLike> replyLikeList);
+    void appendReplyShard(Long postId, List<Reply> replyList, List<ReplyLike> replyLikeList);
 
     void deleteComment(DeleteComment deleteComment);
 

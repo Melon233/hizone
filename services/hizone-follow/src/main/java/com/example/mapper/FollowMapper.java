@@ -7,10 +7,10 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.example.hizone.dao.follow.Follow;
-import com.example.hizone.front.follow.AddFollow;
-import com.example.hizone.front.follow.DeleteFan;
-import com.example.hizone.front.follow.DeleteFollow;
+import com.example.hizone.request.follow.AddFollow;
+import com.example.hizone.request.follow.DeleteFan;
+import com.example.hizone.request.follow.DeleteFollow;
+import com.example.hizone.table.follow.Follow;
 
 @Mapper
 public interface FollowMapper {

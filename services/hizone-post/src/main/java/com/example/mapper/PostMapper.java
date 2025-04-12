@@ -9,18 +9,18 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.hizone.dao.post.Post;
-import com.example.hizone.front.post.ModifyPost;
-import com.example.hizone.front.post.UploadPost;
+import com.example.hizone.request.post.ModifyPost;
+import com.example.hizone.request.post.UploadPost;
+import com.example.hizone.table.post.Post;
 
 @Mapper
 public interface PostMapper {
 
     @Select("select * FROM post WHERE post_id = #{postId}")
-    Post selectPostById(int postId);
+    Post selectPostById(Long postId);
 
     @Select("select * from post where author_id = #{authorId}")
-    List<Post> selectPostListByAuthorId(int authorId);
+    List<Post> selectPostListByAuthorId(Long authorId);
 
     @Select("select * from post order by post_time desc limit 50")
     List<Post> selectPush();
@@ -33,5 +33,5 @@ public interface PostMapper {
     void updatePostById(ModifyPost modifyPost);
 
     @Delete("delete from post where post_id = #{postId}")
-    void deletePostById(int postId);
+    void deletePostById(Long postId);
 }

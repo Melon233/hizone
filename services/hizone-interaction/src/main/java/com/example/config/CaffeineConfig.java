@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.hizone.front.interaction.CollectPost;
-import com.example.hizone.front.interaction.LikePost;
+import com.example.hizone.request.interaction.CollectPost;
+import com.example.hizone.request.interaction.LikePost;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hizone.front.login.Login;
-import com.example.hizone.inter.Email;
-import com.example.hizone.utility.Utility;
+import com.example.hizone.dto.Email;
+import com.example.hizone.request.login.Login;
+import com.example.hizone.utility.TokenUtility;
 import com.example.service.LoginService;
 
 @RequestMapping("/login")
@@ -32,7 +32,7 @@ public class LoginController {
         if (!loginService.validateLogin(login)) {
             return "error";
         }
-        return Utility.generateToken(loginService.getUserIdByEmail(login.getEmail()));
+        return TokenUtility.generateToken(loginService.getUserIdByEmail(login.getEmail()));
     }
 
     /**
@@ -43,7 +43,7 @@ public class LoginController {
      */
     @PostMapping("/sendCheckCode")
     public String sendCheckCode(@RequestBody Email email) {
-        if (!Utility.validateEmail(email.getEmail())) {
+        if (!TokenUtility.validateEmail(email.getEmail())) {
             return "invalid email";
         }
         loginService.sendCheckCode(email.getEmail());

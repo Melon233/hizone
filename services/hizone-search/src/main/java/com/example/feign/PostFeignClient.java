@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import com.example.hizone.outer.PostDetail;
+import com.example.hizone.response.PostDetail;
 
 @FeignClient(value = "hizone-post")
 public interface PostFeignClient {

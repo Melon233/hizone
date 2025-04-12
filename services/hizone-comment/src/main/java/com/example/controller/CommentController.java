@@ -17,22 +17,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.feign.InteractionFeignClient;
-import com.example.hizone.dao.comment.CommentLike;
-import com.example.hizone.dao.comment.Comment;
-import com.example.hizone.dao.comment.Reply;
-import com.example.hizone.dao.comment.ReplyLike;
-import com.example.hizone.front.comment.CancelLikeComment;
-import com.example.hizone.front.comment.CancelLikeReply;
-import com.example.hizone.front.comment.DeleteComment;
-import com.example.hizone.front.comment.DeleteReply;
-import com.example.hizone.front.comment.LikeComment;
-import com.example.hizone.front.comment.LikeReply;
-import com.example.hizone.front.comment.ReplyComment;
-import com.example.hizone.front.comment.SendComment;
-import com.example.hizone.inter.UpdateCommentCount;
-import com.example.hizone.outer.CommentDetail;
-import com.example.hizone.outer.ReplyDetail;
-import com.example.hizone.utility.Utility;
+import com.example.hizone.dto.UpdateCommentCount;
+import com.example.hizone.request.comment.CancelLikeComment;
+import com.example.hizone.request.comment.CancelLikeReply;
+import com.example.hizone.request.comment.DeleteComment;
+import com.example.hizone.request.comment.DeleteReply;
+import com.example.hizone.request.comment.LikeComment;
+import com.example.hizone.request.comment.LikeReply;
+import com.example.hizone.request.comment.SendReply;
+import com.example.hizone.request.comment.SendComment;
+import com.example.hizone.response.CommentDetail;
+import com.example.hizone.response.ReplyDetail;
+import com.example.hizone.table.comment.Comment;
+import com.example.hizone.table.comment.CommentLike;
+import com.example.hizone.table.comment.Reply;
+import com.example.hizone.table.comment.ReplyLike;
+import com.example.hizone.utility.TokenUtility;
 import com.example.service.CacheService;
 import com.example.service.CommentService;
 
@@ -59,7 +59,7 @@ public class CommentController {
      */
     @GetMapping("/getCommentList")
     public List<CommentDetail> getCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") int postId) {
-        int userId = token == null ? -1 : Utility.extractUserId(token);
+        int userId = token == null ? -1 : TokenUtility.extractUserId(token);
         List<CommentDetail> commentDetailList = cacheService.getCommentShardByScore(postId, userId, 0, 10);
         if (!commentDetailList.isEmpty()) {
             return commentDetailList;
@@ -76,7 +76,7 @@ public class CommentController {
 
     @GetMapping("/getReplyList")
     public List<ReplyDetail> getReplyCommentList(@RequestHeader(value = "Token", required = false) String token, @RequestParam("parent_comment_id") int parentCommentId) {
-        int userId = token == null ? -1 : Utility.extractUserId(token);
+        int userId = token == null ? -1 : TokenUtility.extractUserId(token);
         List<ReplyDetail> replyDetailList = cacheService.getReplyShardByScore(parentCommentId, userId, 0, 10);
         if (!replyDetailList.isEmpty()) {
             return replyDetailList;
@@ -111,7 +111,7 @@ public class CommentController {
         // 更新交互元数据缓存
         UpdateCommentCount updateCommentCount = new UpdateCommentCount();
         updateCommentCount.setPostId(sendComment.getPostId());
-        updateCommentCount.setIncrement(1);
+        updateCommentCount.setIncrement(1L);
         interactionFeignClient.updateCommentCount(updateCommentCount);
         // 添加评论到缓存
         Comment comment = new Comment();
@@ -132,7 +132,7 @@ public class CommentController {
      * @return
      */
     @PostMapping("/sendReply")
-    public Reply sendReply(@RequestBody ReplyComment sendReply) {
+    public Reply sendReply(@RequestBody SendReply sendReply) {
         // 设置时间
         sendReply.setReplyTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).toString());
         // 添加评论到数据库
@@ -140,7 +140,7 @@ public class CommentController {
         // 更新交互元数据缓存
         UpdateCommentCount updateCommentCount = new UpdateCommentCount();
         updateCommentCount.setPostId(sendReply.getPostId());
-        updateCommentCount.setIncrement(1);
+        updateCommentCount.setIncrement(1L);
         interactionFeignClient.updateCommentCount(updateCommentCount);
         // 添加评论到缓存
         Reply reply = new Reply();
@@ -209,7 +209,7 @@ public class CommentController {
         // 更新交互元数据缓存
         UpdateCommentCount updateCommentCount = new UpdateCommentCount();
         updateCommentCount.setPostId(deleteComment.getPostId());
-        updateCommentCount.setIncrement(-1);
+        updateCommentCount.setIncrement(-1L);
         interactionFeignClient.updateCommentCount(updateCommentCount);
         cacheService.deleteComment(deleteComment);
         return "success";
@@ -221,7 +221,7 @@ public class CommentController {
         // 更新交互元数据缓存
         UpdateCommentCount updateCommentCount = new UpdateCommentCount();
         updateCommentCount.setPostId(deleteReply.getPostId());
-        updateCommentCount.setIncrement(-1);
+        updateCommentCount.setIncrement(-1L);
         interactionFeignClient.updateCommentCount(updateCommentCount);
         cacheService.deleteReply(deleteReply);
         return "success";

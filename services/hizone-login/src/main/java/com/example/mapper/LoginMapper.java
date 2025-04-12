@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
-import com.example.hizone.dao.user.User;
+import com.example.hizone.table.user.User;
 
 @Mapper
 public interface LoginMapper {
@@ -18,5 +18,5 @@ public interface LoginMapper {
     User selectUserByEmail(String email);
 
     @Insert("INSERT INTO user_metadata (user_id) VALUES (#{userId})")
-    void insertNewUserMetadata(int useId);
+    void insertNewUserMetadata(Long useId);
 }

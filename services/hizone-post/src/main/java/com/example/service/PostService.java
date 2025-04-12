@@ -2,21 +2,21 @@ package com.example.service;
 
 import java.util.List;
 
-import com.example.hizone.dao.post.Post;
-import com.example.hizone.front.post.ModifyPost;
-import com.example.hizone.front.post.UploadPost;
+import com.example.hizone.request.post.ModifyPost;
+import com.example.hizone.request.post.UploadPost;
+import com.example.hizone.table.post.Post;
 
 public interface PostService {
 
     void insertPost(UploadPost uploadPost);
 
-    void deletePost(int postId);
+    void deletePost(Long postId);
 
-    Post getPost(int postId);
+    Post getPost(Long postId);
 
     void modifyPost(ModifyPost modifyPost);
 
-    List<Post> getPostList(int authorId);
+    List<Post> getPostList(Long authorId);
 
     List<Post> getPush();
 }

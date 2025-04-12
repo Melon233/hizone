@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.hizone.dao.follow.Follow;
-import com.example.hizone.front.follow.AddFollow;
-import com.example.hizone.front.follow.DeleteFan;
-import com.example.hizone.front.follow.DeleteFollow;
+import com.example.hizone.request.follow.AddFollow;
+import com.example.hizone.request.follow.DeleteFan;
+import com.example.hizone.request.follow.DeleteFollow;
+import com.example.hizone.table.follow.Follow;
 import com.example.mapper.FollowMapper;
 import com.example.service.FollowService;
 

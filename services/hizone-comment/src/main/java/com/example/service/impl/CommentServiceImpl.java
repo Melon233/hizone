@@ -6,20 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.hizone.dao.comment.CommentLike;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.example.feign.UserFeignClient;
-import com.example.hizone.dao.comment.Comment;
-import com.example.hizone.dao.comment.Reply;
-import com.example.hizone.dao.comment.ReplyLike;
-import com.example.hizone.front.comment.CancelLikeComment;
-import com.example.hizone.front.comment.CancelLikeReply;
-import com.example.hizone.front.comment.DeleteComment;
-import com.example.hizone.front.comment.DeleteReply;
-import com.example.hizone.front.comment.LikeComment;
-import com.example.hizone.front.comment.LikeReply;
-import com.example.hizone.front.comment.ReplyComment;
-import com.example.hizone.front.comment.SendComment;
+import com.example.hizone.request.comment.CancelLikeComment;
+import com.example.hizone.request.comment.CancelLikeReply;
+import com.example.hizone.request.comment.DeleteComment;
+import com.example.hizone.request.comment.DeleteReply;
+import com.example.hizone.request.comment.LikeComment;
+import com.example.hizone.request.comment.LikeReply;
+import com.example.hizone.request.comment.SendReply;
+import com.example.hizone.request.comment.SendComment;
+import com.example.hizone.table.comment.Comment;
+import com.example.hizone.table.comment.CommentLike;
+import com.example.hizone.table.comment.Reply;
+import com.example.hizone.table.comment.ReplyLike;
 import com.example.mapper.CommentMapper;
 import com.example.service.CommentService;
 
@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
 
     @SentinelResource(value = "addReply")
     @Override
-    public void addReply(ReplyComment replyComment) {
+    public void addReply(SendReply replyComment) {
         commentMapper.insertReplyComment(replyComment);
         commentMapper.updateReplyCountIncrement(replyComment);
     }

@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.example.hizone.front.interaction.CollectPost;
-import com.example.hizone.front.interaction.LikePost;
-import com.example.hizone.inter.UserInteraction;
-import com.example.hizone.inter.UserPost;
+import com.example.hizone.dto.UserInteraction;
+import com.example.hizone.dto.UserPost;
+import com.example.hizone.request.interaction.CollectPost;
+import com.example.hizone.request.interaction.LikePost;
 import com.example.service.CacheService;
 import com.example.service.InteractionService;
 import com.github.benmanes.caffeine.cache.Cache;
@@ -88,7 +88,7 @@ public class CacheServiceImpl implements CacheService {
     }
 
     @Override
-    public void loadPostUserInteraction(int postId) {
+    public void loadPostUserInteraction(Long postId) {
         List<LikePost> likePostList = interactionService.getLikePostList(postId);
         List<CollectPost> collectPostList = interactionService.getCollectPostList(postId);
         // Set<LikePost> likePostSet = new HashSet<>(likePostList);

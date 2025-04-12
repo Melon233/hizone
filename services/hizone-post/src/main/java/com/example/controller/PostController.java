@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.feign.InteractionFeignClient;
 import com.example.feign.UserFeignClient;
-import com.example.hizone.dao.post.Post;
-import com.example.hizone.front.post.DeletePost;
-import com.example.hizone.front.post.ModifyPost;
-import com.example.hizone.front.post.UploadPost;
-import com.example.hizone.inter.PostId;
-import com.example.hizone.inter.UpdateUserMetadata;
-import com.example.hizone.outer.InteractionDetail;
-import com.example.hizone.outer.PostDetail;
-import com.example.hizone.outer.UserInfo;
+import com.example.hizone.dto.PostId;
+import com.example.hizone.dto.UpdateUserMetadata;
+import com.example.hizone.request.post.DeletePost;
+import com.example.hizone.request.post.ModifyPost;
+import com.example.hizone.request.post.UploadPost;
+import com.example.hizone.response.InteractionDetail;
+import com.example.hizone.response.PostDetail;
+import com.example.hizone.response.UserInfo;
+import com.example.hizone.table.post.Post;
 import com.example.service.CacheService;
 import com.example.service.PostService;
 
@@ -55,12 +55,10 @@ class PostController {
      * @return
      */
     @GetMapping("/getPost")
-    public PostDetail getPost(@RequestHeader(value = "Token", required = false) String token,
-            @RequestParam("post_id") int postId) {
+    public PostDetail getPost(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") Long postId) {
         Post post = postService.getPost(postId);
-        UserInfo userInfo = userFeignClient.getUserInfoList(new int[] { post.getAuthorId() }).get(0);
-        InteractionDetail interactionDetail = interactionFeignClient
-                .getInteractionDetailList(token, new int[] { postId }).get(0);
+        UserInfo userInfo = userFeignClient.getUserInfoList(List.of(post.getAuthorId())).get(0);
+        InteractionDetail interactionDetail = interactionFeignClient.getInteractionDetailList(token, List.of(postId)).get(0);
         PostDetail postDetail = new PostDetail();
         postDetail.setPostId(post.getPostId());
         postDetail.setAuthorId(post.getAuthorId());
@@ -84,7 +82,7 @@ class PostController {
      * @return
      */
     @GetMapping("/getPostList")
-    public List<Post> getPostList(@RequestParam int authorId) {
+    public List<Post> getPostList(@RequestParam Long authorId) {
         return postService.getPostList(authorId);
     }
 
@@ -99,8 +97,8 @@ class PostController {
     public List<PostDetail> getPush(@RequestHeader(value = "Token", required = false) String token) {
         System.out.println("getPush");
         List<Post> pushList = postService.getPush();
-        List<UserInfo> userInfoList = userFeignClient.getUserInfoList(pushList.stream().mapToInt(Post::getAuthorId).toArray());
-        List<InteractionDetail> interactionDetailList = interactionFeignClient.getInteractionDetailList(token, pushList.stream().mapToInt(Post::getPostId).toArray());
+        List<UserInfo> userInfoList = userFeignClient.getUserInfoList(pushList.stream().mapToLong(Post::getAuthorId).boxed().toList());
+        List<InteractionDetail> interactionDetailList = interactionFeignClient.getInteractionDetailList(token, pushList.stream().mapToLong(Post::getPostId).boxed().toList());
         List<PostDetail> postDetailList = new ArrayList<>();
         for (int i = 0; i < pushList.size(); i++) {
             PostDetail postDetail = new PostDetail();
@@ -132,7 +130,7 @@ class PostController {
         postService.insertPost(uploadPost);
         UpdateUserMetadata updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(uploadPost.getAuthorId());
-        updateUserMetadata.setPostCount(1);
+        updateUserMetadata.setPostCount(1L);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         PostId postId = new PostId();
         postId.setPostId(uploadPost.getPostId());
@@ -168,7 +166,7 @@ class PostController {
         cacheService.deleteCache("post" + deletePost.getPostId());
         UpdateUserMetadata updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deletePost.getAuthorId());
-        updateUserMetadata.setPostCount(-1);
+        updateUserMetadata.setPostCount(-1L);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";
     }

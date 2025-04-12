@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.hizone.dao.interaction.Interaction;
-import com.example.hizone.front.interaction.CancelCollectPost;
-import com.example.hizone.front.interaction.CancelLikePost;
-import com.example.hizone.front.interaction.CollectPost;
-import com.example.hizone.front.interaction.LikePost;
-import com.example.hizone.inter.UpdateCommentCount;
-import com.example.hizone.inter.UserInteraction;
-import com.example.hizone.inter.UserPost;
+import com.example.hizone.dto.UpdateCommentCount;
+import com.example.hizone.dto.UserInteraction;
+import com.example.hizone.dto.UserPost;
+import com.example.hizone.request.interaction.CancelCollectPost;
+import com.example.hizone.request.interaction.CancelLikePost;
+import com.example.hizone.request.interaction.CollectPost;
+import com.example.hizone.request.interaction.LikePost;
+import com.example.hizone.table.interaction.Interaction;
 import com.example.mapper.InteractionMapper;
 import com.example.service.InteractionService;
 
@@ -34,12 +34,12 @@ public class InteractionServiceImpl implements InteractionService {
     }
 
     @Override
-    public Interaction getInteraction(int postId) {
+    public Interaction getInteraction(Long postId) {
         return interactionMapper.selectInteractionById(postId);
     }
 
     @Override
-    public void initInteraction(int postId) {
+    public void initInteraction(Long postId) {
         interactionMapper.insertNewInteraction(postId);
     }
 
@@ -61,12 +61,12 @@ public class InteractionServiceImpl implements InteractionService {
     }
 
     @Override
-    public List<LikePost> getLikePostList(int postId) {
+    public List<LikePost> getLikePostList(Long postId) {
         return interactionMapper.selectPostLikeList(postId);
     }
 
     @Override
-    public List<CollectPost> getCollectPostList(int postId) {
+    public List<CollectPost> getCollectPostList(Long postId) {
         return interactionMapper.selectPostCollectList(postId);
     }
 
@@ -81,12 +81,12 @@ public class InteractionServiceImpl implements InteractionService {
     }
 
     @Override
-    public void updatePostLikeCount(int postId, int increment) {
+    public void updatePostLikeCount(Long postId, Long increment) {
         interactionMapper.updateInteractionLikeCount(postId, increment);
     }
 
     @Override
-    public void updatePostCollectCount(int postId, int increment) {
+    public void updatePostCollectCount(Long postId, Long increment) {
         interactionMapper.updateInteractionCollectCount(postId, increment);
     }
 

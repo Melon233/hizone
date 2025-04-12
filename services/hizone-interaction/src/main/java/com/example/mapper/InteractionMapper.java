@@ -8,15 +8,15 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.hizone.dao.interaction.Interaction;
-import com.example.hizone.dao.interaction.PostCollect;
-import com.example.hizone.dao.interaction.PostLike;
-import com.example.hizone.front.interaction.CancelCollectPost;
-import com.example.hizone.front.interaction.CancelLikePost;
-import com.example.hizone.front.interaction.CollectPost;
-import com.example.hizone.front.interaction.LikePost;
-import com.example.hizone.inter.UpdateCommentCount;
-import com.example.hizone.inter.UserPost;
+import com.example.hizone.dto.UpdateCommentCount;
+import com.example.hizone.dto.UserPost;
+import com.example.hizone.request.interaction.CancelCollectPost;
+import com.example.hizone.request.interaction.CancelLikePost;
+import com.example.hizone.request.interaction.CollectPost;
+import com.example.hizone.request.interaction.LikePost;
+import com.example.hizone.table.interaction.Interaction;
+import com.example.hizone.table.interaction.PostCollect;
+import com.example.hizone.table.interaction.PostLike;
 
 @Mapper
 public interface InteractionMapper {
@@ -25,13 +25,13 @@ public interface InteractionMapper {
     void insertPostLike(LikePost postLike);
 
     @Select("SELECT * FROM post_interaction WHERE post_id = #{postId}")
-    Interaction selectInteractionById(int postId);
+    Interaction selectInteractionById(Long postId);
 
     @Insert("INSERT INTO post_collect (post_id, sender_id) VALUES (#{postId}, #{senderId})")
     void insertPostCollect(CollectPost collectPost);
 
     @Insert("INSERT INTO post_interaction (post_id) VALUES (#{postId})")
-    void insertNewInteraction(int postId);
+    void insertNewInteraction(Long postId);
 
     @Select("SELECT * FROM post_like WHERE post_id = #{postId} AND sender_id = #{userId}")
     PostLike selectPostLike(UserPost userPost);
@@ -40,16 +40,16 @@ public interface InteractionMapper {
     PostCollect selectPostCollect(UserPost userPost);
 
     @Select("SELECT * FROM post_like WHERE post_id = #{postId}")
-    List<LikePost> selectPostLikeList(int postId);
+    List<LikePost> selectPostLikeList(Long postId);
 
     @Select("SELECT * FROM post_collect WHERE post_id = #{postId}")
-    List<CollectPost> selectPostCollectList(int postId);
+    List<CollectPost> selectPostCollectList(Long postId);
 
     @Update("UPDATE post_interaction SET like_count = like_count + #{increment} WHERE post_id = #{postId}")
-    void updateInteractionLikeCount(int postId, int increment);
+    void updateInteractionLikeCount(Long postId, Long increment);
 
     @Update("UPDATE post_interaction SET collect_count = collect_count + #{increment} WHERE post_id = #{postId}")
-    void updateInteractionCollectCount(int postId, int increment);
+    void updateInteractionCollectCount(Long postId, Long increment);
 
     @Update("UPDATE post_interaction SET comment_count = comment_count + #{increment} WHERE post_id = #{postId}")
     void updateCommentCount(UpdateCommentCount updateCommentCount);

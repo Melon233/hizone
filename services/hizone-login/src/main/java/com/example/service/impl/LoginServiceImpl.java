@@ -11,8 +11,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.component.CheckCodeManager;
-import com.example.hizone.dao.user.User;
-import com.example.hizone.front.login.Login;
+import com.example.hizone.request.login.Login;
+import com.example.hizone.table.user.User;
 import com.example.mapper.LoginMapper;
 import com.example.service.LoginService;
 
@@ -67,12 +67,12 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public int getUserIdByEmail(String email) {
+    public Long getUserIdByEmail(String email) {
         return loginMapper.selectUserByEmail(email).getUserId();
     }
 
     @Override
-    public void initUser(int userId) {
+    public void initUser(Long userId) {
         Path defaultAvatar = Paths.get("services/hizone-user/src/main/resources/avatar/default.png");
         Path userAvatar = Paths.get("services/hizone-user/src/main/resources/avatar/" + userId + ".png");
         try {

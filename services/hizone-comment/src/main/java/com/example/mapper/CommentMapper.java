@@ -9,18 +9,18 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.hizone.dao.comment.CommentLike;
-import com.example.hizone.dao.comment.Comment;
-import com.example.hizone.dao.comment.Reply;
-import com.example.hizone.dao.comment.ReplyLike;
-import com.example.hizone.front.comment.CancelLikeComment;
-import com.example.hizone.front.comment.CancelLikeReply;
-import com.example.hizone.front.comment.DeleteComment;
-import com.example.hizone.front.comment.DeleteReply;
-import com.example.hizone.front.comment.LikeComment;
-import com.example.hizone.front.comment.LikeReply;
-import com.example.hizone.front.comment.ReplyComment;
-import com.example.hizone.front.comment.SendComment;
+import com.example.hizone.request.comment.CancelLikeComment;
+import com.example.hizone.request.comment.CancelLikeReply;
+import com.example.hizone.request.comment.DeleteComment;
+import com.example.hizone.request.comment.DeleteReply;
+import com.example.hizone.request.comment.LikeComment;
+import com.example.hizone.request.comment.LikeReply;
+import com.example.hizone.request.comment.SendReply;
+import com.example.hizone.request.comment.SendComment;
+import com.example.hizone.table.comment.Comment;
+import com.example.hizone.table.comment.CommentLike;
+import com.example.hizone.table.comment.Reply;
+import com.example.hizone.table.comment.ReplyLike;
 
 @Mapper
 public interface CommentMapper {
@@ -31,7 +31,7 @@ public interface CommentMapper {
 
     @Insert("INSERT INTO reply (post_id, sender_id, reply_content, parent_comment_id, reply_time) VALUES (#{postId}, #{senderId}, #{replyContent}, #{parentCommentId},#{replyTime})")
     @Options(useGeneratedKeys = true, keyProperty = "replyId", keyColumn = "reply_id")
-    void insertReplyComment(ReplyComment replyComment);
+    void insertReplyComment(SendReply replyComment);
 
     @Select("SELECT * FROM comment WHERE post_id = #{postId}")
     List<Comment> selectCommentList(int postId);
@@ -58,7 +58,7 @@ public interface CommentMapper {
     void updateReplyLikeCountDecrement(CancelLikeReply cancelLikeReply);
 
     @Update("UPDATE comment SET reply_count = reply_count + 1 WHERE comment_id = #{parentCommentId}")
-    void updateReplyCountIncrement(ReplyComment replyComment);
+    void updateReplyCountIncrement(SendReply replyComment);
 
     @Update("UPDATE comment SET reply_count = reply_count - 1 WHERE comment_id = #{parentCommentId}")
     void updateReplyCountDecrement(DeleteReply deleteReply);

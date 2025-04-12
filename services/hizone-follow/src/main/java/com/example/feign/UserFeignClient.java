@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.hizone.inter.UpdateUserMetadata;
+import com.example.hizone.dto.UpdateUserMetadata;
 
 @FeignClient(value = "hizone-user")
 public interface UserFeignClient {

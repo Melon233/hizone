@@ -5,8 +5,8 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.hizone.front.login.Login;
-import com.example.hizone.inter.CheckCode;
+import com.example.hizone.dto.CheckCode;
+import com.example.hizone.request.login.Login;
 import com.github.benmanes.caffeine.cache.Cache;
 
 @Component

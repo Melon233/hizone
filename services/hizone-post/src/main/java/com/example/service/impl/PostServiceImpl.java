@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.example.hizone.dao.post.Post;
-import com.example.hizone.front.post.ModifyPost;
-import com.example.hizone.front.post.UploadPost;
+import com.example.hizone.request.post.ModifyPost;
+import com.example.hizone.request.post.UploadPost;
+import com.example.hizone.table.post.Post;
 import com.example.mapper.PostMapper;
 import com.example.service.PostService;
 
@@ -26,13 +26,13 @@ public class PostServiceImpl implements PostService {
 
     @SentinelResource(value = "deletePost")
     @Override
-    public void deletePost(int postId) {
+    public void deletePost(Long postId) {
         postMapper.deletePostById(postId);
     }
 
     @SentinelResource(value = "getPost")
     @Override
-    public Post getPost(int postId) {
+    public Post getPost(Long postId) {
         return postMapper.selectPostById(postId);
     }
 
@@ -44,7 +44,7 @@ public class PostServiceImpl implements PostService {
 
     @SentinelResource(value = "getPostList")
     @Override
-    public List<Post> getPostList(int authorId) {
+    public List<Post> getPostList(Long authorId) {
         return postMapper.selectPostListByAuthorId(authorId);
     }
 

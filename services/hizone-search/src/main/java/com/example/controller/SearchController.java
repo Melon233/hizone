@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hizone.dao.user.User;
-import com.example.hizone.outer.PostDetail;
+import com.example.hizone.response.PostDetail;
+import com.example.hizone.table.user.User;
 import com.example.service.PostSearchService;
 import com.example.service.UserSearchService;
 

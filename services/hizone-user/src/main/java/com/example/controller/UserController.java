@@ -3,16 +3,16 @@ package com.example.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.feign.FollowFeignClient;
-import com.example.hizone.dao.follow.Follow;
-import com.example.hizone.dao.user.User;
-import com.example.hizone.dao.user.UserMetadata;
-import com.example.hizone.front.user.UpdateUserInfo;
-import com.example.hizone.front.user.UpdateUserAvatar;
-import com.example.hizone.inter.UpdateUserMetadata;
-import com.example.hizone.outer.UserDetail;
-import com.example.hizone.outer.UserInfo;
-import com.example.hizone.utility.Utility;
-import com.example.service.CacheService;
+import com.example.hizone.dto.UpdateUserMetadata;
+import com.example.hizone.request.user.UpdateUserAvatar;
+import com.example.hizone.request.user.UpdateUserInfo;
+import com.example.hizone.response.UserDetail;
+import com.example.hizone.response.UserInfo;
+import com.example.hizone.table.follow.Follow;
+import com.example.hizone.table.user.User;
+import com.example.hizone.table.user.UserMetadata;
+import com.example.hizone.utility.TokenUtility;
+import com.example.service.UserCacheService;
 import com.example.service.UserService;
 
 import java.io.File;
@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -50,43 +51,35 @@ public class UserController {
     private FollowFeignClient followFeignClient;
 
     @Autowired
-    private CacheService cacheService;
+    private UserCacheService cacheService;
+
+    @Value("${static.avatar.path}")
+    private String avatarPath;
 
     /**
-     * 获取用户基本信息
-     * 高频高精数据-使用缓存并且数据更新时总是更新缓存
-     * 
-     * @param token
-     * @param userId
-     * @return
+     * get user basic info by user id list
+     * high frequency high accuracy data
+     * use cache and always update cache when data is updated
      */
     @GetMapping("/getUserInfoList")
-    public List<UserInfo> getUserInfoList(@RequestParam("user_id_list") int[] userIdList) {
-        List<UserInfo> userInfoList = new ArrayList<>();
-        for (int userId : userIdList) {
-            UserDetail userDetail = (UserDetail) cacheService.getCache("user" + userId);
-            if (userDetail == null) {
-                userDetail = userService.getUserDetail(userId);
-                cacheService.setCache("user" + userId, userDetail);
-            }
-            UserInfo userInfo = new UserInfo();
-            userInfo.setUserId(userId);
-            userInfo.setNickname(userDetail.getNickname());
-            userInfoList.add(userInfo);
+    public List<UserInfo> getUserInfoList(@RequestParam("user_id_list") List<Integer> userIdList) {
+        if (userIdList == null || userIdList.isEmpty()) {
+            return new ArrayList<>();
         }
-        return userInfoList;
+        if (userIdList.size() > 100) {
+            throw new IllegalArgumentException("user_id_list size must be less than or equal to 100");
+        }
+        return userService.getUserInfoList(userIdList);
     }
 
     /**
-     * 获取用户详细信息
-     * 低频高精数据-不缓存
-     * 
-     * @param userId
-     * @return
+     * get single user detail
+     * low frequency high accuracy data
+     * use cache and always update cache when data is updated
      */
     @GetMapping("/getUserDetail")
-    public UserDetail getUserDetail(@RequestHeader(value = "Token", required = false) String token, @RequestParam("user_id") int userId) {
-        int selfId = token == null ? -1 : Utility.extractUserId(token);
+    public UserDetail getUserDetail(@RequestHeader(value = "Token", required = false) String token, @RequestParam("user_id") Long userId) {
+        Long selfId = token == null ? -1 : TokenUtility.extractUserId(token);
         UserDetail userDetail = (UserDetail) cacheService.getCache("user" + userId);
         if (userDetail == null) {
             userDetail = userService.getUserDetail(userId);
@@ -97,8 +90,8 @@ public class UserController {
     }
 
     @GetMapping("/getUserAvatar")
-    public ResponseEntity<Resource> getUserAvatar(@RequestParam("user_id") int userId) throws IOException {
-        File imageFile = new File("services/hizone-user/src/main/resources/avatar/" + userId + ".png");
+    public ResponseEntity<Resource> getUserAvatar(@RequestParam("user_id") Integer userId) throws IOException {
+        File imageFile = new File(avatarPath + userId + ".png");
         System.out.println(imageFile.getAbsolutePath());
         if (!imageFile.exists()) {
             System.out.println("Image file not found: " + imageFile.getAbsolutePath());

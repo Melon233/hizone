@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.feign.UserFeignClient;
-import com.example.hizone.dao.post.Post;
-import com.example.hizone.dao.user.User;
+import com.example.hizone.table.post.Post;
+import com.example.hizone.table.user.User;
 import com.example.service.UserSearchService;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
@@ -30,7 +30,7 @@ public class UserSearchServiceImpl implements UserSearchService {
         for (Post post : posts) {
             elasticsearchClient.index(i -> i
                     .index("post")
-                    .id(Integer.toString(post.getPostId()))
+                    .id(Long.toString(post.getPostId()))
                     .document(post));
         }
     }

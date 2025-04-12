@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.hizone.front.login.Login;
+import com.example.hizone.request.login.Login;
 
 public interface LoginService {
 
@@ -8,7 +8,7 @@ public interface LoginService {
 
     void sendCheckCode(String email);
 
-    int getUserIdByEmail(String email);
+    Long getUserIdByEmail(String email);
 
-    void initUser(int userId); // 新增方法，用于初始化用户信息
+    void initUser(Long userId); // 新增方法，用于初始化用户信息
 }

@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.example.service.CacheService;
+import com.example.service.UserCacheService;
 import com.github.benmanes.caffeine.cache.Cache;
 
 @Service
-public class CacheServiceImpl implements CacheService {
+public class CacheServiceImpl implements UserCacheService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;

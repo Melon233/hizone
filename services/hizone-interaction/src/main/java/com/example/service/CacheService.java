@@ -1,7 +1,7 @@
 package com.example.service;
 
-import com.example.hizone.inter.UserInteraction;
-import com.example.hizone.inter.UserPost;
+import com.example.hizone.dto.UserInteraction;
+import com.example.hizone.dto.UserPost;
 
 public interface CacheService {
 
@@ -11,7 +11,7 @@ public interface CacheService {
 
     UserInteraction getUserInteraction(UserPost userPost);
 
-    void loadPostUserInteraction(int postId);
+    void loadPostUserInteraction(Long postId);
 
     void addLikePost(UserPost userPost);
 

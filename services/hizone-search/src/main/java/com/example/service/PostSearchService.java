@@ -3,7 +3,7 @@ package com.example.service;
 import java.io.IOException;
 import java.util.List;
 
-import com.example.hizone.outer.PostDetail;
+import com.example.hizone.response.PostDetail;
 
 public interface PostSearchService {
 

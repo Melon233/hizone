@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.hizone.dao.comment.Comment;
-import com.example.hizone.dao.comment.Reply;
+import com.example.hizone.table.comment.Comment;
+import com.example.hizone.table.comment.Reply;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 

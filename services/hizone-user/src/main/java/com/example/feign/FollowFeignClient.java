@@ -3,7 +3,7 @@ package com.example.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.hizone.dao.follow.Follow;
+import com.example.hizone.table.follow.Follow;
 
 @FeignClient(value = "hizone-follow")
 public interface FollowFeignClient {

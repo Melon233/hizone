@@ -3,15 +3,14 @@ package com.example.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.feign.UserFeignClient;
-import com.example.hizone.dao.follow.Follow;
-import com.example.hizone.front.follow.AddFollow;
-import com.example.hizone.front.follow.DeleteFan;
-import com.example.hizone.front.follow.DeleteFollow;
-import com.example.hizone.inter.UpdateUserMetadata;
+import com.example.hizone.dto.UpdateUserMetadata;
+import com.example.hizone.request.follow.AddFollow;
+import com.example.hizone.request.follow.DeleteFan;
+import com.example.hizone.request.follow.DeleteFollow;
+import com.example.hizone.table.follow.Follow;
 import com.example.service.FollowService;
 
 import java.util.List;
-import java.util.concurrent.Flow;
 
 import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,11 +75,11 @@ public class FollowController {
         UpdateUserMetadata updateUserMetadata;
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(addFollow.getFollowerId());
-        updateUserMetadata.setFollowCount(1);
+        updateUserMetadata.setFollowCount(1L);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(addFollow.getFolloweeId());
-        updateUserMetadata.setFanCount(1);
+        updateUserMetadata.setFanCount(1L);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";
     }
@@ -98,11 +97,11 @@ public class FollowController {
         UpdateUserMetadata updateUserMetadata;
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFan.getFollowerId());
-        updateUserMetadata.setFollowCount(-1);
+        updateUserMetadata.setFollowCount(-1L);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFan.getFolloweeId());
-        updateUserMetadata.setFanCount(-1);
+        updateUserMetadata.setFanCount(-1L);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";
     }
@@ -120,11 +119,11 @@ public class FollowController {
         UpdateUserMetadata updateUserMetadata;
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFollow.getFollowerId());
-        updateUserMetadata.setFollowCount(-1);
+        updateUserMetadata.setFollowCount(-1L);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFollow.getFolloweeId());
-        updateUserMetadata.setFanCount(-1);
+        updateUserMetadata.setFanCount(-1L);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";
     }

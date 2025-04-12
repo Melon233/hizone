@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.feign.PostFeignClient;
-import com.example.hizone.outer.PostDetail;
+import com.example.hizone.response.PostDetail;
 import com.example.service.PostSearchService;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
@@ -43,7 +43,7 @@ public class PostSearchServiceImpl implements PostSearchService {
         for (PostDetail post : posts) {
             elasticsearchClient.index(i -> i
                     .index("post")
-                    .id(Integer.toString(post.getPostId()))
+                    .id(Long.toString(post.getPostId()))
                     .document(post));
         }
     }
