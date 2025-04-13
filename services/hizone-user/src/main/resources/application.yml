@@ -43,3 +43,6 @@ mybatis:
 static:
   avatar:
     path: services/hizone-user/src/main/resources/avatar/
+logging:
+  level:
+    com.example.feign.UserFeignClient: DEBUG

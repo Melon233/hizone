@@ -57,12 +57,12 @@ class PostController {
     @GetMapping("/getPost")
     public PostDetail getPost(@RequestHeader(value = "Token", required = false) String token, @RequestParam("post_id") Long postId) {
         Post post = postService.getPost(postId);
-        UserInfo userInfo = userFeignClient.getUserInfoList(List.of(post.getAuthorId())).get(0);
+        // UserInfo userInfo = userFeignClient.getUserInfoList(List.of(post.getAuthorId())).get(0);
         InteractionDetail interactionDetail = interactionFeignClient.getInteractionDetailList(token, List.of(postId)).get(0);
         PostDetail postDetail = new PostDetail();
         postDetail.setPostId(post.getPostId());
         postDetail.setAuthorId(post.getAuthorId());
-        postDetail.setAuthorName(userInfo.getNickname());
+        // postDetail.setAuthorName(userInfo.getNickname());
         postDetail.setPostTitle(post.getPostTitle());
         postDetail.setPostContent(post.getPostContent());
         postDetail.setLikeCount(interactionDetail.getLikeCount());

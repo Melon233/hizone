@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserMetadata getUserMetadata(Long userId) {
-        return userMapper.getUserMetadata(userId);
+        return null;
     }
 
     @Override
