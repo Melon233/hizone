@@ -1,7 +1,5 @@
 package com.example.hizone.table.post;
 
-import java.time.LocalDateTime;
-
 import lombok.Data;
 
 @Data
@@ -15,5 +13,5 @@ public class Post {
 
     private String postContent;
 
-    private LocalDateTime postTime;
+    private String postTime;
 }

@@ -18,5 +18,5 @@ public interface LoginMapper {
     User selectUserByEmail(String email);
 
     @Insert("INSERT INTO user_metadata (user_id) VALUES (#{userId})")
-    void insertNewUserMetadata(Long useId);
+    void insertNewUserMetadata(Long userId);
 }

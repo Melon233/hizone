@@ -27,11 +27,11 @@ import com.example.hizone.table.comment.Comment;
 import com.example.hizone.table.comment.CommentLike;
 import com.example.hizone.table.comment.Reply;
 import com.example.hizone.table.comment.ReplyLike;
-import com.example.service.CacheService;
+import com.example.service.CommentCacheService;
 import com.github.benmanes.caffeine.cache.Cache;
 
 @Service
-public class CacheServiceImpl implements CacheService {
+public class CommentCacheServiceImpl implements CommentCacheService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -48,17 +48,17 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public void setCache(String key, Object value) {
-        caffeineCache.put(key, value);
+        // caffeineCache.put(key, value);
         redisTemplate.opsForValue().set(key, value);
     }
 
     @Override
     public Object getCache(String key) {
         Object cache;
-        cache = caffeineCache.getIfPresent(key);
-        if (cache != null) {
-            return cache;
-        }
+        // cache = caffeineCache.getIfPresent(key);
+        // if (cache != null) {
+        //     return cache;
+        // }
         cache = redisTemplate.opsForValue().get(key);
         if (cache != null) {
             caffeineCache.put(key, cache);
@@ -73,7 +73,7 @@ public class CacheServiceImpl implements CacheService {
     @Override
     public void addComment(Comment comment) {
         redisTemplate.opsForHash().put("comment" + comment.getPostId(), Long.toString(comment.getCommentId()), comment);
-        redisTemplate.opsForZSet().add("comment-score" + comment.getPostId(), comment.getCommentId(), comment.getCommentLikeCount());
+        redisTemplate.opsForZSet().add("comment-score" + comment.getPostId(), comment.getCommentId(), comment.getLikeCount());
     }
 
     @Override
@@ -103,7 +103,7 @@ public class CacheServiceImpl implements CacheService {
         }
         System.out.println("命中！！！");
         Comment comment = (Comment) redisTemplate.opsForHash().get("comment" + likeComment.getPostId(), Long.toString(likeComment.getCommentId()));
-        comment.setCommentLikeCount(comment.getCommentLikeCount() + 1);
+        comment.setLikeCount(comment.getLikeCount() + 1);
         redisTemplate.opsForHash().put("comment" + likeComment.getPostId(), Long.toString(likeComment.getCommentId()), comment);
         redisTemplate.opsForZSet().incrementScore("comment-score" + likeComment.getPostId(), likeComment.getCommentId(), 1);
         redisTemplate.opsForSet().add("comment-like" + likeComment.getPostId(), new CommentLike(likeComment.getPostId(), likeComment.getSenderId(), likeComment.getCommentId()));
@@ -124,13 +124,12 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public void appendCommentShard(Long postId, List<Comment> commentList, List<CommentLike> commentLikeList) {
-        Map<String, Comment> commentMap = commentList.stream().collect(Collectors
-                .toMap(comment -> Long.toString(comment.getCommentId()),
-                        comment -> comment));
+        System.out.println(commentList);
+        Map<String, Comment> commentMap = commentList.stream().collect(Collectors.toMap(comment -> Long.toString(comment.getCommentId()), comment -> comment));
         redisTemplate.opsForHash().putAll("comment" + postId, commentMap);
         Set<ZSetOperations.TypedTuple<Object>> tuples = commentList.stream()
                 .map(comment -> new DefaultTypedTuple<Object>(comment.getCommentId(),
-                        (double) comment.getCommentLikeCount()))
+                        (double) comment.getLikeCount()))
                 .collect(Collectors.toSet());
         redisTemplate.opsForZSet().add("comment-score" + postId, tuples);
         if (commentLikeList.size() > 0) {
@@ -180,7 +179,7 @@ public class CacheServiceImpl implements CacheService {
             commentDetail.setSenderId(comment.getSenderId());
             commentDetail.setSenderName(userInfoList.get(commentList.indexOf(comment)).getNickname());
             commentDetail.setCommentContent(comment.getCommentContent());
-            commentDetail.setCommentLikeCount(comment.getCommentLikeCount());
+            commentDetail.setLikeCount(comment.getLikeCount());
             commentDetail.setReplyCount(comment.getReplyCount());
             commentDetail.setCommentTime(comment.getCommentTime());
             commentDetail.setLiked(userId == -1 ? false : commentLikeSet.contains(new CommentLike(postId, userId, comment.getCommentId())));
@@ -250,11 +249,11 @@ public class CacheServiceImpl implements CacheService {
         // List<comment> commentList = caffeineCommentSet.getIfPresent(key);
         // for (comment comment : commentList) {
         // if (comment.getcommentId() == updateReplyCount.getParentCommentId()) {
-        // comment.setCommentLikeCount(comment.getCommentLikeCount() +
+        // comment.setLikeCount(comment.getLikeCount() +
         // updateReplyCount.getReplyCount());
         // break;
         // }
-        // commentList.sort(Comparator.comparing(comment::getCommentLikeCount));
+        // commentList.sort(Comparator.comparing(comment::getLikeCount));
         // }
     }
 
@@ -276,7 +275,7 @@ public class CacheServiceImpl implements CacheService {
     @Override
     public void cancelLikeComment(CancelLikeComment cancelLikeComment) {
         Comment comment = (Comment) redisTemplate.opsForHash().get("comment" + cancelLikeComment.getPostId(), Long.toString(cancelLikeComment.getCommentId()));
-        comment.setCommentLikeCount(comment.getCommentLikeCount() - 1);
+        comment.setLikeCount(comment.getLikeCount() - 1);
         redisTemplate.opsForHash().put("comment" + cancelLikeComment.getPostId(), Long.toString(cancelLikeComment.getCommentId()), comment);
         redisTemplate.opsForZSet().incrementScore("comment-score" + cancelLikeComment.getPostId(), cancelLikeComment.getCommentId(), -1);
         redisTemplate.opsForSet().remove("comment-like" + cancelLikeComment.getPostId(), new CommentLike(cancelLikeComment.getPostId(), cancelLikeComment.getSenderId(), cancelLikeComment.getCommentId()));

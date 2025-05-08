@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.feign.UserFeignClient;
-import com.example.hizone.table.post.Post;
 import com.example.hizone.table.user.User;
 import com.example.service.UserSearchService;
 
@@ -26,12 +25,13 @@ public class UserSearchServiceImpl implements UserSearchService {
 
     @Override
     public void syncUser() throws IOException {
-        List<Post> posts = userFeignClient.getAllUser();
-        for (Post post : posts) {
+        elasticsearchClient.indices().delete(d -> d.index("user"));
+        List<User> userList = userFeignClient.getAllUser();
+        for (User user : userList) {
             elasticsearchClient.index(i -> i
-                    .index("post")
-                    .id(Long.toString(post.getPostId()))
-                    .document(post));
+                    .index("user")
+                    .id(Long.toString(user.getUserId()))
+                    .document(user));
         }
     }
 

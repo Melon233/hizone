@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.example.feign.FollowFeignClient;
 import com.example.hizone.dto.UpdateUserMetadata;
 import com.example.hizone.request.user.UpdateUserInfo;
 import com.example.hizone.response.UserDetail;
 import com.example.hizone.response.UserInfo;
+import com.example.hizone.table.follow.Follow;
 import com.example.hizone.table.user.User;
 import com.example.hizone.table.user.UserMetadata;
 import com.example.mapper.UserMapper;
@@ -26,6 +28,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserCacheService userCacheService;
 
+    @Autowired
+    private FollowFeignClient followFeignClient;
+
+    @Autowired
+    private UserCacheService cacheService;
+
     @SentinelResource(value = "updateUserInfo")
     @Override
     public void updateUserInfo(UpdateUserInfo updateUserInfo) {
@@ -34,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Long userId) {
-        return userMapper.getUser(userId);
+        return userMapper.selectUser(userId);
     }
 
     @Override
@@ -44,17 +52,52 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserMetadata(UpdateUserMetadata updateUserMetadata) {
-        userMapper.updateUserMetadata(updateUserMetadata);
+        System.out.println("here");
+        Long userId = updateUserMetadata.getUserId();
+        String type = updateUserMetadata.getType();
+        Integer increment = updateUserMetadata.getIsIncrement() ? 1 : -1;
+        if (type.equals("FanCount")) {
+            userMapper.updateFanCount(userId, increment);
+        } else if (type.equals("FollowCount")) {
+            userMapper.updateFollowCount(userId, increment);
+        } else if (type.equals("CollectCount")) {
+            userMapper.updateCollectCount(userId, increment);
+        } else if (type.equals("PostCount")) {
+            System.out.println("updatePostCount: " + updateUserMetadata);
+            userMapper.updatePostCount(userId, increment);
+        } else if (type.equals("LikedCount")) {
+            userMapper.updateLikedCount(userId, increment);
+        }
+        cacheService.deleteCache("user" + updateUserMetadata.getUserId());
     }
 
     @Override
     public UserMetadata getUserMetadata(Long userId) {
-        return null;
+        return userMapper.selectUserMetadata(userId);
     }
 
     @Override
-    public UserDetail getUserDetail(Long userId) {
-        return userMapper.getUserDetail(userId);
+    public UserDetail getUserDetail(Long selfId, Long userId) {
+        UserDetail userDetail = (UserDetail) cacheService.getCache("user" + userId);
+        if (userDetail == null) {
+            UserMetadata userMetadata = getUserMetadata(userId);
+            User user = getUser(userId);
+            userDetail = new UserDetail();
+            userDetail.setUserId(userId);
+            userDetail.setNickname(user.getNickname());
+            userDetail.setEmail(user.getEmail());
+            userDetail.setRegisterTime(user.getRegisterTime());
+            userDetail.setCollectCount(userMetadata.getCollectCount());
+            userDetail.setFanCount(userMetadata.getFanCount());
+            userDetail.setFollowCount(userMetadata.getFollowCount());
+            userDetail.setLikedCount(userMetadata.getLikedCount());
+            userDetail.setPostCount(userMetadata.getPostCount());
+            cacheService.setCache("user" + userId, userDetail);
+        }
+        if (selfId != null) {
+            userDetail.setFollowed(followFeignClient.hasFollow(new Follow(selfId, userId)));
+        }
+        return userDetail;
     }
 
     @Override
@@ -63,12 +106,14 @@ public class UserServiceImpl implements UserService {
         //iterate userIdList
         for (Long userId : userIdList) {
             //from cache
+            System.out.println("userIds: " + userId);
             UserDetail userDetail = (UserDetail) userCacheService.getCache("user" + userId);
             //if not in cache
             if (userDetail == null) {
                 //from db
-                userDetail = getUserDetail(userId);
+                userDetail = getUserDetail(null, userId);
                 //write to cache
+                System.out.println(userDetail);
                 userCacheService.setCache("user" + userId, userDetail);
             }
             //extract partial user info

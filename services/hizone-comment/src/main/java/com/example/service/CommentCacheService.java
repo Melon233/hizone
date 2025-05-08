@@ -16,7 +16,7 @@ import com.example.hizone.table.comment.CommentLike;
 import com.example.hizone.table.comment.Reply;
 import com.example.hizone.table.comment.ReplyLike;
 
-public interface CacheService {
+public interface CommentCacheService {
 
     void setCache(String key, Object value);
 

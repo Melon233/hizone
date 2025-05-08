@@ -15,7 +15,7 @@ public class CommentDetail {
 
     private String commentContent;
 
-    private Long commentLikeCount;
+    private Long likeCount;
 
     private Long replyCount;
 

@@ -75,11 +75,14 @@ public class FollowController {
         UpdateUserMetadata updateUserMetadata;
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(addFollow.getFollowerId());
-        updateUserMetadata.setFollowCount(1L);
+        updateUserMetadata.setType("FollowCount");
+        updateUserMetadata.setIsIncrement(true);
+        ;
         userFeignClient.updateUserMetadata(updateUserMetadata);
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(addFollow.getFolloweeId());
-        updateUserMetadata.setFanCount(1L);
+        updateUserMetadata.setType("FanCount");
+        updateUserMetadata.setIsIncrement(true);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";
     }
@@ -97,11 +100,13 @@ public class FollowController {
         UpdateUserMetadata updateUserMetadata;
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFan.getFollowerId());
-        updateUserMetadata.setFollowCount(-1L);
+        updateUserMetadata.setType("FollowCount");
+        updateUserMetadata.setIsIncrement(false);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFan.getFolloweeId());
-        updateUserMetadata.setFanCount(-1L);
+        updateUserMetadata.setType("FanCount");
+        updateUserMetadata.setIsIncrement(false);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";
     }
@@ -119,11 +124,13 @@ public class FollowController {
         UpdateUserMetadata updateUserMetadata;
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFollow.getFollowerId());
-        updateUserMetadata.setFollowCount(-1L);
+        updateUserMetadata.setType("FollowCount");
+        updateUserMetadata.setIsIncrement(false);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         updateUserMetadata = new UpdateUserMetadata();
         updateUserMetadata.setUserId(deleteFollow.getFolloweeId());
-        updateUserMetadata.setFanCount(-1L);
+        updateUserMetadata.setType("FanCount");
+        updateUserMetadata.setIsIncrement(false);
         userFeignClient.updateUserMetadata(updateUserMetadata);
         return "success";
     }

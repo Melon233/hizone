@@ -13,7 +13,7 @@ import com.example.hizone.request.interaction.LikePost;
 import com.example.hizone.response.InteractionDetail;
 import com.example.hizone.table.interaction.Interaction;
 import com.example.hizone.utility.TokenUtility;
-import com.example.service.CacheService;
+import com.example.service.InteractionCacheService;
 import com.example.service.InteractionService;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class InteractionController {
     private InteractionService interactionService;
 
     @Autowired
-    private CacheService cacheService;
+    private InteractionCacheService cacheService;
 
     /**
      * 获取互动元数据
@@ -107,7 +107,7 @@ public class InteractionController {
             if (interaction == null) {
                 // 从数据库抓取
                 interaction = interactionService.getInteraction(postId);
-                // System.out.println("getInteraction by db" + interaction);
+                System.out.println("getInteraction by db" + interaction);
                 // 加入缓存
                 cacheService.setCache("interaction" + postId, interaction);
             }
@@ -157,7 +157,6 @@ public class InteractionController {
         cacheService.addLikePost(new UserPost(likePost.getPostId(), likePost.getSenderId()));
         // 抓取单个帖子交互元数据缓存
         Interaction interaction = (Interaction) cacheService.getCache("interaction" + likePost.getPostId());
-        // 若非空
         if (interaction != null) {
             // 更新缓存
             interaction.setLikeCount(interaction.getLikeCount() + 1);
@@ -180,8 +179,7 @@ public class InteractionController {
     @PostMapping("/collectPost")
     public String collectPost(@RequestBody CollectPost collectPost) {
         // 抓取用户单个帖子收藏记录缓存
-        UserInteraction userInteraction = cacheService
-                .getUserInteraction(new UserPost(collectPost.getPostId(), collectPost.getSenderId()));
+        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(collectPost.getPostId(), collectPost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.addCollectPost(collectPost);
@@ -204,8 +202,7 @@ public class InteractionController {
     @PostMapping("/cancelLikePost")
     public String cancelLikePost(@RequestBody CancelLikePost cancelLikePost) {
         // 抓取用户单个帖子点赞记录缓存
-        UserInteraction userInteraction = cacheService
-                .getUserInteraction(new UserPost(cancelLikePost.getPostId(), cancelLikePost.getSenderId()));
+        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(cancelLikePost.getPostId(), cancelLikePost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.cancelLikePost(cancelLikePost);
@@ -228,8 +225,7 @@ public class InteractionController {
     @PostMapping("/cancelCollectPost")
     public String cancelCollectPost(@RequestBody CancelCollectPost cancelCollectPost) {
         // 抓取用户单个帖子点赞记录缓存
-        UserInteraction userInteraction = cacheService
-                .getUserInteraction(new UserPost(cancelCollectPost.getPostId(), cancelCollectPost.getSenderId()));
+        UserInteraction userInteraction = cacheService.getUserInteraction(new UserPost(cancelCollectPost.getPostId(), cancelCollectPost.getSenderId()));
         System.out.println(userInteraction);
         // if (userInteraction == null) {
         interactionService.cancelCollectPost(cancelCollectPost);

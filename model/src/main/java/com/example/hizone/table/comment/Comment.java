@@ -11,11 +11,9 @@ public class Comment {
 
     private Long senderId;
 
-    private String senderName;
-
     private String commentContent;
 
-    private Long commentLikeCount;
+    private Long likeCount;
 
     private Long replyCount;
 

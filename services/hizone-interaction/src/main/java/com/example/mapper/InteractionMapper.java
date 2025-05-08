@@ -39,10 +39,10 @@ public interface InteractionMapper {
     @Select("SELECT * FROM post_collect WHERE post_id = #{postId} AND sender_id = #{userId}")
     PostCollect selectPostCollect(UserPost userPost);
 
-    @Select("SELECT * FROM post_like WHERE post_id = #{postId}")
+    @Select("SELECT post_id,sender_id  FROM post_like WHERE post_id = #{postId}")
     List<LikePost> selectPostLikeList(Long postId);
 
-    @Select("SELECT * FROM post_collect WHERE post_id = #{postId}")
+    @Select("SELECT post_id,sender_id FROM post_collect WHERE post_id = #{postId}")
     List<CollectPost> selectPostCollectList(Long postId);
 
     @Update("UPDATE post_interaction SET like_count = like_count + #{increment} WHERE post_id = #{postId}")

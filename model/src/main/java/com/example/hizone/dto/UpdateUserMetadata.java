@@ -7,13 +7,7 @@ public class UpdateUserMetadata {
 
     private Long userId;
 
-    private Long fanCount;
+    private String type;
 
-    private Long followCount;
-
-    private Long collectCount;
-
-    private Long postCount;
-
-    private Long likedCount;
+    private Boolean isIncrement;
 }

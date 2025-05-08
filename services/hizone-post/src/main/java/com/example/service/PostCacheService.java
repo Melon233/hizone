@@ -1,6 +1,6 @@
 package com.example.service;
 
-public interface CacheService {
+public interface PostCacheService {
 
     void setCache(String key, Object value);
 

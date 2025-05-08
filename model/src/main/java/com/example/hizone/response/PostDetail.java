@@ -1,7 +1,5 @@
 package com.example.hizone.response;
 
-import java.time.LocalDateTime;
-
 import lombok.Data;
 
 @Data
@@ -23,7 +21,7 @@ public class PostDetail {
 
     private Long commentCount;
 
-    private LocalDateTime postTime;
+    private String postTime;
 
     private Boolean liked;
 

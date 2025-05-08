@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.hizone.table.post.Post;
+import com.example.hizone.table.user.User;
 
 @FeignClient(value = "hizone-user")
 public interface UserFeignClient {
 
     @GetMapping("/user/getAllUser")
-    List<Post> getAllUser();
+    List<User> getAllUser();
 }

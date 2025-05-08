@@ -45,10 +45,10 @@ public interface CommentMapper {
     @Insert("INSERT INTO reply_like (parent_comment_id, sender_id, reply_id) VALUES (#{parentCommentId}, #{senderId}, #{replyId})")
     void insertCommentReplyLike(LikeReply likeReply);
 
-    @Update("UPDATE comment SET comment_like_count = comment_like_count + 1 WHERE comment_id = #{commentId}")
+    @Update("UPDATE comment SET like_count = like_count + 1 WHERE comment_id = #{commentId}")
     void updateCommentLikeCountIncrement(LikeComment likeComment);
 
-    @Update("UPDATE comment SET comment_like_count = comment_like_count - 1 WHERE comment_id = #{commentId}")
+    @Update("UPDATE comment SET like_count = like_count - 1 WHERE comment_id = #{commentId}")
     void updateCommentLikeCountDecrement(CancelLikeComment cancelLikeComment);
 
     @Update("UPDATE reply SET reply_like_count = reply_like_count + 1 WHERE reply_id = #{replyId}")

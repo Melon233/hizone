@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.example.service.UserCacheService;
+import com.example.service.PostCacheService;
 import com.github.benmanes.caffeine.cache.Cache;
 
 @Service
-public class CacheServiceImpl implements UserCacheService {
+public class PostCacheServiceImpl implements PostCacheService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -17,24 +17,24 @@ public class CacheServiceImpl implements UserCacheService {
     private Cache<String, Object> caffeineCache;
 
     @Override
+    public void setCache(String key, Object value) {
+        // caffeineCache.put(key, value);
+        redisTemplate.opsForValue().set(key, value);
+    }
+
+    @Override
     public Object getCache(String key) {
         Object cache;
-        cache = caffeineCache.getIfPresent(key);
-        if (cache != null) {
-            return cache;
-        }
+        // cache = caffeineCache.getIfPresent(key);
+        // if (cache != null) {
+        //     return cache;
+        // }
         cache = redisTemplate.opsForValue().get(key);
         if (cache != null) {
             caffeineCache.put(key, cache);
             return cache;
         }
         return cache;
-    }
-
-    @Override
-    public void setCache(String key, Object value) {
-        caffeineCache.put(key, value);
-        redisTemplate.opsForValue().set(key, value);
     }
 
     @Override

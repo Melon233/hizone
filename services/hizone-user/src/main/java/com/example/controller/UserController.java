@@ -10,7 +10,6 @@ import com.example.hizone.response.UserDetail;
 import com.example.hizone.response.UserInfo;
 import com.example.hizone.table.follow.Follow;
 import com.example.hizone.table.user.User;
-import com.example.hizone.table.user.UserMetadata;
 import com.example.hizone.utility.TokenUtility;
 import com.example.service.UserCacheService;
 import com.example.service.UserService;
@@ -67,7 +66,7 @@ public class UserController {
             return new ArrayList<>();
         }
         if (userIdList.size() > 100) {
-            throw new IllegalArgumentException("user_id_list size must be less than or equal to 100");
+            throw new IllegalArgumentException("user id list size must be less than or equal to 100");
         }
         return userService.getUserInfoList(userIdList);
     }
@@ -78,15 +77,9 @@ public class UserController {
      * use cache and always update cache when data is updated
      */
     @GetMapping("/getUserDetail")
-    public UserDetail getUserDetail(@RequestHeader(value = "Token", required = false) String token, @RequestParam("user_id") Long userId) {
+    public UserDetail getUserDetail(@RequestHeader("Token") String token, @RequestParam("user_id") Long userId) {
         Long selfId = token == null ? -1 : TokenUtility.extractUserId(token);
-        UserDetail userDetail = (UserDetail) cacheService.getCache("user" + userId);
-        if (userDetail == null) {
-            userDetail = userService.getUserDetail(userId);
-            cacheService.setCache("user" + userId, userDetail);
-        }
-        userDetail.setFollowed(followFeignClient.hasFollow(new Follow(selfId, userId)));
-        return userDetail;
+        return userService.getUserDetail(selfId, userId);
     }
 
     @GetMapping("/getUserAvatar")
@@ -127,8 +120,7 @@ public class UserController {
 
     @PostMapping("/updateUserAvatar")
     public String updateUserAvatar(@RequestBody UpdateUserAvatar updateUserAvatar) throws IOException {
-        Path imageFile = Paths
-                .get("services/fenta-user/src/main/resources/avatar/" + updateUserAvatar.getUserId() + ".jpg");
+        Path imageFile = Paths.get(avatarPath + updateUserAvatar.getUserId() + ".png");
         if (Files.exists(imageFile)) {
             Files.delete(imageFile);
         }
@@ -145,11 +137,8 @@ public class UserController {
      */
     @PostMapping("/updateUserMetadata")
     public String updateUserMetadata(@RequestBody UpdateUserMetadata updateUserMetadata) {
-        System.out.println("updateUserMetadata" + updateUserMetadata.getUserId() + " " + updateUserMetadata.getPostCount());
-        UserMetadata userMetadata = userService.getUserMetadata(updateUserMetadata.getUserId());
-        userMetadata.merge(updateUserMetadata);
+        System.out.println("updateUserMetadata: " + updateUserMetadata);
         userService.updateUserMetadata(updateUserMetadata);
-        cacheService.deleteCache("user" + updateUserMetadata.getUserId());
         return "success";
     }
 }

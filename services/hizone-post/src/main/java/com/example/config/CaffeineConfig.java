@@ -10,6 +10,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Configuration
 public class CaffeineConfig {
+
     @Bean
     Cache<String, Object> caffeinCache() {
         return Caffeine.newBuilder()

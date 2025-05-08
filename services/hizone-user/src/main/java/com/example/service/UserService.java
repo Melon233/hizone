@@ -15,8 +15,6 @@ public interface UserService {
 
     UserMetadata getUserMetadata(Long userId);
 
-    UserDetail getUserDetail(Long userId);
-
     List<User> getAllUser();
 
     void updateUserInfo(UpdateUserInfo updateUser);
@@ -24,4 +22,6 @@ public interface UserService {
     void updateUserMetadata(UpdateUserMetadata updateUserMetadata);
 
     List<UserInfo> getUserInfoList(List<Long> userIdList);
+
+    UserDetail getUserDetail(Long selfId, Long userId);
 }

@@ -15,7 +15,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 public class CaffeineConfig {
 
     @Bean
-    Cache<String, Object> caffeinCache() {
+    Cache<String, Object> caffeineCache() {
         return Caffeine.newBuilder()
                 .maximumSize(1000)
                 .expireAfterWrite(10, TimeUnit.MINUTES)

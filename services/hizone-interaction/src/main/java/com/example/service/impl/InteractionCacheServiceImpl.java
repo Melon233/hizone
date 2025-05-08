@@ -10,12 +10,12 @@ import com.example.hizone.dto.UserInteraction;
 import com.example.hizone.dto.UserPost;
 import com.example.hizone.request.interaction.CollectPost;
 import com.example.hizone.request.interaction.LikePost;
-import com.example.service.CacheService;
+import com.example.service.InteractionCacheService;
 import com.example.service.InteractionService;
 import com.github.benmanes.caffeine.cache.Cache;
 
 @Service
-public class CacheServiceImpl implements CacheService {
+public class InteractionCacheServiceImpl implements InteractionCacheService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -38,17 +38,17 @@ public class CacheServiceImpl implements CacheService {
      */
     @Override
     public void setCache(String key, Object value) {
-        caffeineCache.put(key, value);
+        // caffeineCache.put(key, value);
         redisTemplate.opsForValue().set(key, value);
     }
 
     @Override
     public Object getCache(String key) {
         Object cache;
-        cache = caffeineCache.getIfPresent(key);
-        if (cache != null) {
-            return cache;
-        }
+        // cache = caffeineCache.getIfPresent(key);
+        // if (cache != null) {
+        //     return cache;
+        // }
         cache = redisTemplate.opsForValue().get(key);
         if (cache != null) {
             caffeineCache.put(key, cache);

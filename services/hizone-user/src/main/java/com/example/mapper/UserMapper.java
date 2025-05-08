@@ -6,26 +6,37 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.example.hizone.dto.UpdateUserMetadata;
 import com.example.hizone.request.user.UpdateUserInfo;
-import com.example.hizone.response.UserDetail;
 import com.example.hizone.table.user.User;
+import com.example.hizone.table.user.UserMetadata;
 
 @Mapper
 public interface UserMapper {
 
-    @Select("SELECT * FROM user WHERE user_id = #{userId}")
-    User getUser(Long userId);
+    @Update("UPDATE user SET nickname = #{nickname} WHERE user_id = #{userId}")
+    void updateUserInfo(UpdateUserInfo updateUserInfo);
+
+    @Update("UPDATE user_metadata SET fan_count = fan_count + #{increment} WHERE user_id = #{userId}")
+    void updateFanCount(Long userId, Integer increment);
+
+    @Update("UPDATE user_metadata SET follow_count = follow_count + #{increment} WHERE user_id = #{userId}")
+    void updateFollowCount(Long userId, Integer increment);
+
+    @Update("UPDATE user_metadata SET collect_count = collect_count + #{increment} WHERE user_id = #{userId}")
+    void updateCollectCount(Long userId, Integer increment);
+
+    @Update("UPDATE user_metadata SET post_count = post_count + #{increment} WHERE user_id = #{userId}")
+    void updatePostCount(Long userId, Integer increment);
+
+    @Update("UPDATE user_metadata SET liked_count = liked_count + #{increment} WHERE user_id = #{userId}")
+    void updateLikedCount(Long userId, Integer increment);
 
     @Select("SELECT * FROM user WHERE user_id = #{userId}")
-    UserDetail getUserDetail(Long userId);
+    User selectUser(Long userId);
 
     @Select("SELECT * FROM user")
     List<User> getAllUserList();
 
-    @Update("UPDATE user SET nickname = #{nickname} WHERE user_id = #{userId}")
-    void updateUserInfo(UpdateUserInfo updateUserInfo);
-
-    @Update("UPDATE user_metadata SET fan_count = fan_count + #{fanCount}, follow_count = follow_count + #{followCount}, collect_count = collect_count + #{collectCount}, post_count = post_count + #{postCount}, liked_count = liked_count + #{likedCount} WHERE user_id = #{userId}")
-    void updateUserMetadata(UpdateUserMetadata updateUserMetadata);
+    @Select("SELECT * FROM user_metadata WHERE user_id = #{userId}")
+    UserMetadata selectUserMetadata(Long userId);
 }

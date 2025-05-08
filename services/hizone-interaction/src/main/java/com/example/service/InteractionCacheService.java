@@ -3,7 +3,7 @@ package com.example.service;
 import com.example.hizone.dto.UserInteraction;
 import com.example.hizone.dto.UserPost;
 
-public interface CacheService {
+public interface InteractionCacheService {
 
     void setCache(String key, Object value);
 

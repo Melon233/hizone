@@ -26,18 +26,15 @@ public class PostSearchServiceImpl implements PostSearchService {
 
     @Override
     public void syncPost() throws IOException {
+        elasticsearchClient.indices().delete(d -> d.index("post"));
         CreateIndexResponse createResponse = elasticsearchClient.indices().create(c -> c
                 .index("post")
                 .mappings(m -> m
-                        .properties("postId", p -> p.integer(i -> i)) // int -> integer
-                        .properties("authorId", p -> p.integer(i -> i)) // int -> integer
-                        .properties("authorName", p -> p.text(t -> t)) // String -> text
+                        .properties("postId", p -> p.long_(i -> i)) // int -> integer
+                        .properties("authorId", p -> p.long_(i -> i)) // int -> integer
                         .properties("postTitle", p -> p.text(t -> t)) // String -> text
                         .properties("postContent", p -> p.text(t -> t)) // String -> text
-                        .properties("postTime", p -> p.date(d -> d)) // Date -> date
-                        .properties("likeCount", p -> p.integer(i -> i))
-                        .properties("collectCount", p -> p.integer(i -> i))
-                        .properties("commentCount", p -> p.integer(i -> i))));
+                ));
         System.out.println("Index 'post' created: " + createResponse.acknowledged());
         List<PostDetail> posts = postFeignClient.getPush(null);
         for (PostDetail post : posts) {

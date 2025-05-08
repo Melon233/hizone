@@ -28,12 +28,13 @@ import com.example.hizone.request.comment.SendReply;
 import com.example.hizone.request.comment.SendComment;
 import com.example.hizone.response.CommentDetail;
 import com.example.hizone.response.ReplyDetail;
+import com.example.hizone.response.UserDetail;
 import com.example.hizone.table.comment.Comment;
 import com.example.hizone.table.comment.CommentLike;
 import com.example.hizone.table.comment.Reply;
 import com.example.hizone.table.comment.ReplyLike;
 import com.example.hizone.utility.TokenUtility;
-import com.example.service.CacheService;
+import com.example.service.CommentCacheService;
 import com.example.service.CommentService;
 
 @RequestMapping("/comment")
@@ -46,7 +47,7 @@ public class CommentController {
     private CommentService commentService;
 
     @Autowired
-    private CacheService cacheService;
+    private CommentCacheService cacheService;
 
     @Autowired
     private InteractionFeignClient interactionFeignClient;
@@ -120,6 +121,9 @@ public class CommentController {
         comment.setCommentTime(sendComment.getCommentTime());
         comment.setPostId(sendComment.getPostId());
         comment.setSenderId(sendComment.getSenderId());
+        UserDetail userDetail = (UserDetail) cacheService.getCache("user" + sendComment.getSenderId());
+        comment.setLikeCount(0L);
+        comment.setReplyCount(0L);
         cacheService.addComment(comment);
         return comment;
     }
@@ -150,6 +154,9 @@ public class CommentController {
         reply.setPostId(sendReply.getPostId());
         reply.setSenderId(sendReply.getSenderId());
         reply.setParentCommentId(sendReply.getParentCommentId());
+        UserDetail userDetail = (UserDetail) cacheService.getCache("user" + sendReply.getSenderId());
+        reply.setSenderName(userDetail.getNickname());
+        reply.setReplyLikeCount(0L);
         cacheService.addReply(reply);
         return reply;
     }
