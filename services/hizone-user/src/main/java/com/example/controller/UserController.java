@@ -2,13 +2,11 @@ package com.example.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.feign.FollowFeignClient;
 import com.example.hizone.dto.UpdateUserMetadata;
 import com.example.hizone.request.user.UpdateUserAvatar;
 import com.example.hizone.request.user.UpdateUserInfo;
 import com.example.hizone.response.UserDetail;
 import com.example.hizone.response.UserInfo;
-import com.example.hizone.table.follow.Follow;
 import com.example.hizone.table.user.User;
 import com.example.hizone.utility.TokenUtility;
 import com.example.service.UserCacheService;
@@ -45,9 +43,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private FollowFeignClient followFeignClient;
 
     @Autowired
     private UserCacheService cacheService;
